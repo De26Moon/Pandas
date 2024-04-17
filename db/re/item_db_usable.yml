@@ -1086,7 +1086,7 @@ Body:
     Script: |
       itemskill "AL_TELEPORT",1;
       if(countitem(601) <= 1)
-         gettiem 601,1;
+         getitem 601,1;
   - Id: 602
     AegisName: Wing_Of_Butterfly
     Name: Butterfly Wing
