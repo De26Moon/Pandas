@@ -1097,7 +1097,7 @@ Body:
       BuyingStore: true
     Script: |
       itemskill "AL_TELEPORT",3;
-      if(counttiem(602) <= 1)
+      if(countitem(602) <= 1)
          getitem 602,1;
   - Id: 603
     AegisName: Old_Blue_Box
