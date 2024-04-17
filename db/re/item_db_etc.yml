@@ -4562,7 +4562,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bAspdRate,10;
+      bonus bAspdRate,200;
   - Id: 4143
     AegisName: Orc_Hero_Card
     Name: Orc Hero Card
