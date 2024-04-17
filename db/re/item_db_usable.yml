@@ -1085,6 +1085,8 @@ Body:
       BuyingStore: true
     Script: |
       itemskill "AL_TELEPORT",1;
+      if(countitem(601) <= 1)
+         gettiem 601,1;
   - Id: 602
     AegisName: Wing_Of_Butterfly
     Name: Butterfly Wing
@@ -1095,6 +1097,8 @@ Body:
       BuyingStore: true
     Script: |
       itemskill "AL_TELEPORT",3;
+      if(counttiem(602) <= 1)
+         getitem 602,1;
   - Id: 603
     AegisName: Old_Blue_Box
     Name: Old Blue Box
