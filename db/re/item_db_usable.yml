@@ -1858,7 +1858,7 @@ Body:
     AegisName: Poison_Bottle
     Name: Poison Bottle
     Type: Usable
-    Buy: 5000
+    Buy: 1000
     Weight: 100
     Flags:
       BuyingStore: true
