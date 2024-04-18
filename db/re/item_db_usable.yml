@@ -1201,6 +1201,8 @@ Body:
       BuyingStore: true
     Script: |
       itemskill "MC_IDENTIFY",1;
+      if(countitem(611) <= 1)
+         getitem 611,1;
   - Id: 612
     AegisName: Portable_Furnace
     Name: Mini Furnace
