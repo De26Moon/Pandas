@@ -303,7 +303,7 @@ Body:
     AegisName: Fruit_Of_Mastela
     Name: Mastela Fruit
     Type: Healing
-    Buy: 8500
+    Buy: 100
     Weight: 30
     Flags:
       BuyingStore: true
@@ -433,7 +433,7 @@ Body:
     AegisName: Ice_Cream
     Name: Ice Cream
     Type: Healing
-    Buy: 150
+    Buy: 100
     Weight: 80
     Flags:
       BuyingStore: true
@@ -1164,7 +1164,7 @@ Body:
     AegisName: Seed_Of_Yggdrasil
     Name: Yggdrasil Seed
     Type: Healing
-    Buy: 5000
+    Buy: 300
     Weight: 300
     Flags:
       BuyingStore: true
@@ -1869,6 +1869,8 @@ Body:
       }
       else
          percentheal -100,-100;
+      if(countitem(678) <= 1)
+         getitem 678,1;
   - Id: 679
     AegisName: Gold_Pill
     Name: Pilule
