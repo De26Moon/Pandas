@@ -304,11 +304,11 @@ Body:
     Name: Mastela Fruit
     Type: Healing
     Buy: 100
-    Weight: 30
+    Weight: 1
     Flags:
       BuyingStore: true
     Script: |
-      itemheal rand(400,600),0;
+      percentheal 5,5;
   - Id: 523
     AegisName: Holy_Water
     Name: Holy Water
@@ -434,11 +434,11 @@ Body:
     Name: Ice Cream
     Type: Healing
     Buy: 100
-    Weight: 80
+    Weight: 1
     Flags:
       BuyingStore: true
     Script: |
-      itemheal rand(105,145),0;
+      percentheal 10,10;
       sc_start SC_FREEZE,10000,0,2500,0;
   - Id: 537
     AegisName: Pet_Food
@@ -1165,7 +1165,7 @@ Body:
     Name: Yggdrasil Seed
     Type: Healing
     Buy: 300
-    Weight: 300
+    Weight: 1
     Flags:
       BuyingStore: true
     Delay:
@@ -1869,8 +1869,6 @@ Body:
       }
       else
          percentheal -100,-100;
-      if(countitem(678) <= 1)
-         getitem 678,1;
   - Id: 679
     AegisName: Gold_Pill
     Name: Pilule
