@@ -125,13 +125,13 @@ prt_in,28,73,4	script	Wise Old Woman#eAcustom	78,{
 			}
 		}
 
-		if(.@failchance < 10) {
-			next;
-			failedremovecards .@part,3;
-			mes "[Wise Old Woman]";
-			mes "I have failed to remove the cards. Luckily, however, both the item and the cards are still okay.";
-			close;
-		}
+		//if(.@failchance < 10) {
+		//	next;
+		//	failedremovecards .@part,3;
+		//	mes "[Wise Old Woman]";
+		//	mes "I have failed to remove the cards. Luckily, however, both the item and the cards are still okay.";
+		//	close;
+		//}
 		next;
 		successremovecards .@part;
 		mes "[Wise Old Woman]";

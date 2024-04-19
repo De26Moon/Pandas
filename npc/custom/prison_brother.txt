@@ -1,0 +1,40 @@
+prontera,165,107,6	shop	牢鸽	849,522:100,536:100,608:300,525:500,678:1000,7139:200,14517:1000,14518:1000,14519:1000,14520:1000,12645:1000,12020:1000,12114:1000,12115:1000,12116:1000,12117:1000,12202:10000,12203:10000,12204:1000,12205:1000,12206:1000,12207:1000,12214:1000,645:1200,656:2200,657:4500
+
+prontera,146,107,2	script	牢二	715,{
+	if (prison_two_tick > gettimetick(2)) {
+		mes "[牢二]";
+		mes "你有点粘人了~";
+		specialeffect2 EF_HIT1;
+		percentheal -10,-10;
+		close;
+	}
+
+	mes "[牢二]";
+	mes "哪个词形容我最贴切？";
+	next;
+	switch (select("持久:专一:持久专一")) {
+	case 1:
+		mes "[牢二]";
+		mes "讨厌~";
+		sc_start SC_FREEZE,10000,0;
+		sc_start SC_POISON,10000,0;
+		sc_start SC_CURSE,10000,0;
+		sc_start SC_SILENCE,10000,0;
+		close;
+	case 2:
+		mes "[牢二]";
+		mes "恶心心~";
+		sc_start SC_STUN,10000,0;
+		sc_start SC_CONFUSION,10000,0;
+		sc_start SC_BLIND,10000,0;
+		sc_start SC_BLEEDING,10000,0;
+		close;
+	case 3:
+		mes "[牢二]";
+		mes "赏你了~";
+		specialeffect2 EF_COIN;
+		Zeny += 10000;
+		prison_two_tick = gettimetick(2) + 60;
+		close;
+	}
+}
