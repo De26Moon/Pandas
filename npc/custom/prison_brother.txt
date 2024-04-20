@@ -2,7 +2,7 @@
 
 prontera,165,107,4	shop	ภฮธ๋	801,{
 	mes "[ภฮธ๋]";
-	mes "ื้ศ๖ฃฟ"
+	mes "ื้ศ๖ฃฟ";
 	switch (select("ภฮ:ธ๋")) {
 	case 1:
 		mes "[ภฮธ๋]";
