@@ -11,6 +11,7 @@ prontera,165,107,4	script	ÀÎ¸ë	801,{
 		next;
 		switch (select("°µ´ê´ê:Ô½Óü")) {
 		case 1:
+			close;
 			callshop "prison_pigeon_shop",1;
 			end;
 		case 2:
