@@ -3,10 +3,12 @@
 prontera,165,107,4	script	ÀÎ¸ë	801,{
 	mes "[ÀÎ¸ë]";
 	mes "×éÈö£¿";
+	next;
 	switch (select("ÀÎ:¸ë")) {
 	case 1:
 		mes "[ÀÎ¸ë]";
 		mes "Äã±ğ»Å~";
+		next;
 		switch (select("°µ´ê´ê:Ô½Óü")) {
 		case 1:
 			callshop "prison_pigeon_shop",1;
