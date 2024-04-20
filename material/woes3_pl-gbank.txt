@@ -1,0 +1,78 @@
+// WoE Setter 3 Plug-in
+// Player -  Secure Guild Storage
+// By: [GM]Xeon
+// Version: 1.0.0
+
+-	script	WoES3Pl_RGBank	-1,{
+end;
+OnLoadPlugins: //The following section adds the plug-in to the main NPC
+	if (!query_sql("show columns from `guild` like 'gbank'",.@ignore,.@ignore,.@ignore,.@ignore,.@ignore,.@ignore)) query_sql("ALTER TABLE `guild` ADD COLUMN `gbank_pass` VARCHAR(32) AFTER `emblem_data`, ADD COLUMN `gbank` BIGINT UNSIGNED NOT NULL DEFAULT 0 AFTER `gbank_pass`",.@ignore);
+	set $@woes3_pl_playermenu$[getarraysize($@woes3_pl_playermenu$)], "公会银行帐户";
+	set $@woes3_pl_player$[getarraysize($@woes3_pl_player$)], "GBank";
+	end;
+}
+
+function	script	WoES3Pl_GBank	{
+	if (!query_sql("show columns from `guild` like 'gbank'",.@ignore,.@ignore,.@ignore,.@ignore,.@ignore)) { mes "There was a critical database error. Please report this to a GM!"; return; }
+	mes "[公会银行]";
+	if (!getcharid(2)) { mes "您必须加入公会才能使用此功能！"; return; }
+	query_sql("select gbank,gbank_pass from `guild` where `guild_id` = '"+getcharid(2)+"'",@gbankacc,@gpass$);
+	mes "您的公会银行存款剩下:^FF0000 "+@gbankacc+"^000000 Zeny";
+	next;
+L_Menu:
+	menu "存款:取款"+((getcharid(0) == getguildmasterid(getcharid(2)))?":设定":""),-,"返回",L_Return;
+	mes "[公会银行]";
+	switch(@menu) {
+		case 1:
+			mes "请输入存款金额";
+			input @amt;
+			if (Zeny < @amt) {
+				mes "您身上金额不足！！";
+				break;
+			}
+			//query
+			set Zeny, Zeny-@amt;
+			query_sql("update `guild` set `gbank` = `gbank`+"+@amt+" where `guild_id` = '"+getcharid(2)+"'",@ignore);
+			mes "您已成功存入^0000FF "+@amt+"^000000 Zeny.";
+			break;
+		case 2:
+			if (@gpass$ != "") {
+				mes "请输入公会银行密码";
+				input @pass$;
+				if (@pass$ != @gpass$) {
+					mes "密码错误！";
+					break;
+				}
+			}
+			mes "请输入取款金额";
+			input @amt;
+			query_sql("select gbank from `guild` where `guild_id` = '"+getcharid(2)+"'",@gbankacc);
+			if (@gbankacc < @amt) {
+				mes "您的公会银行帐户没那么多钱！！";
+				break;
+			}
+			set Zeny, Zeny+@amt;
+			query_sql("update `guild` set `gbank` = `gbank`-"+@amt+" where `guild_id` = '"+getcharid(2)+"'",@ignore);
+			mes "您已成功从帐户中领取^0000FF "+@amt+"^000000 Zeny";
+			break;
+		case 3:
+			switch(select("设定银行密码","返回")) {
+				case 1:
+					mes "请输入密码 ^FF0000(不能超过32个字元)^000000";
+					input @pass$;
+					if (getstrlen(@pass$) > 32) {
+						mes "密码字数太长了！";
+						break;
+					}
+					query_sql("update `guild` set `gbank_pass` = '"+escape_sql(@pass$)+"' where `guild_id` = '"+getcharid(2)+"'",@ignore);
+					break;
+				case 2: break;
+					
+			}
+			break;
+	}
+	next;
+	goto L_Menu;
+L_Return:
+	return;
+}

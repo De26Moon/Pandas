@@ -1,0 +1,36 @@
+/*
+	角色下线后以 离开模式 把角色拉上线站街
+	
+	默认参数是在主城范围内生效，延时1秒。
+	
+	延时时间内同时下线应该会产生只会一个人上线站街，修改为数组处理即可
+	
+	各项参数根据需要调整
+	
+	使用pandas扩展函数
+	
+*/
+
+-	script	稻草人	-1,{
+end;
+OnPCLogoutEvent:
+	if(sy_dl_sj==1){
+		sy_dl_sj=0;
+		getmapxy(.@map$,.@x,.@y);
+		if(.@map$=="prontera" && .@y<170 && .@x>100 && getequiprefinerycnt(9)>9){
+			.id=getcharid(0);
+			.name$=convertpcinfo(.id,CPC_NAME);
+			initnpctimer;
+		}
+	}
+end;
+OnPCLoginEvent:
+	sy_dl_sj=1;
+end;
+OnTimer1000:
+	debugmes "------稻草人: ["+.name$+"]----角色ID: ["+.id+"]";
+	.@a=login(.id,0,rand(8),0,SUSPEND_MODE_AFK);
+	stopnpctimer;
+
+end;
+}

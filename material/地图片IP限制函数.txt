@@ -1,0 +1,35 @@
+/*
+= 脚本名<<地图入场IP限制>>
+============================================================
+=  [人鱼姬的思念 ] 
+= QQ: 327945477
+= 更多定制创意可以联系作者编写
+============================================================
+callfunc "#IP_limit",3,"prontera";
+*/
+
+function	script	#IP_limit	{
+	.@MAXIP = getarg(0);
+	.@map$ = getarg(1);
+	.@pc_ip$ = getcharip();
+	.@aidtemp = getcharid(3);
+      //检查同IP帐号
+      query_sql("SELECT account_id FROM `login` WHERE last_ip = '"+.@pc_ip$+"'", .@account_id);
+         
+       //检查同IP在线人数
+          for(.@i=0;.@i<getarraysize(.@account_id);.@i++){
+                     if(attachrid(.@account_id[.@i])) {
+						//排除离线挂店的
+						  .@state = checkvending();
+						if ( strcharinfo(3) == .@map$  && !(.@state&2))
+							.@k++;//设定限制地图
+                     }
+                         detachrid;
+                 }	 
+                attachrid .@aidtemp;
+                if(.@k >= .@MAXIP){           
+                     dispbottom "相同IP不可超过3个角色进入.";
+                     end;
+                  }
+				  return;
+}

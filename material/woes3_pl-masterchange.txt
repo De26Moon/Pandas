@@ -1,0 +1,42 @@
+// WoE Setter 3 Plug-in
+// Player - 职务管理员
+// By: [GM]Xeon
+// Version: 1.0.0
+
+-	script	WoES3Pl_RGMaster	-1,{
+end;
+OnLoadPlugins: //The following section adds the plug-in to the main NPC
+	set $@woes3_pl_playermenu$[getarraysize($@woes3_pl_gmmenu$)], "更换会长功能";
+	set $@woes3_pl_player$[getarraysize($@woes3_pl_gm$)], "GMaster";
+	set $@woes3_gmaster_fee, 1000; //The fee in zeny of changing the guild master
+	end;
+}
+
+function	script	WoES3Pl_GMaster	{
+	mes "[职务管理员]";
+	if (getguildmasterid(getcharid(2)) != getcharid(0)) {
+		mes "您必须是公会会长才能使用此功能！";
+		return;
+	}
+	if ($@woes3_gmaster_fee) mes "我必须收取 "+$@woes3_gmaster_fee+" Cash 手续费！";
+	mes "^FF0000您确定要更换会长吗？ 更换后您将会失去会长的权限喔！^000000";
+	next;
+	if (select("否","^FF0000是^000000")==2) {
+		mes "[职务管理员]";
+		mes "输入会员的人物名称，请小心使用！";
+		next;
+		input @temp$;
+		mes "[职务管理员]";
+		if (#CASHPOINTS < $@woes3_gmaster_fee) {
+			mes "您身上的Cash点数不足！";
+		} else {
+			atcommand "@changegm "+@temp$;
+			sleep2 250;
+			if (getguildmasterid(getcharid(2)) != getcharid(0)) {
+				mes "会长更换成功！";
+				set #CASHPOINTS, #CASHPOINTS-$@woes3_gmaster_fee;
+			} else mes "更换失败，请稍候再试一次！";
+		}
+	}
+	return;
+}

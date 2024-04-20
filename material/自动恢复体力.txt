@@ -1,0 +1,38 @@
+
+prontera,150,113,4	script	冰墩墩	82,{
+	mes "你的体力是："+callfunc("Sy_tilid");
+	mes "你要干什么？";
+	if((select("-10:取消"))==2){
+	close;}
+	if(callfunc("Sy_tilid")>10){sy_tili-=10;}
+	else{mes "你的体力不够啊。只有"+callfunc("Sy_tilid");}
+	
+end;
+}
+
+function	script	Sy_tilid	{
+//-----------------第一次读，初始化-------------------------------
+	if(sy_tilisj==0){								//如果上次时间戳是0(没计算过)
+		sy_tili = 120;								//初始体力120
+		sy_tilisj = gettimetick(2);					//记录现在时间后返回体力值
+		return sy_tili;								//后返回体力
+	}
+//--------------之后读------------------------------------------------
+	.@jg = gettimetick(2);							//取时间
+	if(sy_tili>120){								//如果大于120.
+		sy_tilisj = .@jg;							//记录时间
+		sy_tili=120;								//体力=120
+	}else{
+		.@sjc=.@jg-sy_tilisj;						//取时间差
+		.@hf=.@sjc/10;								//取时间内可以恢复的体力【10=多少秒恢复1点】
+		sy_tili+=.@hf;								//计算总体力
+		if(sy_tili>120){							//如果大于120
+			sy_tilisj = .@jg;							//记录现在时间
+			sy_tili=120;								//记录体力120
+		}else{										
+			sy_tilisj+=10*.@hf;							//记录恢复用整数时间【10=多少秒恢复1点】
+		}
+	}
+	return sy_tili;	
+	end;
+}

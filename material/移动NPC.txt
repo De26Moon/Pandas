@@ -1,0 +1,23 @@
+prontera,155,120,2	script	波利#001	1002,{
+	
+	mes "你好啊";
+	
+	
+end;
+
+//	npcstop;		//停止移动
+
+
+OnInit:
+	npcspeed 200;
+	initnpctimer;
+	end;
+
+
+OnTimer2000:
+	getmapxy(.@map$,.@x,.@y,BL_NPC,"波利#001");
+	getfreecell .@map$,.@x1,.@y1,.@x,.@y,10,10;
+	npcwalkto .@x1,.@y1; 				
+	initnpctimer;
+	end;
+}

@@ -1,0 +1,1 @@
+prontera.gat,164,79,3	script	回收站	406,{	set  @itemnumber, 0;	mes"[回收站]";	mes"这儿可以删除某些无法丢掉的东西,";	mes"不过需要知道物品代码,";	mes"需要保留的物品请放入仓库.";	mes"删除包括装备在身上的物品.";	mes"请输入物品代码:";	next;	input  @itemnumber;	if (countitem(@itemnumber) >= 1) {	mes"[回收站]";	mes"好的，现在为你删除";	delitem @itemnumber,countitem(@itemnumber);		close;	}	mes"[回收站]";	mes"该物品代码无效.";	close;	end;}

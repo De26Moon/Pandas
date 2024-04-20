@@ -1,0 +1,88 @@
+-	script	InstanceRecaller	-1,{
+ClearAllMemory:
+	// 离线时候的副本编号
+	InstanceRecaller_Id = 0;
+	// 离线时候的副本地图名称
+	InstanceRecaller_Map$ = "";
+	// 离线时候在地图上的 X 坐标
+	InstanceRecaller_X = 0;
+	// 离线时候在地图上的 Y 坐标
+	InstanceRecaller_Y = 0;
+	// 离线时的时间戳
+	InstanceRecaller_OfflineTime = 0;
+	// 离线时候的血量, 避免离线回来后自动复活
+	InstanceRecaller_LeftHP = false;
+	// 离线的时候队长是谁
+	InstanceRecaller_PartyLeader = 0;
+	end;
+OnPCLogoutEvent:
+	if (getmapxy(.@map$,.@x,.@y,BL_PC) != 0) {
+		goto ClearAllMemory;	// 读取坐标失败, 清除记录
+	}
+	
+	if (!instance_id(IM_PARTY)) {
+		goto ClearAllMemory;	// 不在副本里面, 清除记录
+	}
+	
+	if (!compare(.@map$, "#")) {
+		goto ClearAllMemory;	// 不在副本地图中, 清除记录
+	}
+	
+	if (getcharid(1) == 0) {
+		goto ClearAllMemory;	// 不在队伍里面, 清除记录
+	}
+	
+	// 离线时候的副本编号
+	InstanceRecaller_Id = instance_id(IM_PARTY);
+	// 离线时候的副本地图名称
+	InstanceRecaller_Map$ = .@map$;
+	// 离线时候在地图上的 X 坐标
+	InstanceRecaller_X = .@x;
+	// 离线时候在地图上的 Y 坐标
+	InstanceRecaller_Y = .@y;
+	// 离线时的时间戳
+	InstanceRecaller_OfflineTime = gettimetick(2);
+	// 离线时候的血量, 避免离线回来后自动复活
+	InstanceRecaller_LeftHP = HP;
+	// 离线的时候队长是谁
+	InstanceRecaller_PartyLeader = getpartyleader(getcharid(1), 2);
+	
+	end;
+OnPCLoginEvent:
+	sleep2 100;	// 进入游戏后等 100 毫秒再处理
+	
+	if (!instance_id(IM_PARTY) || 
+		instance_id(IM_PARTY) != InstanceRecaller_Id || 
+		InstanceRecaller_Map$ == "" ) {
+		goto ClearAllMemory;	// 不在副本里面, 清除记录
+	}
+	
+	if (getcharid(1) == 0) {
+		goto ClearAllMemory;	// 不在队伍里面, 清除记录
+	}
+	
+	if (InstanceRecaller_PartyLeader != getpartyleader(getcharid(1), 2)) {
+		goto ClearAllMemory;	// 队长已经换人了, 清除记录
+	}
+	
+	// 计算玩家已经离开游戏的时间
+	.@leave_secs = gettimetick(2) - InstanceRecaller_OfflineTime;
+	
+	// 离线多长时间内可以自动回到副本
+	.@recall_secs = 60 * 3;
+	
+	if (.@leave_secs > .@recall_secs) {
+		goto ClearAllMemory;	// 超过时限了, 清除记录
+	}
+	
+	warp InstanceRecaller_Map$, InstanceRecaller_X, InstanceRecaller_Y;
+	
+	if (InstanceRecaller_LeftHP == 0) {
+		// 离线的时候已经死亡, 立刻让他死掉
+		percentheal -100, 0;
+	}
+	
+	goto ClearAllMemory;	// 已经完成自动召回, 清除记录
+	
+	end;
+}

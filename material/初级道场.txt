@@ -1,0 +1,219 @@
+prontera,213,71,3	script	初级道场	560,{
+	mes "＊ 尊敬的^ff6040"+strcharinfo(0)+"^000000"+(Sex?"先生":"小姐");
+	mes "＊ ^984AAC欢迎您参加初级道场的挑战^000000";
+	mes "＊ 1-9关 一只BOSS";
+	mes "＊ 10 关 两只BOSS";
+	mes "＊ 挑战等级 : "+$@Dc_Level_lv1+"";
+	mes "＊ 报名费 : "+$@Dc_In_Zeny_lv1+"z";	
+	next;
+	menu ">> 参加挑战",-,">> 查看奖励",checkjl,">> 查看场地",changdi;
+	mes "[初级道场]";
+	if (Baselevel < $@Dc_Level_lv1)
+	{
+		
+		mes "----------------------------";
+		mes ">> 您的等级不足"+$@Dc_Level_lv1+"级";
+		mes "----------------------------";
+		close;
+	}
+	if (!getcharid(1) || Zeny<$@Dc_In_Zeny_lv1)
+	{
+		
+		mes "----------------------------";
+		mes ">> 您没有队伍或金钱不足 "+$@Dc_In_Zeny_lv1+" Zeny";
+		mes "----------------------------";
+		close;
+	}
+	if( getcharid(0) != getpartyleader(getcharid(1),2) )
+	{
+		
+		mes "----------------------------";
+		mes ">> 只有队长才可以报名。";
+		mes "----------------------------";
+		close;
+	}
+		getpartymember getcharid(1);
+		if($@partymembercount>$@Dc_People_lv1){
+		mes "初级道场挑战";
+		mes "----------------------------";
+		mes ">> ^C63131你的队伍人数超过了"+$@Dc_People_lv1+"人不能报名。^000000";
+		mes "----------------------------";
+		close;
+
+		}
+	for (set @t,1;@t<6;set @t,@t+1)
+	{
+		if ($@Dc_timer_lv1[@t]==0 )
+		{
+			killmonster "1@g_vs"+@t+".gat","lv1_Dc_Main_"+@t+"::OnKillMob";
+			set Zeny,Zeny-$@Dc_In_Zeny_lv1;
+			set $@Dc_Truns_lv1[@t],1;
+			//set $@Dc_Party_lv1[@t],getcharid(1);
+			set $@Dc_timer_lv1[@t],$@Dc_Delay_lv1[0];
+			enablenpc "初级道场管理员#"+@t+"";
+			initnpctimer "Dc_timer_lv1_"+@t+"";
+			announce "[ 道场 ] "+getpartyname(getcharid(1)) +" 队伍, 开始挑战初级道场！",15,0xdcdcdc;
+			warpparty "1@g_vs"+@t+".gat",49,47,getcharid(1);
+			killmonsterall "1@g_vs"+@t;
+			if (!sleep2(3000))
+				end;
+			mapannounce "1@g_vs"+@t+".gat","[ 道场 ] 请在 "+$@Dc_Delay_lv1[0]+" 分钟内开始比赛，否则将强制退出！",15;
+			end;
+		}
+	}
+	set @a,0;
+	for (set @t,1;@t<6;set @t,@t+1)
+	{
+		if(getmapusers("1@g_vs"+@t+".gat") != 0)
+		{
+			mes "[场地"+@t+"]:已经有人在挑战了!";
+			set @a,@a+1;
+		}
+		else
+		{
+			mes "[场地"+@t+"]:没有人在挑战!";
+		}
+	}
+	if(@a == 5)mes "全部场地都有人在挑战了,请稍后再试";
+	close;
+
+changdi:
+	for (set @t,1;@t<6;set @t,@t+1)
+	{
+		if(getmapusers("1@g_vs"+@t+".gat") != 0)
+		{
+			mes "[场地"+@t+"]:已经有人在挑战了!";
+		}
+		else
+		{
+			mes "[场地"+@t+"]:没有人在挑战!";
+		}
+	}
+	close;
+
+checkjl:
+	
+	mes "----------------------------";	
+	mes ">> 随机获得以下物品";
+	mes "----------------------------";
+	mes ">> 10万元支票 * 10";
+	mes ">> 25万元支票 * 4";
+	mes ">> 50万元支票 * 2";
+	mes ">> 100万元支票 * 1";
+	mes "----------------------------";
+	close2;
+	cutin "",255;
+	end;
+
+OnInit:
+	waitingroom "【初级道场】",0;
+	end;
+}
+
+1@g_vs1.gat,0,0,0	script	Dc_timer_lv1_1	-1,{ OnTimer60000: callfunc "Dc_timer_lv1",1; }
+1@g_vs2.gat,0,0,0	script	Dc_timer_lv1_2	-1,{ OnTimer60000: callfunc "Dc_timer_lv1",2; }
+1@g_vs3.gat,0,0,0	script	Dc_timer_lv1_3	-1,{ OnTimer60000: callfunc "Dc_timer_lv1",3; }
+1@g_vs4.gat,0,0,0	script	Dc_timer_lv1_4	-1,{ OnTimer60000: callfunc "Dc_timer_lv1",4; }
+1@g_vs5.gat,0,0,0	script	Dc_timer_lv1_5	-1,{ OnTimer60000: callfunc "Dc_timer_lv1",5; }
+
+function	script	Dc_timer_lv1	{
+	initnpctimer "Dc_timer_lv1_"+getarg(0)+"";
+	set $@Dc_timer_lv1[getarg(0)],$@Dc_timer_lv1[getarg(0)]-1;
+	if ($@Dc_timer_lv1[getarg(0)]==0||getmapusers("1@g_vs"+getarg(0)+".gat") == 0)
+	{
+		set $@Dc_timer_lv1[getarg(0)],0;
+		stopnpctimer "Dc_timer_lv1_"+getarg(0)+"";
+		mapwarp "1@g_vs"+getarg(0)+".gat","prontera",156,118;
+		//set $@Dc_Party_lv1[getarg(0)],0;
+	}
+	end;
+}
+
+1@g_vs1.gat,0,0,0	script	lv1_Dc_Main_1	-1,{ OnMain: callfunc "Dc_Main_lv1",1; OnKillMob: callfunc "Dc_Kill_lv1",1; }
+1@g_vs2.gat,0,0,0	script	lv1_Dc_Main_2	-1,{ OnMain: callfunc "Dc_Main_lv1",2; OnKillMob: callfunc "Dc_Kill_lv1",2; }
+1@g_vs3.gat,0,0,0	script	lv1_Dc_Main_3	-1,{ OnMain: callfunc "Dc_Main_lv1",3; OnKillMob: callfunc "Dc_Kill_lv1",3; }
+1@g_vs4.gat,0,0,0	script	lv1_Dc_Main_4	-1,{ OnMain: callfunc "Dc_Main_lv1",4; OnKillMob: callfunc "Dc_Kill_lv1",4; }
+1@g_vs5.gat,0,0,0	script	lv1_Dc_Main_5	-1,{ OnMain: callfunc "Dc_Main_lv1",5; OnKillMob: callfunc "Dc_Kill_lv1",5; }
+
+function	script	Dc_Main_lv1	{
+	stopnpctimer "Dc_timer_lv1_"+getarg(0)+"";
+	initnpctimer "Dc_timer_lv1_"+getarg(0)+"";
+	set $@Dc_timer_lv1[getarg(0)],$@Dc_Delay_lv1[$@Dc_Truns_lv1[getarg(0)]];
+	killmonsterall "1@g_vs"+getarg(0)+".gat",0;
+	if($@Dc_Truns_lv1[getarg(0)] == $@Dc_Misson_lv1){
+		for (set @num,0;@num<$@Dc_Mob_Num_lv1[$@Dc_Truns_lv1[getarg(0)]];set @num,@num+1)
+			monster "1@g_vs"+getarg(0)+".gat",50,49,"--ja--",$@Dc_Mob_Id_lv1[rand(getarraysize($@Dc_Mob_Id_lv1))],1,"lv1_Dc_Main_"+getarg(0)+"::OnKillMob";
+	set $@Dc_Mob_lv1[getarg(0)],$@Dc_Mob_Num_lv1[$@Dc_Truns_lv1[getarg(0)]];
+	mapannounce "1@g_vs"+getarg(0)+".gat","[ 道场 ] 魔物放出！第 "+$@Dc_Truns_lv1[getarg(0)]+" 关挑战开始！",15;
+	mapannounce "1@g_vs"+getarg(0)+".gat","[ 道场 ] 请在 "+$@Dc_Delay_lv1[$@Dc_Truns_lv1[getarg(0)]]+" 分钟内完成本关，否则将强制退出！",15;
+	end;
+	}
+	for (set @num,0;@num<$@Dc_Mob_Num_lv1[$@Dc_Truns_lv1[getarg(0)]];set @num,@num+1)
+		monster "1@g_vs"+getarg(0)+".gat",50,49,"--ja--",$@Dc_Mob_Id_lv1[rand(getarraysize($@Dc_Mob_Id_lv1))],1,"lv1_Dc_Main_"+getarg(0)+"::OnKillMob";
+	set $@Dc_Mob_lv1[getarg(0)],$@Dc_Mob_Num_lv1[$@Dc_Truns_lv1[getarg(0)]];
+	mapannounce "1@g_vs"+getarg(0)+".gat","[ 道场 ] 魔物放出！第 "+$@Dc_Truns_lv1[getarg(0)]+" 关挑战开始！",15;
+	mapannounce "1@g_vs"+getarg(0)+".gat","[ 道场 ] 请在 "+$@Dc_Delay_lv1[$@Dc_Truns_lv1[getarg(0)]]+" 分钟内完成本关，否则将强制退出！",15;
+	mapannounce "1@g_vs"+getarg(0)+".gat","[ 道场 ] 本关魔物数量："+$@Dc_Mob_Num_lv1[getarg(0)]+"只",15;
+	end;
+}
+
+function	script	Dc_Kill_lv1	{
+	set $@Dc_Mob_lv1[getarg(0)], $@Dc_Mob_lv1[getarg(0)] - 1;
+	if( $@Dc_Mob_lv1[getarg(0)] > 0 ) end;
+	mapannounce "1@g_vs"+getarg(0)+".gat","[ 道场 ] "+getpartyname(getcharid(1)) +" 队伍, 第 "+$@Dc_Truns_lv1[getarg(0)]+" 关挑战成功！",15;
+	if (!sleep2($@Dc_Space_lv1[$@Dc_Truns_lv1[getarg(0)]]*1000))
+		end;
+	if($@Dc_Truns_lv1[getarg(0)] == $@Dc_Misson_lv1)
+	{
+		announce "[ 道场 ] "+getpartyname(getcharid(1)) +" 队伍, 成功挑战初级道场！",15,0xdcdcdc;
+		set $@Dc_timer_lv1[getarg(0)],0;
+		stopnpctimer "Dc_timer_lv1_"+getarg(0)+"";
+		areawarp "1@g_vs"+getarg(0)+".gat",1,1,300,300,"job_sage_1.gat",50,160;
+	}
+	else
+	{
+		set $@Dc_Truns_lv1[getarg(0)],$@Dc_Truns_lv1[getarg(0)] + 1;
+		doevent "lv1_Dc_Main_"+getarg(0)+"::OnMain";
+	}
+	end;
+}
+
+1@g_vs1.gat,50,49,4	script	初级道场管理员#1	758,{ callfunc "dc_doevent_lv1",1; }
+1@g_vs2.gat,50,49,4	script	初级道场管理员#2	758,{ callfunc "dc_doevent_lv1",2; }
+1@g_vs3.gat,50,49,4	script	初级道场管理员#3	758,{ callfunc "dc_doevent_lv1",3; }
+1@g_vs4.gat,50,49,4	script	初级道场管理员#4	758,{ callfunc "dc_doevent_lv1",4; }
+1@g_vs5.gat,50,49,4	script	初级道场管理员#5	758,{ callfunc "dc_doevent_lv1",5; }
+
+function	script	dc_doevent_lv1	{
+	mes "[裁判]";
+	mes "您准备要开始挑战了吗？";
+	menu "是的",-;
+	close2;
+	if( getcharid(0) != getpartyleader(getcharid(1),2) )
+	{
+		mes "[裁判]";
+		mes "对不起，只有队长才可以开始。";
+		close;
+	}
+	If(getmapusers("1@g_vs"+getarg(0)+".gat") > 13 )	{
+		mapwarp "1@g_vs"+getarg(0)+".gat","prontera",156,118;
+	}
+	doevent "lv1_Dc_Main_"+getarg(0)+"::OnMain";
+	disablenpc "初级道场管理员#"+getarg(0)+"";
+	end;
+}
+
+job_sage_1.gat,50,166,4	script	奖品发放员#lv1	736,{ callfunc "Dc_Pay_lv1","奖品"; }
+
+function	script	Dc_Pay_lv1	{
+		mes "我是负责发放初级道场奖品的";
+		next;
+		menu "我要领"+getarg(0)+"",-;
+			set @Pay,rand((getarraysize($@Dc_Item_Id_lv1)-1));
+			getitem $@Dc_Item_Id_lv1[@Pay],$@Dc_Item_Num_lv1[@Pay];
+			set @DC_zeny,rand($@Dc_Win_Zeny_lv1,$@Dc_Win_Zeny_2v1);
+			set zeny,zeny+@DC_zeny;
+			dispbottom "[Roz提示] -本次获取< "+@DC_zeny+" > Z. ";
+		warp "prontera",156,108;
+		end;
+}

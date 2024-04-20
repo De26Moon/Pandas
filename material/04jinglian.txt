@@ -1,0 +1,307 @@
+prontera.gat,139,98,5	script	精练大师	85,{
+
+
+//---------------------精练成功率------------------------
+	set $@fuchenga,100;
+
+//-------------------精练需要的RO币------------------------
+	set $@fuzenya,10000;
+	set @part,0;
+	set @parta,0;
+
+	mes "[精练师]";
+	mes "^FF0000我可以将装备进行精练^000000.";
+	mes "^FF0000使装备得到额外防御.^000000";
+	mes "^FF0000把你要精练的装备穿在身上.^000000";
+	mes "需要支付 ^FF0000"+$@fuzenya+"^000000 RO币.";
+	mes "成功率为 ^FF0000"+$@fuchenga+"^000000 %.";
+	next;
+
+	menu	"一次精练到20",L_dme,
+		"逐件精练",L_Yes;
+
+
+L_dme:
+	if (@part>20){goto Levent2;}
+	if (@parta>19){set @parta,0;set @part,@part+1;}
+	if (getequipisequiped(@part)==0){ set @part,@part+1;set @parta,0;goto L_dme;}
+	if (getequiprefinerycnt(@part)>19){ set @part,@part+1;set @parta,0;goto L_dme;}
+	successrefitem @part;
+	set @parta,@parta+1;
+goto L_dme;
+
+
+L_Yes:
+	set @yesno0a$,"";
+	set @yesno1a$,"";
+	set @yesno2a$,"";
+	set @yesno3a$,"";
+	set @yesno4a$,"";
+	set @yesno5a$,"";
+	set @yesno6a$,"";
+	set @yesno7a$,"";
+	set @yesno8a$,"";
+	set @yesno9a$,"";
+	set @yesno10a$,"";
+	set @yesno11a$,"";
+	set @yesno12a$,"";
+	set @yesno13a$,"";
+	set @yesno14a$,"";
+	set @yesno15a$,"";
+	set @yesno16a$,"";
+	set @yesno17a$,"";
+	set @yesno18a$,"";
+	set @yesno19a$,"";
+	set @yesno20a$,"";
+
+	set @zbw0a$,"^5000A0左装→^000000 未装备";
+	set @zbw1a$,"^5000A0右装→^000000 未装备";
+	set @zbw2a$,"^5000A0鞋子→^000000 未装备";
+	set @zbw3a$,"^5000A0披肩→^000000 未装备";
+	set @zbw4a$,"^5000A0头下→^000000 未装备";
+	set @zbw5a$,"^5000A0头中→^000000 未装备";
+	set @zbw6a$,"^5000A0头上→^000000 未装备";
+	set @zbw7a$,"^5000A0衣服→^000000 未装备";
+	set @zbw8a$,"^5000A0左手→^000000 未装备";
+	set @zbw9a$,"^5000A0右手→^000000 未装备";
+	set @zbw10a$,"^5000A0时装头上→^000000 未装备";
+	set @zbw11a$,"^5000A0时装头中→^000000 未装备";
+	set @zbw12a$,"^5000A0时装头下→^000000 未装备";
+	set @zbw13a$,"^5000A0时装披肩→^000000 未装备";
+	set @zbw14a$,"^5000A0投掷物品→^000000 未装备";
+	set @zbw15a$,"^5000A0时装盔甲→^000000 未装备";
+	set @zbw16a$,"^5000A0时装武器→^000000 未装备";
+	set @zbw17a$,"^5000A0时装盾牌→^000000 未装备";
+	set @zbw18a$,"^5000A0时装鞋子→^000000 未装备";
+	set @zbw19a$,"^5000A0时装右饰→^000000 未装备";
+	set @zbw20a$,"^5000A0时装左饰→^000000 未装备";
+
+	if (getequipisequiped(0)!=0) { 
+	set @zbw0a$,"^5000A0左装→^000000 "+getequipname(0);
+	set @yesno0a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(0)>19) set @yesno0a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(1)!=0) { 
+	set @zbw1a$,"^5000A0右装→^000000 "+getequipname(1);
+	set @yesno1a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(1)>19) set @yesno1a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(2)!=0) { 
+	set @zbw2a$,"^5000A0鞋子→^000000 "+getequipname(2);
+	set @yesno2a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(2)>19) set @yesno2a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(3)!=0) { 
+	set @zbw3a$,"^5000A0披肩→^000000 "+getequipname(3);
+	set @yesno3a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(3)>19) set @yesno3a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(4)!=0) { 
+	set @zbw4a$,"^5000A0头下→^000000 "+getequipname(4);
+	set @yesno4a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(4)>19) set @yesno4a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(5)!=0) { 
+	set @zbw5a$,"^5000A0头中→^000000 "+getequipname(5);
+	set @yesno5a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(5)>19) set @yesno5a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(6)!=0) { 
+	set @zbw6a$,"^5000A0头上→^000000 "+getequipname(6);
+	set @yesno6a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(6)>19) set @yesno6a$," ^FF0000[不可精练]^000000"; }
+
+
+	if (getequipisequiped(7)!=0) { 
+	set @zbw7a$,"^5000A0衣服→^000000 "+getequipname(7);
+	set @yesno7a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(7)>19) set @yesno7a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(8)!=0) { 
+	set @zbw8a$,"^5000A0左手→^000000 "+getequipname(8);
+	set @yesno8a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(8)>19) set @yesno8a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(9)!=0) { 
+	set @zbw9a$,"^5000A0右手→^000000 "+getequipname(9);
+	set @yesno9a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(9)>19) set @yesno9a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(10)!=0) { 
+	set @zbw10a$,"^5000A0时装头上→^000000 "+getequipname(10);
+	set @yesno10a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(10)>19) set @yesno10a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(11)!=0) { 
+	set @zbw11a$,"^5000A0时装头中→^000000 "+getequipname(11);
+	set @yesno11a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(11)>29) set @yesno11a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(12)!=0) { 
+	set @zbw12a$,"^5000A0时装头下→^000000 "+getequipname(12);
+	set @yesno12a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(12)>19) set @yesno12a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(13)!=0) { 
+	set @zbw13a$,"^5000A0时装披肩→^000000 "+getequipname(13);
+	set @yesno13a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(13)>19) set @yesno13a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(14)!=0) { 
+	set @zbw14a$,"^5000A0投掷物品→^000000 "+getequipname(14);
+	set @yesno14a$," ^FF0000[不可精练]^000000";
+	if (getequiprefinerycnt(14)>19) set @yesno14a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(15)!=0) { 
+	set @zbw15a$,"^5000A0时装盔甲→^000000 "+getequipname(15);
+	set @yesno15a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(15)>19) set @yesno15a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(16)!=0) { 
+	set @zbw16a$,"^5000A0时装武器→^000000 "+getequipname(16);
+	set @yesno16a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(16)>19) set @yesno16a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(17)!=0) { 
+	set @zbw17a$,"^5000A0时装盾牌→^000000 "+getequipname(17);
+	set @yesno17a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(17)>19) set @yesno17a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(18)!=0) { 
+	set @zbw18a$,"^5000A0时装鞋子→^000000 "+getequipname(18);
+	set @yesno18a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(18)>19) set @yesno18a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(19)!=0) { 
+	set @zbw19a$,"^5000A0时装右饰→^000000 "+getequipname(19);
+	set @yesno19a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(19)>19) set @yesno19a$," ^FF0000[不可精练]^000000"; }
+
+	if (getequipisequiped(20)!=0) { 
+	set @zbw20a$,"^5000A0时装左饰→^000000 "+getequipname(20);
+	set @yesno20a$," ^0000FF[可精练]^000000";
+	if (getequiprefinerycnt(20)>19) set @yesno20a$," ^FF0000[不可精练]^000000"; }
+
+
+
+
+	set @part,select(@zbw0a$+@yesno0a$,@zbw1a$+@yesno1a$,@zbw2a$+@yesno2a$,@zbw3a$+@yesno3a$,@zbw4a$+@yesno4a$,@zbw5a$+@yesno5a$,@zbw6a$+@yesno6a$,@zbw7a$+@yesno7a$,@zbw8a$+@yesno8a$,@zbw9a$+@yesno9a$,@zbw10a$+@yesno10a$,@zbw11a$+@yesno11a$,@zbw12a$+@yesno12a$,@zbw13a$+@yesno13a$,@zbw14a$+@yesno14a$,@zbw15a$+@yesno15a$,@zbw16a$+@yesno16a$,@zbw17a$+@yesno17a$,@zbw18a$+@yesno18a$,@zbw19a$+@yesno19a$,@zbw20a$+@yesno20a$);
+
+	
+//=============================此处是修改赋魔部分 getequipid( 1 2 5 6 | 头 铠 披 鞋 )======================
+	set @part,@part-1;
+
+	if ( @part==0 )	{ set @zbid1,getequipid(0);
+	if (getequipisequiped(0)==0) goto Levent6;
+	}
+	if ( @part==1 )	{ set @zbid1,getequipid(1);
+	if (getequipisequiped(1)==0) goto Levent6;
+	}
+	if ( @part==2 )	{ set @zbid1,getequipid(2);
+	if (getequipisequiped(2)==0) goto Levent6;
+	}
+	if ( @part==3 ) { set @zbid1,getequipid(3);
+	if (getequipisequiped(3)==0) goto Levent6;
+	}
+	if ( @part==4 ) { set @zbid1,getequipid(4);
+	if (getequipisequiped(4)==0) goto Levent6;
+	}
+	if ( @part==5 ) { set @zbid1,getequipid(5);
+	if (getequipisequiped(5)==0) goto Levent6;
+	}
+	if ( @part==6 ) { set @zbid1,getequipid(6);
+	if (getequipisequiped(6)==0) goto Levent6;
+	}
+	if ( @part==7 ) { set @zbid1,getequipid(7);
+	if (getequipisequiped(7)==0) goto Levent6;
+	}
+	if ( @part==8 ) { set @zbid1,getequipid(8);
+	if (getequipisequiped(8)==0) goto Levent6;
+	}
+	if ( @part==9 ) { set @zbid1,getequipid(9);
+	if (getequipisequiped(9)==0) goto Levent6;
+	}
+	if ( @part==10 ) { set @zbid1,getequipid(10);
+	if (getequipisequiped(10)==0) goto Levent6;
+	}
+	if ( @part==11 ) { set @zbid1,getequipid(11);
+	if (getequipisequiped(11)==0) goto Levent6;
+	}
+	if ( @part==12 ) { set @zbid1,getequipid(12);
+	if (getequipisequiped(12)==0) goto Levent6;
+	}
+	if ( @part==13 ) { set @zbid1,getequipid(13);
+	if (getequipisequiped(13)==0) goto Levent6;
+	}
+	if ( @part==14 ) {
+	mes "[高级精练师]";
+	mes "该物品不可精练";
+	close;
+	}
+	if ( @part==15 ) { set @zbid1,getequipid(15);
+	if (getequipisequiped(15)==0) goto Levent6;
+	}
+	if ( @part==16 ) { set @zbid1,getequipid(16);
+	if (getequipisequiped(16)==0) goto Levent6;
+	}
+	if ( @part==17 ) { set @zbid1,getequipid(17);
+	if (getequipisequiped(17)==0) goto Levent6;
+	}
+	if ( @part==18 ) { set @zbid1,getequipid(18);
+	if (getequipisequiped(18)==0) goto Levent6;
+	}
+	if ( @part==19 ) { set @zbid1,getequipid(19);
+	if (getequipisequiped(19)==0) goto Levent6;
+	}
+	if ( @part==20 ) { set @zbid1,getequipid(20);
+	if (getequipisequiped(20)==0) goto Levent6;
+	}
+
+
+//================================
+	set @zbid2,getequiprefinerycnt(@part);
+	set @zbid3,getequipcardid(@part,0);
+	set @zbid4,getequipcardid(@part,1);
+	set @zbid5,getequipcardid(@part,2);
+//保存精练前数据↑
+	mes "[精练师]";
+	mes "你确定要将 [^FF0000"+getitemname(@zbid1)+"^000000] 精练吗？";
+	next;
+	menu "确定精练",-;
+	if (zeny<$@fuzenya) goto Levent1;
+	if (getequiprefinerycnt(@part)>29) goto Levent2;
+
+	set zeny,zeny-$@fuzenya;
+
+	successrefitem @part;
+
+	mes "[高级精练师]";
+	mes "恭喜你的装备 [^FF0000"+getitemname(@zbid1)+"^000000] 精练成功！";
+cutin "wish_maiden11",255;
+	close;
+
+Levent1:
+	mes "[高级精练师]";
+	mes "你身上的金钱不足，请准备好再来！";
+	close;
+
+Levent2:
+	mes "[高级精练师]";
+	mes "已经到精练最大值了！";
+	close;
+
+
+
+
+Levent6:
+	mes "[高级精练师]";
+	mes "未发现装备";
+	close;
+
+
+close;end;
+
+
+
+
+}

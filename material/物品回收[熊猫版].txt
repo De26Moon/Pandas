@@ -1,0 +1,52 @@
+// =================================================================
+// 名称:  物品回收[ 定制请联系 ]
+// 版本:  -
+// 适用:  pandas|bra
+// ---------------------------------------------------------------------------------------------------------------
+// 说明:  转载请保留所有信息
+//	   如有BUG请联系QQ191279750
+// ---------------------------------------------------------------------------------------------------------------
+prontera,161,112,5	script	物品回收#test	96,{
+
+	disable_items;
+	mes "你想要做什么呢？";
+	.@s = select("回收","考虑下");
+	if(.@s != 1) close;
+	callshop "test_shop", 2;
+	npcshopattach "test_shop";
+	end;
+	
+	
+OnSellItem:
+
+	for(.@i=0;.@i<getarraysize(@sold_quantity);.@i++){
+		delitem @sold_nameid[.@i],@sold_quantity[.@i];
+		.@item_id = @sold_nameid[.@i];
+		.@item_num = @sold_quantity[.@i];
+		.@idx = inarray(.sell_item_id1, .@item_id);
+		if(.@idx != -1){
+			getitem .reward_item_id[.@idx], .@item_num *  .reward_item_num[.@idx];
+		}
+		.@idx = inarray(.sell_item_id2, .@item_id);
+		if(.@idx != -1){
+			.@point = .@item_num * .reward_item_point[.@idx];
+			#CASHPOINTS += .@point;
+			dispbottom "CASH增加了"+.@point+"点.";
+		}
+	}
+	end;
+	
+	
+	
+OnInit:
+	// 给道具
+	setarray .sell_item_id1[0],   505, 506, 507;
+	setarray .reward_item_id[0], 678, 679, 680;
+	setarray .reward_item_num[0],  1,   2,   3;
+	// 给CASH
+	setarray .sell_item_id2[0],   501, 502, 503;	
+	setarray .reward_item_point[0],  1,   2,   3;
+	end;
+	
+}
+-	shop	test_shop	-1,512:-1

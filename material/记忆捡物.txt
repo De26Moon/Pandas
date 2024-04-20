@@ -1,0 +1,103 @@
+/*=================================================================
+
+	做着玩的脚本
+	适用：pandas
+	作者：千歌
+
+===================================================================*/
+
+//---------------------脚本主体------------------------------------
+
+-	script	jiyijianwu	-1,{
+OnPCLoginEvent:
+	//重置函数
+	if(getarraysize(alootname$[0])!=10)
+		setarray alootname$[0],"0","0","0","0","0","0","0","0","0","0";
+	//setarray alootid1-10[0];
+	for(.@i = 1;.@i < 11; .@i++){
+		if(getarraysize(getd("alootid"+.@i+"[0]")) == 0)
+			setarray getd("alootid"+.@i+"[0]"),0,0,0,0,0,0,0,0,0,0;
+	}
+	
+	if(aloot > 0){
+		for(.@i = 0; .@i < getarraysize(getd("alootid"+aloot+"[0]")); .@i++){
+			if(getd("alootid"+aloot+"["+.@i+"]") == 0)
+				continue;
+			atcommand "@alootid +" + getd("alootid"+aloot+"["+.@i+"]");
+		}
+	}
+}
+
+function	script	记忆捡物	{
+	mes "[记忆捡物]";
+
+	
+	for(.@i=0;.@i<10;.@i++){ //设置选项菜单.@menu$
+		.@menu$ = .@menu$ + (.@i+1) +". ["+(alootname$[.@i]=="0"?"^aaaaaa尚未命名":"^0000ff"+alootname$[.@i])+"^000000]"+(aloot==.@i+1?" [^0000ff套用中^000000]":" [^aaaaaa尚未套用^000000]");
+		set .@menu$, .@menu$+":";
+	}
+	.a = select(.@menu$);
+	
+OnSetAlootId:
+	.@menu2$ = "^0000ff进行套用^000000:命名^FF0000"+.a+"^000000组["+(alootname$[.a-1]=="0"?"^aaaaaa尚未命名":"^0000ff"+alootname$[.a-1])+"^000000]:^FF0000清空列表^000000:";
+	for(.@i=0;.@i<10;.@i++){ //设置选项菜单.@menu2$
+		//debugmes ""+getd("alootid"+.a+"["+.@i+"]");
+		.@menu2$ = .@menu2$ + (.@i+1)+". "+(getd("alootid"+.a+"["+.@i+"]")!= 0?getitemname(getd("alootid"+.a+"["+.@i+"]"))+"#"+(getd("alootid"+.a+"["+.@i+"]")):"^aaaaaa尚未设定道具^000000");
+		set .@menu2$, .@menu2$+":";
+	}
+	.b = select(.@menu2$);
+	if(.b == 1){
+		aloot = .a;
+		clear;
+		mes "[记忆捡物]";
+		mes "第^ff0000"+.a+"^000000组套用完成";
+		mes "下次登入时自动套用";
+		atcommand "@alootid reset";
+		for(.@i = 0; .@i < getarraysize(getd("alootid"+aloot+"[0]")); .@i++){
+			if(getd("alootid"+aloot+"["+.@i+"]") == 0)
+				continue;
+			atcommand "@alootid +" + getd("alootid"+aloot+"["+.@i+"]");
+		}
+		end;
+	}
+	else if(.b == 2){
+		clear;
+		mes "[记忆捡物]";
+		mes "第"+.a+"组当前名称["+(alootname$[.a-1]=="0"?"^aaaaaa尚未命名":"^0000ff"+alootname$[.a-1])+"^000000]";
+		mes "请输入要命名的名称(0,取消)";
+		mes "^ff0000限制最大字符 5 字符";
+		input alootname$[.a-1],1,6;
+		mes "已命名为[^0000ff"+alootname$[.a-1]+"^000000]";
+		next;
+		callfunc "记忆捡物";
+	}
+	else if(.b == 3){
+		mes "确定清空列表吗?";
+		switch(select("取消", "确定")){
+			case 1:
+				end;
+			case 2:
+				setarray getd("alootid"+.a+"[0]"),0,0,0,0,0,0,0,0,0,0;
+				mes "列表已清空";
+				end;
+		}
+	}
+	else {
+		clear;
+		mes "[记忆捡物]";
+		mes "设定第^FF0000"+.a+"^000000组 - 第^0000FF"+(.b-3)+"^000000个物品";
+		mes "输入物品编号 (0,取消)";
+		mes "输入1表示删除单项目";
+		mes "查询建议: 《幻想厅》";
+		input .@id;
+		if (getitemname(.@id) == "null" ||inarray(getd("alootid"+.a+"[0]"),.@id)!=-1){
+			clear;
+			mes ""+getitemname(.@id)+"#"+.@id;
+			mes "不存在或已存于清单,请重新输入.";
+		}
+		else 
+			setarray getd("alootid"+.a+"["+(.b-4)+"]"),.@id;
+		callsub OnSetAlootId;
+		end;
+	}
+}

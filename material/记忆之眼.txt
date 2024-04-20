@@ -1,0 +1,46 @@
+/*
+调用方式：	callfunc("sy_item_jyzy");
+	参数1：可传送次数(默认:10)
+	首次使用记录当前位置,以后使用会传送到记录的位置.
+道具要求：不可叠加
+*/
+function	script	sy_item_jyzy	{
+	.@id = @useitem_idx;
+	getmapxy(.@map$,.@x,.@y);
+	if(strpos(.@map$,"#") != -1){
+		dispbottom "此处空间不稳定,无法使用记忆之眼";
+		end;
+	}
+	.@m = getinventoryinfo(.@id,17);
+	if(!.@m){
+		mes "是否在当前位置放置空间信标.";
+		if(prompt("放置:取消") == 1){
+			monster .@map$,@x,@y,"",2536,1;
+			.@gid = $@mobid[0];
+			getunitdata .@gid,.@mobsx;
+			.@m = .@mobsx[5];
+			unitkill .@gid;
+			setinventoryinfo(.@id,17,.@m);
+			setinventoryinfo(.@id,18,.@x);
+			setinventoryinfo(.@id,19,.@y);
+			setinventoryinfo(.@id,20,getarg(0,10));
+			clear;
+			mes "空间信标已放置.";
+			mes "再次使用记忆之眼将返回信标位置";
+		}
+	}else{
+		.@x = getinventoryinfo(.@id,18);
+		.@y = getinventoryinfo(.@id,19);
+		.@c = getinventoryinfo(.@id,20);
+		warp mapid2name(.@m),.@x,.@y;
+		.@c --;
+		if(.@c){
+			setinventoryinfo(.@id,20,.@c);
+			dispbottom "[记忆之眼]: 剩余传送次数 "+.@c;
+		}else{
+			delitemidx .@id,1;
+			dispbottom "[记忆之眼]: 能量消耗殆尽,记忆之眼消失";
+		}
+	}
+end;
+}

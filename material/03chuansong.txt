@@ -1,0 +1,965 @@
+
+prontera.gat,146,104,6	script	传送石头#a	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+morocc.gat,166,97,4	script	传送石头#b	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+geffen.gat,126,62,8	script	传送石头#c	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+payon.gat,192,104,4	script	传送石头#d	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+alberta.gat,190,135,4	script	传送石头#e	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+izlude.gat,130,100,4	script	传送石头#f	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+aldebaran.gat,145,116,6	script	传送石头#g	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+xmas.gat,159,111,6	script	传送石头#h	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+comodo.gat,192,150,6	script	传送石头#i	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+yuno.gat,150,187,6	script	传送石头#j	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+amatsu.gat,193,91,6	script	传送石头#k	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+gonryun.gat,157,122,6	script	传送石头#l	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+umbala.gat,126,136,4	script	传送石头#m	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+niflheim.gat,23,159,6	script	传送石头#n	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+louyang.gat,226,60,6	script	传送石头#o	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+jawaii.gat,225,204,6	script	传送石头#p	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+ayothaya.gat,214,192,6	script	传送石头#q	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+einbroch.gat,57,203,6	script	传送石头#r	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+lighthalzen.gat,163,102,4	script	传送石头#s	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+einbech.gat,181,129,4	script	传送石头#t	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+hugel.gat,102,150,4	script	传送石头#u	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+rachel.gat,132,116,4	script	传送石头#v	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+veins.gat,221,128,4	script	传送石头#y	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+malangdo.gat,175,135,4	script	传送石头#a1	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+malaya.gat,232,202,4	script	传送石头#a2	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+manuk.gat,279,198,4	script	传送石头#a3	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+mora.gat,107,115,4	script	传送石头#a4	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+moscovia.gat,221,189,4	script	传送石头#a5	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+splendide.gat,190,187,4	script	传送石头#a6	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+brasilis.gat,195,221,4	script	传送石头#a7	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+dewata.gat,197,184,4	script	传送石头#a8	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+dicastes01.gat,137,117,4	script	传送石头#a9	406,5,5,{ callfunc "sunmm"; OnTouch: callfunc "sunmmhpsp"; }
+
+
+function	script	sunmmhpsp	{  sc_end SC_STONE; sc_end SC_FREEZE; sc_end SC_STUN; sc_end SC_SLEEP; sc_end SC_POISON; sc_end SC_CURSE; sc_end SC_SILENCE; sc_end SC_CONFUSION; sc_end SC_BLIND; sc_end SC_BLEEDING; percentheal 100,100; emotion 3; end; }
+
+function	script	sunmm	{
+
+// --------------------------------------------------
+//	Main Menu:
+// --------------------------------------------------
+
+	mes"欢迎[" + strcharinfo(0)+((Sex==1)?"]先生":"]小姐");
+	mes"现在是:"+gettimestr("%Y年%m月%d日 %H:%M:%S",50);
+	mes"请问你需要什么样的服务？";
+	next;
+
+
+menu	"最后一次传送点 ^777777["+lastwarp$+"]^000000",-,
+    	" [城镇]",Towns,
+    	" [野外]",Fields,
+    	" [洞穴]",Dungeons,
+    	" [公会城堡]",Castles,
+    	" [副本]",Instances,
+    	" [特殊地区]",Special,
+    	" [幻影地区]",ShadowZone;
+
+	if (lastwarp$ == "")
+		message strcharinfo(0),"您还未去过任何地方.";
+	else
+		warp lastwarp$,lastwarpx,lastwarpy;
+	end;
+
+
+function Go {
+	set lastwarp$, getarg(0);
+	set lastwarpx, getarg(1,0);
+	set lastwarpy, getarg(2,0);
+	warp getarg(0),getarg(1,0),getarg(2,0);
+	end;
+}
+function Disp {
+	if (getargcount() < 3)
+		set @menu$, getarg(0);
+	else {
+		set @menu$,"";
+		for (set .@i,getarg(1); .@i<=getarg(2); set .@i,.@i+1)
+			set @menu$, @menu$+getarg(0)+" "+.@i+":";
+	}
+	return;
+}
+function Pick {
+	set .@warp_block,@warp_block;
+	set @warp_block,0;
+	set .@select, select(@menu$);
+	if (getarg(0) == "") {
+		set .@i, .@select;
+		set .@map$, getarg(.@i);
+	} else {
+		set .@i, .@select-getarg(1,0);
+		set .@map$, getarg(0)+((.@i<10)?"0":"")+.@i;
+	}
+	if (.@warp_block & (1<<.@select)) {
+		message strcharinfo(0),"This map is not enabled in "+((checkre(0))?"":"Pre-")+"Renewal.";
+		end;
+	}
+	set .@x, @c[.@i*2];
+	set .@y, @c[.@i*2+1];
+	deletearray @c[0],getarraysize(@c);
+	Go(.@map$,.@x,.@y);
+}
+function Restrict {
+	if ((getarg(0) == "RE" && !checkre(0)) || (getarg(0) == "Pre-RE" && checkre(0))) {
+		if (getarg(1,0)) {
+			set @warp_block,0;
+			for (set .@i,1; .@i<getargcount(); set .@i,.@i+1)
+				set @warp_block, @warp_block | (1<<getarg(.@i));
+		} else {
+			message strcharinfo(0),"This map is not enabled in "+((checkre(0))?"":"Pre-")+"Renewal.";
+			end;
+		}
+	}
+	return;
+}
+
+// --城镇-------------------------------------------
+	Towns:
+// --------------------------------------------------
+switch(select("卢恩米德加兹王国 首都 普隆德拉:沙漠之都 梦罗克:魔法之都 吉芬:山岳之都 斐扬:港口之都 艾尔贝塔:卫星都市 依斯鲁得岛:运河之都 艾尔帕兰:白雪村落 姜饼城:海边之都 克魔岛:修发兹共和国 首都 朱诺:天水之国 樱花城 天津:神仙之岛 昆仑:雨檀族村落 汶巴拉:死者国家 尼芙菲姆:龙之城 洛阳:克雷斯汉姆古城:蜜月岛 爪哇咿:泰国 哎哟泰雅:钢铁之都 艾音布罗克:企业之都 里希塔乐镇:采矿村落 艾音贝赫:田园都市 毁葛:阿鲁娜配兹教国 首都 拉赫:峡谷村子 伯仁斯:俄罗斯 莫斯科比亚:米德加尔特联合驻地:矿山村庄 马努克:辉煌领域中心:巴西 巴西利亚:沙帕首都 埃迪斯特斯:草精族 穆拉村:德瓦塔岛村:喵喵岛:马来亚港:精灵之都 艾卡拉奇:港口首市  罗札纳:考古前哨基地:洛克理奇岩岭:")) {
+case 1: Go("prontera",156,116);end;
+case 2: Go("morocc",160,90);end;
+case 3: Go("geffen",120,70);end;
+case 4: Go("payon",180,100);end;
+case 5: Go("alberta",191,141);end;
+case 6: Go("izlude",130,100);end;
+case 7: Go("aldebaran",146,115);end;
+case 8: Go("xmas",147,134);end;
+case 9: Go("comodo",184,153);end;
+case 10: Go("yuno",158,81);end;
+case 11: Go("amatsu",195,91);end;
+case 12: Go("gonryun",159,113);end;
+case 13: Go("umbala",126,132);end;
+case 14: Go("niflheim",204,175);end;
+case 15: Go("louyang",214,102);end;
+case 16: Go("glast_01",202,270);end;
+case 17: Go("jawaii",221,215);end;
+case 18: Go("ayothaya",207,168);end;
+case 19: Go("einbroch",158,313);end;
+case 20: Go("lighthalzen",160,95);end;
+case 21: Go("einbech",103,197);end;
+case 22: Go("hugel",84,132);end;
+case 23: Go("rache",132,114);end;
+case 24: Go("veins",216,124);end;
+case 25: Go("moscovia",224,192);end;
+case 26: Go("mid_camp",210,288);end;
+case 27: Go("manuk",299,186);end;
+case 28: Go("splendide",191,182);end;
+case 29: Go("brasilis",196,302);end;
+case 30: Go("dicastes01",197,187);end;
+case 31: Go("mora",110,100);end;
+case 32: Go("dewata",199,182);end;
+case 33: Go("malangdo",180,136);end;
+case 34: Go("malaya",213,205);end;
+case 35: Go("eclage",293,303);end;
+case 36: Go("lasagna",206,305);end;
+case 37: Go("verus04",117,253);end;
+case 38: Go("harboro1",297,112);end;
+}	end;
+
+
+// ---野外-------------------------------------------
+	Fields:
+// --------------------------------------------------
+
+switch(select("克魔岛森林:妙勒尼山脉:普隆德拉:毁葛原野:吉芬:苏克拉特沙漠:斐扬树林:朱诺原野:里希塔乐镇:艾音布罗克:哎哟泰雅:尼鞭菲姆(鬼村):汶巴拉 森林:昆仑原野:天地树叶树干:樱花城原野:姜饼城原野:龙之城原野:拉赫平原:伯仁斯:莫斯科比亚草原:米德加尔特联合驻地:马努克旷野:辉煌领域旷野:巴西平原:卡米达山麓:彩虹桥领域:德瓦他原野:艾卡拉奇平原:马拉亚森林:勒沙尼亚原野:")) {
+
+case 1://克魔岛森林
+switch(select("巴不其卡森林1:克克魔海边 2:基乃依沼泽地3:克克魔海边4:巴不其卡森林边界5:要塞都市山特乐曼(西边)6:发乐斯灯塔岛7:要塞都市山特乐曼(东边)8:要塞都市山特乐曼(南边)9:")) {
+case 1: Go("cmd_fild01",0,0);end;
+case 2: Go("cmd_fild02",0,0);end;
+case 3: Go("cmd_fild03",0,0);end;
+case 4: Go("cmd_fild04",0,0);end;
+case 5: Go("cmd_fild05",0,0);end;
+case 6: Go("cmd_fild06",0,0);end;
+case 7: Go("cmd_fild07",0,0);end;
+case 8: Go("cmd_fild08",0,0);end;
+case 9: Go("cmd_fild09",0,0);end;
+}end;
+
+case 2://妙勒尼山脉
+switch(select("妙勒尼山脉1:妙勒尼山脉2:妙勒尼山脉3:妙勒尼山脉4(蜂后):妙勒尼山脉5:妙勒尼山脉6:妙勒尼山脉7:妙勒尼山脉8:妙勒尼山脉9:妙勒尼山脉10:妙勒尼山脉11:")) {
+case 1: Go("mjolnir_01",0,0);end;
+case 2: Go("mjolnir_02",0,0);end;
+case 3: Go("mjolnir_03",0,0);end;
+case 4: Go("mjolnir_04",0,0);end;
+case 5: Go("mjolnir_05",0,0);end;
+case 6: Go("mjolnir_06",0,0);end;
+case 7: Go("mjolnir_07",0,0);end;
+case 8: Go("mjolnir_08",0,0);end;
+case 9: Go("mjolnir_09",0,0);end;
+case 10: Go("mjolnir_10",0,0);end;
+case 11: Go("mjolnir_11",0,0);end;
+}end;
+
+case 3://普隆德拉
+switch(select("普隆德拉区域1:普隆德拉区域2:普隆德拉区域3:普隆德拉区域4:普隆德拉区域5:普隆德拉区域6:普隆德拉区域7:普隆德拉区域8:普隆德拉区域9:普隆德拉区域10:普隆德拉区域11:普隆德拉区域12:圣卡毕利那修道院:")) {
+case 1: Go("prt_fild00",0,0);end;
+case 2: Go("prt_fild01",0,0);end;
+case 3: Go("prt_fild02",0,0);end;
+case 4: Go("prt_fild03",0,0);end;
+case 5: Go("prt_fild04",0,0);end;
+case 6: Go("prt_fild05",0,0);end;
+case 7: Go("prt_fild06",0,0);end;
+case 8: Go("prt_fild07",0,0);end;
+case 9: Go("prt_fild08",0,0);end;
+case 10: Go("prt_fild09",0,0);end;
+case 11: Go("prt_fild10",0,0);end;
+case 12: Go("prt_fild11",0,0);end;
+case 13: Go("prt_monk",0,0);end;
+}end;
+
+case 4://毁葛原野 达纳托斯之塔
+switch(select("毁葛原野1:毁葛原野2:毁葛原野3:毁葛原野4:毁葛原野5:毁葛原野6:毁葛原野7:")) {
+case 1: Go("hu_fild01",0,0);end;
+case 2: Go("hu_fild02",0,0);end;
+case 3: Go("hu_fild03",0,0);end;
+case 4: Go("hu_fild04",0,0);end;
+case 5: Go("hu_fild05",0,0);end;
+case 6: Go("hu_fild06",0,0);end;
+case 7: Go("hu_fild07",0,0);end;
+}end;
+
+case 5://吉芬
+switch(select("吉芬区域1:吉芬区域2:吉芬区域3:吉芬区域4:吉芬区域5:吉芬区域6:吉芬区域7:吉芬区域8:吉芬区域9:东边兽人村落10:吉芬区域11:克特森林12:吉芬区域13:西边兽人村落14:")) {
+case 1: Go("gef_fild00",0,0);end;
+case 2: Go("gef_fild01",0,0);end;
+case 3: Go("gef_fild02",0,0);end;
+case 4: Go("gef_fild03",0,0);end;
+case 5: Go("gef_fild04",0,0);end;
+case 6: Go("gef_fild05",0,0);end;
+case 7: Go("gef_fild06",0,0);end;
+case 8: Go("gef_fild07",0,0);end;
+case 9: Go("gef_fild08",0,0);end;
+case 10: Go("gef_fild09",0,0);end;
+case 11: Go("gef_fild10",0,0);end;
+case 12: Go("gef_fild11",0,0);end;
+case 13: Go("gef_fild12",0,0);end;
+case 14: Go("gef_fild13",0,0);end;
+}end;
+
+case 6://苏克拉特沙漠
+switch(select("沙漠营地:沙漠区域1:沙漠区域2:沙漠区域3:沙漠区域7:沙漠区域11:沙漠区域12:沙漠区域13:沙漠区域16:沙漠区域17(皮里恩):沙漠区域18:沙漠区域19:")) {
+case 1: Go("moc_ruins",0,0);end;
+case 2: Go("moc_fild01",0,0);end;
+case 3: Go("moc_fild02",0,0);end;
+case 4: Go("moc_fild03",0,0);end;
+case 5: Go("moc_fild07",0,0);end;
+case 6: Go("moc_fild11",0,0);end;
+case 7: Go("moc_fild12",0,0);end;
+case 8: Go("moc_fild13",0,0);end;
+case 9: Go("moc_fild16",0,0);end;
+case 10: Go("moc_fild17",0,0);end;
+case 11: Go("moc_fild18",0,0);end;
+case 12: Go("moc_fild19",0,0);end;
+}end;
+
+case 7://斐扬树林
+switch(select("斐扬树林1:斐扬树林2:斐扬树林3:斐扬树林4:斐扬树林5:斐扬树林6:斐扬树林7:斐扬树林8:斐扬树林9:斐扬树林10:斐扬树林11:")) {
+case 1: Go("pay_fild01",0,0);end;
+case 2: Go("pay_fild02",0,0);end;
+case 3: Go("pay_fild03",0,0);end;
+case 4: Go("pay_fild04",0,0);end;
+case 5: Go("pay_fild05",0,0);end;
+case 6: Go("pay_fild06",0,0);end;
+case 7: Go("pay_fild07",0,0);end;
+case 8: Go("pay_fild08",0,0);end;
+case 9: Go("pay_fild09",0,0);end;
+case 10: Go("pay_fild10",0,0);end;
+case 11: Go("pay_fild11",0,0);end;
+}end;
+
+case 8://朱诺原野
+switch(select("国界检查站1:吉海伊洛别墅2:尔迈斯瀑雷德3:尔迈斯瀑雷德4:尔迈斯瀑雷德5:尔迈斯瀑雷德6:尔迈斯峡谷(深渊的峡谷)7:启海伊洛学院8:警备队露营地9:朱诺原野10:朱诺原野11:国界检查站12:")) {
+case 1: Go("yuno_fild01",0,0);end;
+case 2: Go("yuno_fild02",0,0);end;
+case 3: Go("yuno_fild03",0,0);end;
+case 4: Go("yuno_fild04",0,0);end;
+case 5: Go("yuno_fild05",0,0);end;
+case 6: Go("yuno_fild06",0,0);end;
+case 7: Go("yuno_fild07",0,0);end;
+case 8: Go("yuno_fild08",0,0);end;
+case 9: Go("yuno_fild09",0,0);end;
+case 10: Go("yuno_fild10",0,0);end;
+case 11: Go("yuno_fild11",0,0);end;
+case 12: Go("yuno_fild12",0,0);end;
+}end;
+
+case 9://里希塔乐镇
+switch(select("里希塔乐镇原野1:死神的峡谷2:里希塔乐镇原野3:")) {
+case 1: Go("lhz_fild01",0,0);end;
+case 2: Go("lhz_fild02",0,0);end;
+case 3: Go("lhz_fild03",0,0);end;
+}end;
+
+case 10://艾音布罗克
+switch(select("艾音布罗克原野1:艾音布罗克原野2:艾音布罗克原野3:艾音布罗克原野4:艾音布罗克原野5:艾音布罗克原野6:艾音布罗克原野7:艾音布罗克原野8:艾音布罗克原野9:艾音布罗克原野10:")) {
+case 1: Go("ein_fild01",0,0);end;
+case 2: Go("ein_fild02",0,0);end;
+case 3: Go("ein_fild03",0,0);end;
+case 4: Go("ein_fild04",0,0);end;
+case 5: Go("ein_fild05",0,0);end;
+case 6: Go("ein_fild06",0,0);end;
+case 7: Go("ein_fild07",0,0);end;
+case 8: Go("ein_fild08",0,0);end;
+case 9: Go("ein_fild09",0,0);end;
+case 10: Go("ein_fild10",0,0);end;
+}end;
+
+case 11://哎哟泰雅
+switch(select("哎哟泰雅原野1:哎哟泰雅原野1:")) {
+case 1: Go("ayo_fild01",0,0);end;
+case 2: Go("ayo_fild02",0,0);end;
+}end;
+
+case 12://尼鞭菲姆(鬼村)
+switch(select("尼芙菲姆偏远村落1:鬼的峡谷2:")) {
+case 1: Go("nif_fild01",0,0);end;
+case 2: Go("nif_fild01",0,0);end;
+}end;
+
+case 13://汶巴拉 森林
+switch(select("噜噜卡森林1:沪家森林2:卡拉拉森林3:沪家丛林4:")) {
+case 1: Go("un_fild01",0,0);end;
+case 2: Go("un_fild02",0,0);end;
+case 3: Go("un_fild03",0,0);end;
+case 4: Go("un_fild04",0,0);end;
+}end;
+
+case 14://昆仑原野
+switch(select("昆仑原野:")) {
+case 1: Go("gon_fild01",0,0);end;
+}end;
+
+case 15://天地树叶树干
+switch(select("禾贝勒开米勒之岛:")) {
+case 1: Go("yggdrasil01",0,0);end;
+}end;
+
+case 16://樱花城原野
+switch(select("樱花城原野:")) {
+case 1: Go("ama_fild01",0,0);end;
+}end;
+
+case 17://姜饼城原野
+switch(select("姜饼城原野:")) {
+case 1: Go("xmas_fild01",0,0);end;
+}end;
+
+case 18://龙之城原野
+switch(select("龙之城原野:")) {
+case 1: Go("lou_fild01",0,0);end;
+}end;
+
+case 19://拉赫平原
+switch(select("奥顿拉草原1:奥兹峡谷2:伊达平原3:奥顿拉草原4:奥顿拉草原5:珀尔特鲁纳6:奥兹峡谷7:伊达平原8:奥顿拉草原9:奥兹峡谷10:伊达旷野11:伊达旷野12:眼泪的海岸13:")) {
+case 1: Go("ra_fild01",0,0);end;
+case 2: Go("ra_fild02",0,0);end;
+case 3: Go("ra_fild03",0,0);end;
+case 4: Go("ra_fild04",0,0);end;
+case 5: Go("ra_fild05",0,0);end;
+case 6: Go("ra_fild06",0,0);end;
+case 7: Go("ra_fild07",0,0);end;
+case 8: Go("ra_fild08",0,0);end;
+case 9: Go("ra_fild09",0,0);end;
+case 10: Go("ra_fild10",0,0);end;
+case 11: Go("ra_fild11",0,0);end;
+case 12: Go("ra_fild12",0,0);end;
+case 13: Go("ra_fild13",0,0);end;
+}end;
+
+case 20://伯仁斯
+switch(select("伯仁斯旷野1:伯仁斯旷野2:伯仁斯旷野3:伯仁斯旷野4:伯仁斯旷野5:伯仁斯旷野6:伯仁斯旷野7:")) {
+case 1: Go("ve_fild01",0,0);end;
+case 2: Go("ve_fild02",0,0);end;
+case 3: Go("ve_fild03",0,0);end;
+case 4: Go("ve_fild04",0,0);end;
+case 5: Go("ve_fild05",0,0);end;
+case 6: Go("ve_fild06",0,0);end;
+case 7: Go("ve_fild07",0,0);end;
+}end;
+
+case 21://莫斯科比亚草原
+switch(select("海豚岛1:莫斯科比亚原野2:")) {
+case 1: Go("mosk_fild01",0,0);end;
+case 2: Go("mosk_fild02",0,0);end;
+}end;
+
+case 22://米德加尔特联合驻地
+switch(select("米德加尔特联合驻地1:次元空间2:次元空间3:次元裂缝4:米德加尔特联合驻地5:米德加尔特联合驻地内部:")) {
+case 1: Go("moc_fild20",0,0);end;
+case 2: Go("moc_fild21",0,0);end;
+case 3: Go("moc_fild22",0,0);end;
+case 4: Go("moc_fild22b",0,0);end;
+case 5: Go("mid_camp",0,0);end;
+case 6: Go("mid_campin",0,0);end;
+}end;
+
+case 23://马努克旷野
+switch(select("马努克旷野1:马努克旷野2:马努克旷野3:")) {
+case 1: Go("man_fild01",0,0);end;
+case 2: Go("man_fild02",0,0);end;
+case 3: Go("man_fild03",0,0);end;
+}end;
+
+case 24://辉煌领域旷野
+switch(select("辉煌领域1:辉煌领域2:辉煌领域3:")) {
+case 1: Go("spl_fild01",0,0);end;
+case 2: Go("spl_fild02",0,0);end;
+case 3: Go("spl_fild03",0,0);end;
+}end;
+
+case 25://巴西平原
+switch(select("巴西利亚平原:")) {
+case 1: Go("bra_fild01",0,0);end;
+}end;
+
+case 26://卡米达山麓
+switch(select("布伦贝德约尔希森林:卡米达山麓1:卡米达山麓2:")) {
+case 1: Go("dicastes02",0,0);end;
+case 2: Go("dic_fild01",0,0);end;
+case 3: Go("dic_fild02",0,0);end;
+}end;
+
+case 27://彩虹桥领域
+switch(select("彩虹桥南部1:彩虹桥北部2:")) {
+case 1: Go("bif_fild01",0,0);end;
+case 2: Go("bif_fild02",0,0);end;
+}end;
+
+case 28://德瓦他原野
+switch(select("贾提部落:")) {
+case 1: Go("dew_fild01",0,0);end;
+}end;
+
+case 29://艾卡拉奇平原
+switch(select("鲜花盛开的土地:艾卡拉奇绕道:")) {
+case 1: Go("ecl_fild01",0,0);end;
+case 2: Go("ecl_hub01",0,0);end;
+}end;
+
+case 30://马拉亚森林
+switch(select("马拉亚森林:马拉亚森林:马拉亚运河口:")) {
+case 1: Go("ma_fild01",0,0);end;
+case 2: Go("ma_fild02",0,0);end;
+case 3: Go("ma_scene01",0,0);end;
+}end;
+
+
+case 31://勒沙尼亚原野
+switch(select("罗比奥平原岗亭:罗比奥森林:")) {
+case 1: Go("lasa_fild01",0,0);end;
+case 2: Go("lasa_fild02",0,0);end;
+}end;
+
+}end;
+
+
+
+
+// ----洞穴-------------------------------------------
+	Dungeons:
+// --------------------------------------------------
+switch(select("迷藏森林(北森):普隆德拉 地下水道:蚂蚁地狱 密穴:斐扬迷宫:吉芬塔 地下密穴:金字塔 迷宫:史芬克斯 密穴:艾尔帕兰 钟楼:兽人地下洞窟:海底洞窟:沉没之船:乌龟岛:克魔岛 洞穴:玩具工厂:昆仑洞穴:妙勒尼 废弃矿场:矿山 洞穴:古代神殿 迷宫:樱花城 迷宫:洛阳 古都王陵:克雷斯特汉姆古城:葛帔尼亚:莫斯科比亚森林:巴西瀑布里的洞穴:德瓦他 火山洞穴:诺可罗德溶洞:拉赫冰洞穴:优配擂斯 废墟:机械娃娃工厂:神殿圣域洞穴:奥丁神殿:达纳托斯之塔:图尔 火山 洞窟:深渊湖水 地下洞穴:尼德霍格洞穴:甲虫洞:无名岛:猫猫岛洞穴:般滚勾特医院:彩虹桥高塔:龙之巢穴（猫猫洞）:考古地区:洛克理奇岩岭  区域:生体试验 研究所:公会地下迷宫:")) {
+
+case 1://迷藏森林(北森)
+switch(select("迷藏森林 1层(10):迷藏森林 2层(70):迷藏森林 3层(90)巴风特:")) {
+case 1: Go("prt_maze01",0,0);end;
+case 2: Go("prt_maze02",0,0);end;
+case 3: Go("prt_maze03",0,0);end;
+}end;
+
+case 2://普隆德拉 地下水道
+switch(select("普隆德拉下水道 1层(20):普隆德拉下水道 2层(25):普隆德拉下水道 3层(30):普隆德拉下水道 4层(30)黄金虫:")) {
+case 1: Go("prt_sewb1",0,0);end;
+case 2: Go("prt_sewb2",0,0);end;
+case 3: Go("prt_sewb3",0,0);end;
+case 4: Go("prt_sewb4",0,0);end;
+}end;
+
+case 3://蚂蚁地狱 密穴
+switch(select("蚂蚁地狱 1层(30):蚂蚁地狱 2层(30)蚁后:")) {
+case 1: Go("anthell01",0,0);end;
+case 2: Go("anthell02",0,0);end;
+}end;
+
+case 4://斐扬迷宫
+switch(select("斐扬洞窟 1层(30):斐扬洞窟 2层(50):斐扬洞窟 3层(60):斐扬洞窟 4层(65):斐扬洞窟 5层(70)月夜猫:")) {
+case 1: Go("pay_dun00",0,0);end;
+case 2: Go("pay_dun01",0,0);end;
+case 3: Go("pay_dun02",0,0);end;
+case 4: Go("pay_dun03",0,0);end;
+case 5: Go("pay_dun04",0,0);end;
+}end;
+
+case 5://吉芬塔 地下密穴
+switch(select("吉芬地下密穴 1层(60):吉芬地下密穴 2层(60)德古拉男爵:吉芬地下密穴 3层(90)死灵:吉芬地下密穴 4层(85)黑暗祭司:")) {
+case 1: Go("gef_dun00",0,0);end;
+case 2: Go("gef_dun01",0,0);end;
+case 3: Go("gef_dun02",0,0);end;
+case 4: Go("gef_dun03",0,0);end;
+}end;
+
+case 6://金字塔 迷宫
+switch(select("金字塔地上 1层(25):金字塔地上 2层(55):金字塔地上 3层(55):金字塔地上 4层(60)俄塞里斯:金字塔地下 1层(60):金字塔地下 2层(110):金字塔 梦魇(110):")) {
+case 1: Go("moc_pryd01",0,0);end;
+case 2: Go("moc_pryd02",0,0);end;
+case 3: Go("moc_pryd03",0,0);end;
+case 4: Go("moc_pryd04",0,0);end;
+case 5: Go("moc_pryd05",0,0);end;
+case 6: Go("moc_pryd06",0,0);end;
+case 7: Go("moc_prydn2",0,0);end;
+
+
+
+
+}end;
+
+case 7://史芬克斯 密穴
+switch(select("史芬克斯 1层(70):史芬克斯 2层(70):史芬克斯 3层(80):史芬克斯 4层(100):史芬克斯 5层(100)法老王:")) {
+case 1: Go("in_sphinx1",0,0);end;
+case 2: Go("in_sphinx2",0,0);end;
+case 3: Go("in_sphinx3",0,0);end;
+case 4: Go("in_sphinx4",0,0);end;
+case 5: Go("in_sphinx5",0,0);end;
+}end;
+
+case 8://艾尔帕兰 钟楼
+switch(select("钟塔地上 1层(75):钟塔地上 2层(80):钟塔地上 3层(85):钟塔地上 4层(90):钟塔地下 1层(105):钟塔地下 2层(80):钟塔地下 3层(85):钟塔地下 4层(85):时间扭曲的钟楼(165)时间管理人:")) {
+case 1: Go("c_tower1",0,0);end;
+case 2: Go("c_tower2",0,0);end;
+case 3: Go("c_tower3",0,0);end;
+case 4: Go("c_tower4",0,0);end;
+case 5: Go("alde_dun01",0,0);end;
+case 6: Go("alde_dun02",0,0);end;
+case 7: Go("alde_dun03",0,0);end;
+case 8: Go("alde_dun04",0,0);end;
+case 9: Go("c_tower3_",0,0);end;
+}end;
+
+case 9://兽人地下洞窟
+switch(select("兽人地下洞窟 1层(50):兽人地下洞窟 2层(75):")) {
+case 1: Go("orcsdun01",0,0);end;
+case 2: Go("orcsdun02",0,0);end;
+}end;
+
+case 10://海底洞窟
+switch(select("海底洞窟 1层(40):海底洞窟 2层(45):海底洞窟 3层(50):海底洞窟 4层(55):海底洞窟 5层(60):海底洞窟 6层(110):")) {
+case 1: Go("iz_dun00",0,0);end;
+case 2: Go("iz_dun01",0,0);end;
+case 3: Go("iz_dun02",0,0);end;
+case 4: Go("iz_dun03",0,0);end;
+case 5: Go("iz_dun04",0,0);end;
+case 6: Go("iz_dun05",0,0);end;
+}end;
+
+case 11://沉没之船
+switch(select("沉没之船 1楼(50):沉没之船 2楼(50)海盗之王:")) {
+case 1: Go("treasure01",0,0);end;
+case 2: Go("treasure02",0,0);end;
+}end;
+
+case 12://乌龟岛
+switch(select("乌龟岛表层(90):乌龟岛密穴 1层(95):乌龟岛密穴 2层(100):乌龟岛密穴 3层(100)乌龟将军:")) {
+case 1: Go("tur_dun01",0,0);end;
+case 2: Go("tur_dun02",0,0);end;
+case 3: Go("tur_dun03",0,0);end;
+case 4: Go("tur_dun04",0,0);end;
+}end;
+
+case 13://克魔岛 洞穴
+switch(select("西边洞穴 加露(100):北边洞穴 卢安达(65):西边洞穴 马吾(45):")) {
+case 1: Go("beach_dun",0,0);end;
+case 2: Go("beach_dun2",0,0);end;
+case 3: Go("beach_dun3",0,0);end;
+}end;
+
+case 14://玩具工厂
+switch(select("玩具工厂 1层(40):玩具工厂 2层(40)冰暴骑士:")) {
+case 1: Go("xmas_dun01",0,0);end;
+case 2: Go("xmas_dun02",0,0);end;
+}end;
+
+case 15://昆仑洞穴
+switch(select("昆仑洞穴 1层(90):昆仑洞穴 2层(95):昆仑洞穴 3层(95)墨蛇君:")) {
+case 1: Go("gon_dun01",0,0);end;
+case 2: Go("gon_dun02",0,0);end;
+case 3: Go("gon_dun03",0,0);end;
+}end;
+
+case 16://妙勒尼 废弃矿场
+switch(select("妙勒尼废弃矿场 1层(40):妙勒尼废弃矿场 2层(45):妙勒尼废弃矿场 3层(50):")) {
+case 1: Go("mjo_dun01",0,0);end;
+case 2: Go("mjo_dun02",0,0);end;
+case 3: Go("mjo_dun03",0,0);end;
+}end;
+
+case 17://矿山 洞穴
+switch(select("矿山洞穴 1层(90):矿山洞穴 2层(95)RSX-0806:矿山洞穴3层(175):")) {
+case 1: Go("ein_dun01",0,0);end;
+case 2: Go("ein_dun02",0,0);end;
+case 3: Go("ein_dun03",0,0);end;
+}end;
+
+case 18://古代神殿 迷宫
+switch(select("古代神殿迷宫 1层(60):古代神殿迷宫 2层(60)塔妮小姐:")) {
+case 1: Go("ayo_dun01",0,0);end;
+case 2: Go("ayo_dun02",0,0);end;
+}end;
+
+case 19://樱花城 迷宫
+switch(select("樱花迷宫 1层(85):樱花迷宫 2层(90):樱花迷宫 3层(95)元灵武士:")) {
+case 1: Go("ama_dun01",0,0);end;
+case 2: Go("ama_dun02",0,0);end;
+case 3: Go("ama_dun03",0,0);end;
+}end;
+
+case 20://洛阳 古都王陵
+switch(select("洛阳王陵 1层(80):洛阳王陵 2层(85):洛阳王陵 3层(85)白素贞:")) {
+case 1: Go("lou_dun01",0,0);end;
+case 2: Go("lou_dun02",0,0);end;
+case 3: Go("lou_dun03",0,0);end;
+}end;
+
+case 21://克雷斯特汉姆古城
+switch(select("修道院(80):地下公墓(95)暗黑之王:地上 1层(100):地上 2层(120):监狱 1层(95):监狱 2层(95):骑士团 1层(115):骑士团 2层(120):室内(90):楼梯密穴(80):古城下水道 1层(100):古城下水道 2层(100):古城下水道 3层(105):古城下水道 4层(110):地下洞窟 1层(105):地下洞窟 2层(105):噩梦地上 2层(150)梦魇巴风特:")) {
+case 1: Go("gl_church",0,0);end;
+case 2: Go("gl_chyard",0,0);end;
+case 3: Go("gl_cas01",0,0);end;
+case 4: Go("gl_cas02",0,0);end;
+case 5: Go("gl_prison",0,0);end;
+case 6: Go("gl_prison1",0,0);end;
+case 7: Go("gl_knt01",0,0);end;
+case 8: Go("gl_knt02",0,0);end;
+case 9: Go("gl_in01",0,0);end;
+case 10: Go("gl_step",0,0);end;
+case 11: Go("gl_sew01",0,0);end;
+case 12: Go("gl_sew02",0,0);end;
+case 13: Go("gl_sew03",0,0);end;
+case 14: Go("gl_sew04",0,0);end;
+case 15: Go("gl_dun01",0,0);end;
+case 16: Go("gl_dun02",0,0);end;
+case 17: Go("gl_cas02",0,0);end;
+}end;
+
+case 22://葛帔尼亚
+switch(select("葛帔尼亚 1层(115):葛帔尼亚 2层(115):葛帔尼亚 3层(120):葛帔尼亚 4层(120):")) {
+case 1: Go("gefenia01",0,0);end;
+case 2: Go("gefenia02",0,0);end;
+case 3: Go("gefenia03",0,0);end;
+case 4: Go("gefenia04",0,0);end;
+}end;
+
+case 23://莫斯科比亚森林
+switch(select("深渊森林洞穴 1层(80):深渊森林洞穴 2层(85):深渊森林洞穴 3层(90):")) {
+case 1: Go("mosk_dun01",0,0);end;
+case 2: Go("mosk_dun02",0,0);end;
+case 3: Go("mosk_dun03",0,0);end;
+}end;
+
+case 24://巴西瀑布里的洞穴
+switch(select("巴西瀑布里的洞穴 1层(80):巴西瀑布里的洞穴 2层(80)波伊塔塔:")) {
+case 1: Go("bra_dun01",0,0);end;
+case 2: Go("bra_dun02",0,0);end;
+}end;
+
+case 25://德瓦他 火山洞穴
+switch(select("喀拉喀托火山岛(90)让特:伊斯坦纳洞穴(85):")) {
+case 1: Go("dew_dun01",0,0);end;
+case 2: Go("dew_dun02",0,0);end;
+}end;
+
+case 26://诺可罗德溶洞
+switch(select("诺可罗德溶洞 1层(100):诺可罗德溶洞 2层(105):诺可罗德溶洞 3层(175)")) {
+case 1: Go("mag_dun01",0,0);end;
+case 2: Go("mag_dun02",0,0);end;
+case 3: Go("mag_dun03",0,0);end;
+}end;
+
+case 27://拉赫冰洞穴
+switch(select("冰洞穴 1层(100):冰洞穴 2层(105):冰洞穴 3层(110)寒冰龙:")) {
+case 1: Go("ice_dun01",0,0);end;
+case 2: Go("ice_dun02",0,0);end;
+case 3: Go("ice_dun03",0,0);end;
+}end;
+
+case 28://优配擂斯 废墟
+switch(select("优配擂斯废墟 1层(110):优配擂斯废墟 2层(120):优配擂斯中心部(120)贝思波:")) {
+case 1: Go("juperos_01",0,0);end;
+case 2: Go("juperos_02",0,0);end;
+case 3: Go("jupe_core",0,0);end;
+}end;
+
+case 29://机械娃娃工厂
+switch(select("机械娃娃工厂 1层(110):机械娃娃工厂 2层(115)基尔D-01:")) {
+case 1: Go("kh_dun01",0,0);end;
+case 2: Go("kh_dun02",0,0);end;
+}end;
+
+case 30://神殿圣域洞穴
+switch(select("神殿圣域入口菲力亚大神殿:神殿圣域洞穴 1层(125):神殿圣域洞穴 2层(125):神殿圣域洞穴 3层(125):神殿圣域洞穴 4层(130):神殿圣域洞穴 5层(130)影魔:")) {
+case 1: Go("ra_temple",0,0);end;
+case 2: Go("ra_san01",0,0);end;
+case 3: Go("ra_san02",0,0);end;
+case 4: Go("ra_san03",0,0);end;
+case 5: Go("ra_san04",0,0);end;
+case 6: Go("ra_san05",0,0);end;
+}end;
+
+case 31://奥丁神殿
+switch(select("奥丁神殿 1层(120):奥丁神殿 2层(130):奥丁神殿 3层(140)兰特克力斯:")) {
+case 1: Go("odin_tem01",0,0);end;
+case 2: Go("odin_tem02",0,0);end;
+case 3: Go("odin_tem03",0,0);end;
+}end;
+
+case 32://达纳托斯之塔
+switch(select("达纳托斯之塔 1层(115):达纳托斯之塔 2层(115):达纳托斯之塔 3层(115):达纳托斯之塔 4层(115):达纳托斯之塔 5层(115):达纳托斯之塔 6层(115):达纳托斯之塔 7层(120):达纳托斯之塔 8层(125):达纳托斯之塔 9层(125):达纳托斯之塔10层(130):达纳托斯之塔11层(130):达纳托斯之塔12层(130):魔剑士 达纳托斯的记忆:")) {
+case 1: Go("tha_t01",0,0);end;
+case 2: Go("tha_t02",0,0);end;
+case 3: Go("tha_t03",0,0);end;
+case 4: Go("tha_t04",0,0);end;
+case 5: Go("tha_t05",0,0);end;
+case 6: Go("tha_t06",0,0);end;
+case 7: Go("tha_t07",0,0);end;
+case 8: Go("tha_t08",0,0);end;
+case 9: Go("tha_t09",0,0);end;
+case 10: Go("tha_t10",0,0);end;
+case 11: Go("tha_t11",0,0);end;
+case 12: Go("tha_t12",0,0);end;
+case 13: Go("thana_boss",0,0);end;
+}end;
+
+case 33://图尔 火山 洞窟
+switch(select("图尔火山洞窟 1层(140):图尔火山洞窟 2层(130):图尔火山洞窟 3层(150)伊夫利特:")) {
+case 1: Go("thor_v01",0,0);end;
+case 2: Go("thor_v02",0,0);end;
+case 3: Go("thor_v03",0,0);end;
+}end;
+
+case 34://深渊湖水 地下洞穴
+switch(select("深渊湖水 1层(125):深渊湖水 3层(130):深渊湖水 4层(130)迪塔勒泰唔勒斯:")) {
+case 1: Go("abyss_01",0,0);end;
+case 2: Go("abyss_02",0,0);end;
+case 3: Go("abyss_03",0,0);end;
+}end;
+
+case 35://尼德霍格洞穴
+switch(select("尼德霍格洞穴 1层(130):")) {
+case 1: Go("myd_dun01",0,0);end;
+}end;
+
+case 36://甲虫洞
+switch(select("卡米达隧道(135):甲虫洞(140)女王甲虫:噩梦甲虫洞(150)梦魇女王甲虫:")) {
+case 1: Go("dic_dun01",0,0);end;
+case 2: Go("dic_dun02",0,0);end;
+case 3: Go("dic_dun03",0,0);end;
+}end;
+
+case 37://无名岛
+switch(select("修道院 1层(130):修道院 2层(140)堕落的大神官希巴姆:修道院 3层(150)贝雷杰:无名岛(夜)(130):无名岛(昼)(无怪):")) {
+case 1: Go("abbey01",0,0);end;
+case 2: Go("abbey02",0,0);end;
+case 3: Go("abbey03",0,0);end;
+case 4: Go("nameless_n",0,0);end;
+case 5: Go("nameless_i",0,0);end;
+}end;
+
+case 38://猫猫岛洞穴
+switch(select("猫猫岛洞穴(90)木天蓼果实:")) {
+case 1: Go("mal_dun01",0,0);end;
+}end;
+
+case 39://般滚勾特医院
+switch(select("恶梦医院(120):")) {
+case 1: Go("ma_dun01",0,0);end;
+}end;
+
+
+
+case 40://彩虹桥高塔
+switch(select("彩虹桥高塔 1层(150):彩虹桥高塔 2层(155):彩虹桥高塔 3层(160):彩虹桥高塔 4层(无怪):")) {
+case 1: Go("ecl_tdun01",0,0);end;
+case 2: Go("ecl_tdun02",0,0);end;
+case 3: Go("ecl_tdun03",0,0);end;
+case 4: Go("ecl_tdun04",0,0);end;
+}end;
+
+
+
+case 41://龙之巢穴（猫猫洞）
+switch(select("龙之巢穴1层(120):龙之巢穴2层(130):龙之巢穴3层(140):")) {
+case 1: Go("lasa_dun01",0,0);end;
+case 2: Go("lasa_dun02",0,0);end;
+case 3: Go("lasa_dun03",0,0);end;
+}end;
+
+case 42://考古地区
+switch(select("实验楼(150):研究楼(155):中央广场(160):")) {
+case 1: Go("verus01",0,0);end;
+case 2: Go("verus02",0,0);end;
+case 3: Go("verus03",0,0);end;
+}end;
+
+case 43://洛克理奇岩岭  区域
+switch(select("地下水道(100):契瓦瓦沙漠 西(100):契瓦瓦沙漠 东(100):洛克理奇岩岭矿山 1层(160):洛克理奇岩岭矿山 2层(采矿):")) {
+case 1: Go("harboro2",0,0);end;
+case 2: Go("rockrdg1",0,0);end;
+case 3: Go("rockrdg2",0,0);end;
+case 4: Go("rockmi1",0,0);end;
+case 5: Go("rockmi2",0,0);end;
+}end;
+
+case 44://生体试验 研究所
+switch(select("生体试验研究所 1层(120):生体试验研究所 2层(130)暗剑士:生体试验研究所 3层(140)暗进阶二转:生体试验研究所 4层(150)暗进阶二转:阵亡者之墓:")) {
+case 1: Go("lhz_dun01",0,0);end;
+case 2: Go("lhz_dun02",0,0);end;
+case 3: Go("lhz_dun03",0,0);end;
+case 4: Go("lhz_dun04",0,0);end;
+case 5: Go("lhz_dun_n",0,0);end;
+}end;
+
+case 45://公会地下迷宫
+switch(select("地下公会-斐扬 1层 月夜猫:地下公会-斐扬 2层 虎王:地下公会-艾尔帕兰 1层 蜂后:地下公会-艾尔帕兰 2层 蚁后:地下公会-普隆德拉 1层 巴风特:地下公会-普隆德拉 2层 阿特罗斯:地下公会-吉芬 1层 死灵:地下公会-吉芬 2层 黑暗之王:地下公会-朱诺 库布灵:地下公会-拉赫 库布灵:深渊回廊-古老的风 将军大贤:深渊回廊-英雄的泪 乔伊亚:深渊回廊-道路战士 淘汰者傅立叶:深渊回廊-死亡的山丘 亡灵的守护者卡德斯:地下公会-TE 1层 最后的初心者:地下公会-TE 2层 超级初心者之王:")) {
+case 1: Go("gld2_dun01",0,0);end;
+case 2: Go("gld2_dun01_2",0,0);end;
+case 3: Go("gld2_dun02",0,0);end;
+case 4: Go("gld2_dun02_2",0,0);end;
+case 5: Go("gld2_dun03",0,0);end;
+case 6: Go("gld2_dun03_2",0,0);end;
+case 7: Go("gld2_dun04",0,0);end;
+case 8: Go("gld2_dun04_2",0,0);end;
+case 9: Go("schg_dun01",0,0);end;
+case 10: Go("arug_dun01",0,0);end;
+case 11: Go("gld2_pay",0,0);end;
+case 12: Go("gld2_ald",0,0);end;
+case 13: Go("gld2_prt",0,0);end;
+case 14: Go("gld2_gef",0,0);end;
+case 15: Go("teg_dun01",0,0);end;
+case 16: Go("teg_dun02",0,0);end;
+}end;
+
+
+
+}end;
+
+
+
+// ----公会城堡---------------------------------------
+	Castles:
+// --------------------------------------------------
+
+menu	"艾尔帕兰城堡",C1, "吉芬城堡",C2, "斐扬城堡",C3,
+    	"普隆德拉城堡",C4, "阿卢纳贝兹城堡",C5, "秀发兹发德城堡",C6;
+
+C1: setarray @c[2],48,83,95,249,142,85,239,242,264,90;
+	Disp("娜易修番斯塔引:乎汗修番佳乌:纽蓝贝勒克:布勒刺布勒克:罗探布勒克");
+	Pick("","alde_gld","alde_gld","alde_gld","alde_gld","alde_gld");
+C2: setarray @c[2],214,75,308,240,143,240,193,278,305,87;
+	Disp("雷普立温:耀布力格:易司那普:培勒格:眉撒丝达刺");
+	Pick("","gef_fild13","gef_fild13","gef_fild13","gef_fild13","gef_fild13");
+C3: setarray @c[2],121,233,295,116,317,293,140,160,204,266;
+	Disp("明亭:天坛:佛影:红楼:竹林岘");
+	Pick("","pay_gld","pay_gld","pay_gld","pay_gld","pay_gld");
+C4: setarray @c[2],134,65,240,128,153,137,111,240,208,240;
+	Disp("克林希特:斯般希特:拉兹立克斯:司葵古:关德");
+	Pick("","prt_gld","prt_gld","prt_gld","prt_gld","prt_gld");
+C5: setarray @c[2],158,272,83,47,68,155,299,345,292,107;
+	Disp("马勒杜:希乐:霍伦:吉本:巴拿迪斯");
+	Pick("","aru_gld","aru_gld","aru_gld","aru_gld","aru_gld");
+C6: setarray @c[2],293,100,288,252,97,196,137,90,71,315;
+	Disp("喜民:安得郎克:毕得布莱因:何料德:思凯提乐尼");
+	Pick("","sch_gld","sch_gld","sch_gld","sch_gld","sch_gld");
+
+
+
+
+
+// ----副本-----------------------------------------
+	Instances:
+// --------------------------------------------------
+
+
+
+switch(select("恩德勒斯塔(无限塔):古城的回忆:迷雾森林迷宫:兽人的记忆:封印神殿:八爪鱼巢穴:吉芬魔法大会:幽灵皇宫:查尔斯顿危机:阵亡者之墓:排水沟？:尼德霍格的巢穴:废弃的医院:宝箱巨鳄之巢:食月暴龙湖泊:宝勒世伏的实验室:艾卡拉奇 内部:恐怖玩具工厂:人面虫巢穴:噩梦吉特巴:飞空艇袭击:入侵空中要塞:中央实验室:中枢室:猎心者基地:无限空间:最后的房间:莎拉的记忆:莎拉与芬里尔:魔神之塔:拜欧斯岛、摩尔斯洞穴、魔神殿:")) {
+case 1: Go("e_tower",71,115);end;
+case 2: Go("glast_01",200,270);end;
+case 3: Go("bif_fild01",160,345);end;
+case 4: Go("gef_fild10",240,200);end;
+case 5: Go("monk_dtest",305,145);end;
+case 6: Go("mal_dun01",150,230);end;
+case 7: Go("dali",94,141);end;
+case 8: Go("dali02",46,129);end;
+case 9: Go("verus04",75,114);end;
+case 10: Go("lhz_dun_n",106,207);end;
+case 11: Go("mal_in01",165,28);end;
+case 12: Go("nyd_dun02",95,193);end;
+case 13: Go("ma_dun01",150,10);end;
+case 14: Go("ma_fild02",315,314);end;
+case 15: Go("ma_scene01",175,175);end;
+case 16: Go("lhz_dun04",144,276);end;
+case 17: Go("ecl_in03",145,47);end;
+case 18: Go("xmas",234,296);end;
+case 19: Go("dali",87,66);end;
+case 20: Go("moc_para01",28,90);end;
+case 21: Go("dali02",133,83);end;
+case 22: Go("prt_q",244,81);end;
+case 23: Go("verus01",159,153);end;
+case 24: Go("slabw01",238,89);end;
+case 25: Go("ein_fild04",283,327);end;
+case 26: Go("cmd_fild07",54,269);end;
+case 27: Go("un_myst",162,39);end;
+case 28: Go("dali",135,113);end;
+case 29: Go("dali02",93,140);end;
+case 30: Go("dali02",138,116);end;
+case 31: Go("moro_cav",47,71);end;
+}end;
+
+
+// ---幻影地区--------------------------------------
+	ShadowZone:
+// --------------------------------------------------
+
+switch(select("幻影 月夜猫的噩梦:幻影 第250页（吉芬）:幻影 极冻幻影（冰洞）:幻影 北边洞穴卢安达（克魔岛）:幻影 扭曲的迷藏森林:幻影 死寂良龟村:幻影 凄凉旧良宫:幻影 深渊海底洞穴上层:幻影 深渊海底洞穴下层:幻影 罗斯里安帝国（矿洞）:")) {
+case 1: Go("pay_d03_i",0,0);end;
+case 2: Go("gef_d01_i",0,0);end;
+case 3: Go("ice_d03_i",0,0);end;
+case 4: Go("com_d02_i",0,0);end;
+case 5: Go("prt_mz03_i",0,0);end;
+case 6: Go("tur_d03_i",0,0);end;
+case 7: Go("tur_d04_i",0,0);end;
+case 8: Go("iz_d04_i",0,0);end;
+case 9: Go("iz_d05_i",0,0);end;
+case 10: Go("ein_d02_i",0,0);end;
+
+
+}end;
+
+
+
+
+
+
+
+// ---特殊地区--------------------------------------
+	Special:
+// --------------------------------------------------
+menu	"精炼房",S1, "战场",S2, "赌场",S3, "乐园团总部",S4,
+    	"昆仑战斗场",S5, "依斯鲁得战斗场",S6, "魔物赛跑竞赛场",S7, "竞速场",S8;
+
+S1: Go("auction_01",22,68);
+S2: Go("bat_room",154,150);
+S3: Go("cmd_in02",179,129);
+S4: Restrict("RE");
+	Go("moc_para01",31,14);
+S5: Go("gon_test",48,10);
+S6: Go("arena_room",100,88);
+S7: Go("p_track01",62,41);
+S8: Go("turbo_room",99,114);
+}
+
+
+
+
+

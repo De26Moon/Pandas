@@ -1,0 +1,39 @@
+搜索{替换成{\r\n\t全部替换
+搜索\r\nunidentifiedDescriptionName替换成\r\n\tunidentifiedDescriptionName全部替换
+搜索\r\nidentifiedDescriptionName替换成\r\n\tidentifiedDescriptionName全部替换
+搜索, unidentifiedResourceName替换成,\r\n\tunidentifiedResourceName全部替换
+搜索, identifiedDisplayName替换成,\r\n\tidentifiedDisplayName全部替换
+搜索, identifiedResourceName替换成,\r\n\tidentifiedResourceName全部替换
+搜索{\r\n\t"替换成{\r\n\t\t"全部替换
+搜索, slotCount替换成,\r\n\tslotCount全部替换
+搜索, ClassNum替换成,\r\n\tClassNum全部替换
+搜索},替换成\r\n},全部替换
+搜索\r\n},\r\n替换成\r\n\t},\r\n全部替换
+搜索", "替换成",\r\n\t\t"全部替换
+搜索\r\n替换成\r\n\t全部替换
+搜索\r\n\ttbl = {替换成\r\ntbl = {全部替换
+搜索\r\n\t\t\r\n替换成\r\n全部替换
+搜索}}替换成\r\n\t}\r\n}全部替换
+
+
+main = function()
+    for ItemID,DESC in pairs(tbl) do
+        result, msg = AddItem(ItemID, DESC.unidentifiedDisplayName, DESC.unidentifiedResourceName, DESC.identifiedDisplayName, DESC.identifiedResourceName, DESC.slotCount, DESC.ClassNum)
+        if not result then
+            return false, msg
+        end
+        for k,v in pairs(DESC.unidentifiedDescriptionName) do
+            result, msg = AddItemUnidentifiedDesc(ItemID, v)
+            if not result then
+                return false, msg
+            end
+        end
+        for k,v in pairs(DESC.identifiedDescriptionName) do
+            result, msg = AddItemIdentifiedDesc(ItemID, v)
+            if not result then
+                return false, msg
+            end
+        end
+    end
+    return true, “good”
+end

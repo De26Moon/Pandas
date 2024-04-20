@@ -1,0 +1,431 @@
+prontera,142,100,5	script	元素大师	1_M_WIZARD,{
+
+//---------------------升阶成功率------------------------
+	set $@fuchenga,100;
+
+//-------------------升阶需要的RO币------------------------
+	set $@fuzenya,10000;
+
+
+	mes "[精练师]";
+	mes "^FF0000我可以将装备进行升阶^000000.";
+	mes "^FF0000使装备得到额外属性.^000000";
+	mes "^FF0000把你要升阶的装备穿在身上.^000000";
+	mes "需要支付 ^FF0000"+$@fuzenya+"^000000 RO币.";
+	mes "成功率为 ^FF0000"+$@fuchenga+"^000000 %.";
+	next;
+
+	set @yesno0a$,"";
+	set @yesno1a$,"";
+	set @yesno2a$,"";
+	set @yesno3a$,"";
+	set @yesno4a$,"";
+	set @yesno5a$,"";
+	set @yesno6a$,"";
+	set @yesno7a$,"";
+	set @yesno8a$,"";
+	set @yesno9a$,"";
+	set @yesno10a$,"";
+	set @yesno11a$,"";
+	set @yesno12a$,"";
+	set @yesno13a$,"";
+	set @yesno14a$,"";
+	set @yesno15a$,"";
+	set @yesno16a$,"";
+	set @yesno17a$,"";
+	set @yesno18a$,"";
+	set @yesno19a$,"";
+	set @yesno20a$,"";
+
+	set @zbw0a$,"^5000A0左装→^000000 未装备";
+	set @zbw1a$,"^5000A0右装→^000000 未装备";
+	set @zbw2a$,"^5000A0鞋子→^000000 未装备";
+	set @zbw3a$,"^5000A0披肩→^000000 未装备";
+	set @zbw4a$,"^5000A0头下→^000000 未装备";
+	set @zbw5a$,"^5000A0头中→^000000 未装备";
+	set @zbw6a$,"^5000A0头上→^000000 未装备";
+	set @zbw7a$,"^5000A0衣服→^000000 未装备";
+	set @zbw8a$,"^5000A0左手→^000000 未装备";
+	set @zbw9a$,"^5000A0右手→^000000 未装备";
+	set @zbw10a$,"^5000A0时装头上→^000000 未装备";
+	set @zbw11a$,"^5000A0时装头中→^000000 未装备";
+	set @zbw12a$,"^5000A0时装头下→^000000 未装备";
+	set @zbw13a$,"^5000A0时装披肩→^000000 未装备";
+	set @zbw14a$,"^5000A0投掷物品→^000000 未装备";
+	set @zbw15a$,"^5000A0时装盔甲→^000000 未装备";
+	set @zbw16a$,"^5000A0时装武器→^000000 未装备";
+	set @zbw17a$,"^5000A0时装盾牌→^000000 未装备";
+	set @zbw18a$,"^5000A0时装鞋子→^000000 未装备";
+	set @zbw19a$,"^5000A0时装右饰→^000000 未装备";
+	set @zbw20a$,"^5000A0时装左饰→^000000 未装备";
+
+	if (getequipisequiped(0)!=0) { 
+	set @zbw0a$,"^5000A0左装→^000000 "+getequipname(0);
+	set @yesno0a$," ^0000FF[可升阶]^000000"; }
+
+	if (getequipisequiped(1)!=0) { 
+	set @zbw1a$,"^5000A0右装→^000000 "+getequipname(1);
+	set @yesno1a$," ^0000FF[可升阶]^000000"; }
+
+	if (getequipisequiped(2)!=0) { 
+	set @zbw2a$,"^5000A0鞋子→^000000 "+getequipname(2);
+	set @yesno2a$," ^0000FF[可升阶]^000000"; }
+
+	if (getequipisequiped(3)!=0) { 
+	set @zbw3a$,"^5000A0披肩→^000000 "+getequipname(3);
+	set @yesno3a$," ^0000FF[可升阶]^000000"; }
+
+	if (getequipisequiped(4)!=0) { 
+	set @zbw4a$,"^5000A0头下→^000000 "+getequipname(4);
+	set @yesno4a$," ^0000FF[可升阶]^000000"; }
+
+	if (getequipisequiped(5)!=0) { 
+	set @zbw5a$,"^5000A0头中→^000000 "+getequipname(5);
+	set @yesno5a$," ^0000FF[可升阶]^000000";}
+
+	if (getequipisequiped(6)!=0) { 
+	set @zbw6a$,"^5000A0头上→^000000 "+getequipname(6);
+	set @yesno6a$," ^0000FF[可升阶]^000000";}
+
+
+	if (getequipisequiped(7)!=0) { 
+	set @zbw7a$,"^5000A0衣服→^000000 "+getequipname(7);
+	set @yesno7a$," ^0000FF[可升阶]^000000"; }
+
+	if (getequipisequiped(8)!=0) { 
+	set @zbw8a$,"^5000A0左手→^000000 "+getequipname(8);
+	set @yesno8a$," ^0000FF[可升阶]^000000"; }
+
+	if (getequipisequiped(9)!=0) { 
+	set @zbw9a$,"^5000A0右手→^000000 "+getequipname(9);
+	set @yesno9a$," ^0000FF[可升阶]^000000"; }
+
+	if (getequipisequiped(10)!=0) { 
+	set @zbw10a$,"^5000A0时装头上→^000000 "+getequipname(10);
+	set @yesno10a$," ^0000FF[可升阶]^000000"; }
+
+	if (getequipisequiped(11)!=0) { 
+	set @zbw11a$,"^5000A0时装头中→^000000 "+getequipname(11);
+	set @yesno11a$," ^0000FF[可升阶]^000000";}
+
+	if (getequipisequiped(12)!=0) { 
+	set @zbw12a$,"^5000A0时装头下→^000000 "+getequipname(12);
+	set @yesno12a$," ^0000FF[可升阶]^000000"; }
+
+	if (getequipisequiped(13)!=0) { 
+	set @zbw13a$,"^5000A0时装披肩→^000000 "+getequipname(13);
+	set @yesno13a$," ^0000FF[可升阶]^000000"; }
+
+	if (getequipisequiped(14)!=0) { 
+	set @zbw14a$,"^5000A0投掷物品→^000000 "+getequipname(14);
+	set @yesno14a$," ^FF0000[不可升阶]^000000"; }
+
+	if (getequipisequiped(15)!=0) { 
+	set @zbw15a$,"^5000A0时装盔甲→^000000 "+getequipname(15);
+	set @yesno15a$," ^0000FF[可升阶]^000000"; }
+
+	if (getequipisequiped(16)!=0) { 
+	set @zbw16a$,"^5000A0时装武器→^000000 "+getequipname(16);
+	set @yesno16a$," ^0000FF[可升阶]^000000"; }
+
+	if (getequipisequiped(17)!=0) { 
+	set @zbw17a$,"^5000A0时装盾牌→^000000 "+getequipname(17);
+	set @yesno17a$," ^0000FF[可升阶]^000000"; }
+
+	if (getequipisequiped(18)!=0) { 
+	set @zbw18a$,"^5000A0时装鞋子→^000000 "+getequipname(18);
+	set @yesno18a$," ^0000FF[可升阶]^000000"; }
+
+	if (getequipisequiped(19)!=0) { 
+	set @zbw19a$,"^5000A0时装右饰→^000000 "+getequipname(19);
+	set @yesno19a$," ^0000FF[可升阶]^000000"; }
+
+	if (getequipisequiped(20)!=0) { 
+	set @zbw20a$,"^5000A0时装左饰→^000000 "+getequipname(20);
+	set @yesno20a$," ^0000FF[可升阶]^000000"; }
+
+
+
+	set @part,select(@zbw0a$+@yesno0a$,@zbw1a$+@yesno1a$,@zbw2a$+@yesno2a$,@zbw3a$+@yesno3a$,@zbw4a$+@yesno4a$,@zbw5a$+@yesno5a$,@zbw6a$+@yesno6a$,@zbw7a$+@yesno7a$,@zbw8a$+@yesno8a$,@zbw9a$+@yesno9a$,@zbw10a$+@yesno10a$,@zbw11a$+@yesno11a$,@zbw12a$+@yesno12a$,@zbw13a$+@yesno13a$,@zbw14a$+@yesno14a$,@zbw15a$+@yesno15a$,@zbw16a$+@yesno16a$,@zbw17a$+@yesno17a$,@zbw18a$+@yesno18a$,@zbw19a$+@yesno19a$,@zbw20a$+@yesno20a$);
+
+	
+//=============================此处是修改赋魔部分 getequipid( 1 2 5 6 | 头 铠 披 鞋 )======================
+	set @part,@part-1;
+
+	if ( @part==0 )	{ set @zbid1,getequipid(0);
+	if (getequipisequiped(0)==0) goto Levent6;
+	}
+	if ( @part==1 )	{ set @zbid1,getequipid(1);
+	if (getequipisequiped(1)==0) goto Levent6;
+	}
+	if ( @part==2 )	{ set @zbid1,getequipid(2);
+	if (getequipisequiped(2)==0) goto Levent6;
+	}
+	if ( @part==3 ) { set @zbid1,getequipid(3);
+	if (getequipisequiped(3)==0) goto Levent6;
+	}
+	if ( @part==4 ) { set @zbid1,getequipid(4);
+	if (getequipisequiped(4)==0) goto Levent6;
+	}
+	if ( @part==5 ) { set @zbid1,getequipid(5);
+	if (getequipisequiped(5)==0) goto Levent6;
+	}
+	if ( @part==6 ) { set @zbid1,getequipid(6);
+	if (getequipisequiped(6)==0) goto Levent6;
+	}
+	if ( @part==7 ) { set @zbid1,getequipid(7);
+	if (getequipisequiped(7)==0) goto Levent6;
+	}
+	if ( @part==8 ) { set @zbid1,getequipid(8);
+	if (getequipisequiped(8)==0) goto Levent6;
+	}
+	if ( @part==9 ) { set @zbid1,getequipid(9);
+	if (getequipisequiped(9)==0) goto Levent6;
+	}
+	if ( @part==10 ) { set @zbid1,getequipid(10);
+	if (getequipisequiped(10)==0) goto Levent6;
+	}
+	if ( @part==11 ) { set @zbid1,getequipid(11);
+	if (getequipisequiped(11)==0) goto Levent6;
+	}
+	if ( @part==12 ) { set @zbid1,getequipid(12);
+	if (getequipisequiped(12)==0) goto Levent6;
+	}
+	if ( @part==13 ) { set @zbid1,getequipid(13);
+	if (getequipisequiped(13)==0) goto Levent6;
+	}
+	if ( @part==14 ) { 
+	mes "[元素师]";
+	mes "该物品不可升阶";
+	close;
+	}
+	if ( @part==15 ) { set @zbid1,getequipid(15);
+	if (getequipisequiped(15)==0) goto Levent6;
+	}
+	if ( @part==16 ) { set @zbid1,getequipid(16);
+	if (getequipisequiped(16)==0) goto Levent6;
+	}
+	if ( @part==17 ) { set @zbid1,getequipid(17);
+	if (getequipisequiped(17)==0) goto Levent6;
+	}
+	if ( @part==18 ) { set @zbid1,getequipid(18);
+	if (getequipisequiped(18)==0) goto Levent6;
+	}
+	if ( @part==19 ) { set @zbid1,getequipid(19);
+	if (getequipisequiped(19)==0) goto Levent6;
+	}
+	if ( @part==20 ) { set @zbid1,getequipid(20);
+	if (getequipisequiped(20)==0) goto Levent6;
+	}
+
+
+
+//================================
+	set @zbid2,getequiprefinerycnt(@part);
+	set @zbid3,getequipcardid(@part,0);
+	set @zbid4,getequipcardid(@part,1);
+	set @zbid5,getequipcardid(@part,2);
+	set @zbid6,getequipcardid(@part,3);
+//保存精练前数据↑
+
+
+	if (zeny<$@fuzenya) goto Levent1;
+	set zeny,zeny-$@fuzenya;
+
+//时装左饰  
+	if (@part==20) { 
+		setrandomoption(@part,0,RDMOPT_CLASS_IGNORE_DEF_PERCENT_NORMAL,50,0);
+		setrandomoption(@part,1,RDMOPT_CLASS_IGNORE_DEF_PERCENT_BOSS,50,0);
+		setrandomoption(@part,2,RDMOPT_DAMAGE_SIZE_SMALL_USER,50,0);
+		setrandomoption(@part,3,RDMOPT_DAMAGE_SIZE_MIDIUM_USER,50,0);	
+		setrandomoption(@part,4,RDMOPT_DAMAGE_SIZE_LARGE_USER,50,0);
+			mes "[元素大师]";
+			mes "这是你的装备";
+			close;
+		 };
+//时装右饰  
+	if (@part==19) { 
+		setrandomoption(@part,0,RDMOPT_CLASS_IGNORE_MDEF_PERCENT_NORMAL,50,0);	
+		setrandomoption(@part,1,RDMOPT_CLASS_IGNORE_MDEF_PERCENT_BOSS,50,0);
+		setrandomoption(@part,2,RDMOPT_MDAMAGE_SIZE_SMALL_USER,50,0);
+		setrandomoption(@part,3,RDMOPT_MDAMAGE_SIZE_MIDIUM_USER,50,0);
+		setrandomoption(@part,4,RDMOPT_MDAMAGE_SIZE_LARGE_USER,50,0);
+			mes "[元素大师]";
+			mes "这是你的装备";
+			close;
+		 };
+
+
+//时装鞋子 
+	if (@part==18) { 
+		setrandomoption(@part,0,RDMOPT_ATTR_TOLERACE_POISON,50,0);
+		setrandomoption(@part,1,RDMOPT_ATTR_TOLERACE_SAINT,50,0);
+		setrandomoption(@part,2,RDMOPT_ATTR_TOLERACE_DARKNESS,50,0);
+		setrandomoption(@part,3,RDMOPT_ATTR_TOLERACE_TELEKINESIS,50,0);	
+		setrandomoption(@part,4,RDMOPT_ATTR_TOLERACE_UNDEAD,50,0);
+			mes "[元素大师]";
+			mes "这是你的装备";
+			close;
+		 };
+
+
+//时装盾牌 
+	if (@part==17) { 
+		setrandomoption(@part,0,RDMOPT_ATTR_TOLERACE_NOTHING,50,0);
+		setrandomoption(@part,1,RDMOPT_ATTR_TOLERACE_WATER,50,0);
+		setrandomoption(@part,2,RDMOPT_ATTR_TOLERACE_GROUND,50,0);
+		setrandomoption(@part,3,RDMOPT_ATTR_TOLERACE_FIRE,50,0);	
+		setrandomoption(@part,4,RDMOPT_ATTR_TOLERACE_WIND,50,0);
+			mes "[元素大师]";
+			mes "这是你的装备";
+			close;
+		 };
+
+//时装武器  
+	if (@part==16) { 
+		setrandomoption(@part,0,RDMOPT_HEAL_VALUE,50,0);
+		setrandomoption(@part,1,RDMOPT_HEAL_MODIFY_PERCENT,50,0);
+		setrandomoption(@part,2,RDMOPT_DEC_SPELL_CAST_TIME,50,0);
+		setrandomoption(@part,3,RDMOPT_DEC_SPELL_DELAY_TIME,50,0);	
+		setrandomoption(@part,4,RDMOPT_DEC_SP_CONSUMPTION,50,0);
+			mes "[元素大师]";
+			mes "这是你的装备";
+			close;
+		 };
+
+
+//时装盔甲  
+	if (@part==15) { 
+		setrandomoption(@part,0,RDMOPT_VAR_MDEFPOWER,50,0);
+		setrandomoption(@part,1,RDMOPT_VAR_AVOIDSUCCESSVALUE,5,0);
+		setrandomoption(@part,2,RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE,5,0);
+		setrandomoption(@part,3,RDMOPT_VAR_CRITICALSUCCESSVALUE,5,0);	
+		setrandomoption(@part,4,RDMOPT_VAR_MAXHPAMOUNT,50,0);
+			mes "[元素大师]";
+			mes "这是你的装备";
+			close;
+		 };
+
+//时装披肩 
+	if (@part==13) { 
+		setrandomoption(@part,0,RDMOPT_VAR_PLUSASPDPERCENT,50,0);
+		setrandomoption(@part,1,RDMOPT_VAR_ATTPOWER,50,0);
+		setrandomoption(@part,2,RDMOPT_VAR_HITSUCCESSVALUE,50,0);
+		setrandomoption(@part,3,RDMOPT_VAR_ATTMPOWER,50,0);	
+		setrandomoption(@part,4,RDMOPT_VAR_ITEMDEFPOWER,50,0);
+			mes "[元素大师]";
+			mes "这是你的装备";
+			close;
+		 };
+
+
+
+//时装头下 
+	if (@part==12) { 
+		setrandomoption(@part,0,RDMOPT_VAR_HPACCELERATION,50,0);
+		setrandomoption(@part,1,RDMOPT_VAR_SPACCELERATION,50,0);
+		setrandomoption(@part,2,RDMOPT_VAR_ATKPERCENT,50,0);
+		setrandomoption(@part,3,RDMOPT_VAR_MAGICATKPERCENT,50,0);	
+		setrandomoption(@part,4,RDMOPT_VAR_PLUSASPD,5,0);
+			mes "[元素大师]";
+			mes "这是你的装备";
+			close;
+		 };
+
+
+//时装头中
+	if (@part==11) { 
+		setrandomoption(@part,0,RDMOPT_VAR_INTAMOUNT,200,0);
+		setrandomoption(@part,1,RDMOPT_VAR_DEXAMOUNT,200,0);
+		setrandomoption(@part,2,RDMOPT_VAR_LUKAMOUNT,200,0);
+		setrandomoption(@part,3,RDMOPT_VAR_MAXHPPERCENT,5,0);	
+		setrandomoption(@part,4,RDMOPT_VAR_MAXSPPERCENT,5,0);
+			mes "[元素大师]";
+			mes "这是你的装备";
+			close;
+		 };
+
+
+
+
+//时装头上
+	if (@part==10) { 
+		setrandomoption(@part,0,RDMOPT_VAR_MAXHPAMOUNT,200,0);
+		setrandomoption(@part,1,RDMOPT_VAR_MAXSPAMOUNT,200,0);
+		setrandomoption(@part,2,RDMOPT_VAR_STRAMOUNT,200,0);
+		setrandomoption(@part,3,RDMOPT_VAR_AGIAMOUNT,200,0);	
+		setrandomoption(@part,4,RDMOPT_VAR_VITAMOUNT,200,0);
+			mes "[元素大师]";
+			mes "这是你的装备";
+			close;
+		 };
+
+
+
+//右手
+	if (@part==9) { 
+		setrandomoption(@part,0,RDMOPT_WEAPON_INDESTRUCTIBLE,50,0);
+		setrandomoption(@part,1,rand(175,184),50,0);
+		setrandomoption(@part,2,RDMOPT_VAR_ATTPOWER,100,0);
+		setrandomoption(@part,3,RDMOPT_VAR_ATTMPOWER,100,0);	
+		setrandomoption(@part,4,RDMOPT_VAR_LUKAMOUNT,100,0);
+			mes "[元素大师]";
+			mes "这是你的装备";
+			close;
+		 };
+
+
+//衣服
+	if (@part==7) { 
+		setrandomoption(@part,0,RDMOPT_BODY_INDESTRUCTIBLE,50,0);
+		setrandomoption(@part,1,rand(76,85),4,0);
+		setrandomoption(@part,2,RDMOPT_DEC_SPELL_DELAY_TIME,50,0);
+		setrandomoption(@part,3,RDMOPT_DEC_SPELL_CAST_TIME,50,0);	
+		setrandomoption(@part,4,RDMOPT_DEC_SP_CONSUMPTION,50,0);
+			mes "[元素大师]";
+			mes "这是你的装备";
+			close;
+		 };
+
+
+
+
+
+
+		setrandomoption(@part,0,RDMOPT_VAR_MAXHPAMOUNT,100,0);
+		setrandomoption(@part,1,RDMOPT_VAR_MAXSPAMOUNT,100,0);
+		setrandomoption(@part,2,RDMOPT_VAR_ATTPOWER,100,0);
+		setrandomoption(@part,3,RDMOPT_VAR_ATTMPOWER,100,0);	
+		setrandomoption(@part,4,242,1000,0);
+
+
+			mes "[元素大师]";
+			mes "这是你的装备";
+			close;
+
+
+Levent1:
+	mes "[元素师]";
+	mes "你身上的金钱不足，请准备好再来！";
+	close;
+
+
+
+Levent2:
+	mes "[元素师]";
+	mes "你的武器已经被魔法附魔了。";
+	close;
+
+
+
+Levent6:
+	mes "[元素师]";
+	mes "未发现装备";
+	close;
+
+
+
+//setarray @owenitems[0],EQI_ACC_L,EQI_ACC_R,EQI_SHOES,EQI_GARMENT,EQI_HEAD_LOW,EQI_HEAD_MID,EQI_HEAD_TOP,EQI_ARMOR,EQI_HAND_L,EQI_HAND_R,EQI_HEAD_MID,EQI_HEAD_LOW,EQI_COSTUME_HEAD_LOW,EQI_COSTUME_HEAD_MID,EQI_COSTUME_HEAD_TOP; 
+
+
+	}

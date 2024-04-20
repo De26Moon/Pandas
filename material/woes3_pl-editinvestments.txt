@@ -1,0 +1,53 @@
+// WoE Setter 3 Plug-in
+// GM - Castle Investment Editer
+// By: [GM]Xeon
+// Version: 1.0.0
+
+-	script	WoES3Pl_REditInv	-1,{
+end;
+OnLoadPlugins: //The following section adds the plug-in to the main NPC
+	set $@woes3_pl_gmmenu$[getarraysize($@woes3_pl_gmmenu$)], "修改城堡投资";
+	set $@woes3_pl_gm$[getarraysize($@woes3_pl_gm$)], "EditInv";
+	end;
+}
+
+function	script	WoES3Pl_EditInv	{
+	set @eco, 0;
+	set @def, 0;
+	set @town, 0;
+	set @castle, 0;
+L_Select:
+	switch(select("城堡 ["+getd("$woe_cas"+@town+"_1$["+@castle+"]")+"]","商业发展值 ["+@eco+"]","防御值 ["+@def+"]","套用","返回")) {
+		case 1:
+			dispbottom "请选择要修改哪座城堡的投资数值";
+			goto L_SelectTown;
+		case 2:
+			dispbottom "请输入新的商业发展值，最大值 99。目前是: "+@eco;
+			input @eco;
+			if (@eco>99) set @eco, 99;
+			break;
+		case 3:
+			dispbottom "请输入新的防御值，最大值 99。目前是: "+@def;
+			input @def;
+			if (@def>99) set @def, 99;
+			break;
+		case 4:
+			setcastledata(getd("$woe_cas"+@town+"_3$["+@castle+"]"),2,@eco);
+			setcastledata(getd("$woe_cas"+@town+"_3$["+@castle+"]"),3,@def);
+			dispbottom "编辑成功！";
+			break;
+		case 5: return;
+			
+	}
+	goto L_Select;
+L_SelectTown:
+	menu $woe_towns$[1]+":"+$woe_towns$[2]+":"+$woe_towns$[3]+":"+$woe_towns$[4]+":"+$woe_towns$[5]+":"+$woe_towns$[6]+":"+$woe_towns$[7],-,"^000000返回",L_Select;
+	set .@town, @menu;
+L_SelectCastles:
+	menu getd("$woe_cas"+.@town+"_1$[1]")+":"+getd("$woe_cas"+.@town+"_1$[2]")+":"+getd("$woe_cas"+.@town+"_1$[3]")+":"+getd("$woe_cas"+.@town+"_1$[4]")+((.@town!=5)?":"+getd("$woe_cas"+.@town+"_1$[5]"):""),-,"返回",L_SelectTown;
+	set @castle, @menu;
+	set @town, .@town;
+	set @eco, getcastledata(getd("$woe_cas"+@town+"_3$["+@castle+"]"),2);
+	set @def, getcastledata(getd("$woe_cas"+@town+"_3$["+@castle+"]"),3);
+	goto L_Select;
+}

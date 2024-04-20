@@ -1,0 +1,103 @@
+-	script	整点广播	-1,{
+
+OnHour08:
+announce "【整点报时】早上08点到了！！大家该去吃早饭啰吧",15;
+end;
+
+OnHour09:
+announce "【整点报时】早上09点到了！！",15;
+end;
+
+OnHour10:
+announce "【整点报时】早上10点到了！！",15;
+end;
+
+OnHour11:
+announce "【整点报时】早上11点到了！！",15;
+end;
+
+OnHour12:
+announce "【整点报时】12:00点到了！！大家该去吃午饭饭啰",15;
+end;
+
+OnHour13:
+announce "【整点报时】现在是下午1点！！",15;
+end;
+
+OnHour14:
+announce "【整点报时】现在是下午2点！！",15;
+end;
+
+OnHour15:
+announce "【整点报时】现在是下午3点！！",15;
+end;
+
+OnHour16:
+announce "【整点报时】现在是下午4：00！！",15;
+end;
+
+OnHour17:
+announce "【整点报时】现在是下午5：00！！",15;
+end;
+
+OnHour18:
+announce "【整点报时】现在是下午6：00！！",15;
+end;
+
+OnHour19:
+announce "【整点报时】现在是下午7：00！！",15;
+end;
+
+OnHour20:
+announce "【整点报时】现在是下午8：00！！",15;
+end;
+
+OnHour21:
+announce "【整点报时】现在是下午9：00！！",15;
+end;
+
+OnHour22:
+announce "【整点报时】晚上10点到了！！大家准备睡觉啰吧",15;
+end;
+
+OnHour23:
+announce "【整点报时】晚上11点到了！！大家该去睡觉啰吧",15;
+end;
+
+OnHour00:
+announce "【整点报时】晚上12点到了！！大家真的该去睡觉啰吧",15;
+end;
+
+OnHour01:
+announce "【整点报时】凌晨1点到了！！你还不睡真是神了",15;
+end;
+
+OnHour02:
+announce "【整点报时】凌晨2点到了！！我先睡啰吧",15;
+end;
+
+OnHour03:
+announce "【整点报时】凌晨3点！！",15;
+end;
+
+OnHour04:
+announce "【整点报时】凌晨4点！！副本重置了",15;
+end;
+
+OnHour05:
+announce "【整点报时】现在是凌晨5点！！",15;
+end;
+
+OnHour06:
+announce "【整点报时】现在是早上6点！！",15;
+end;
+
+OnHour07:
+announce "【整点报时】现在是早上7点！！",15;
+end;
+
+}
+
+
+
+

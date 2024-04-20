@@ -1,0 +1,59 @@
+/*=================================================================
+
+	做着玩的脚本
+	适用：pandas
+	作者：千歌
+
+===================================================================*/
+
+//---------------------脚本主体------------------------------------
+
+
+
+function	script	掉落保底	{
+	
+	mes "^FF0000服务说明^000000";
+	mes "每击杀相同魔物累积500只, 获得击杀奖励 所有道具 1 组";
+	switch(select("查询魔物击杀数量(输入ID)",(mobdropsmes?"累计击杀数量提示 [^238E23开启^000000]":"累计击杀数量提示 [^FF0000关闭^000000]"), "取消")){
+		case 1:
+			input .@mobid,1,999999;
+			if(getmonsterinfo(.@mobid, MOB_LV) == -1){
+				mes "ID输入错误,请重新输入";
+				next;
+				clear;
+				callfunc "掉落保底";
+			}
+			else {
+				clear;
+				mes ""+getmonsterinfo(.@mobid, MOB_NAME)+"#"+.@mobid+"  已击杀 "+getd("mobdrops_"+.@mobid)+" 只";
+			}
+			end;
+		case 2:
+			if(mobdropsmes == 0)
+				mobdropsmes = 1;
+			else
+				mobdropsmes = 0;
+			clear;
+			callfunc "掉落保底";
+			end;
+		case 3:
+			end;
+	}
+	
+
+}
+-	script	diaoluobaodi	-1,{
+OnNPCkillEvent:
+	setd("mobdrops_"+killedrid),getd("mobdrops_"+killedrid)+1;
+	if(mobdropsmes == 1){
+		message strcharinfo(0),"累计击杀 " +getmonsterinfo(killedrid, MOB_NAME)+"#"+killedrid+" "+ getd("mobdrops_"+killedrid)+" 只";
+	}
+	if(getd("mobdrops_"+killedrid) >= 500){
+		setd("mobdrops_"+killedrid),0;
+		getmobdrops killedrid;
+		for(.@i = 0; .@i < $@MobDrop_count; .@i++){
+			getitem $@MobDrop_item[.@i], 1;
+		}
+	}
+	end;
+}

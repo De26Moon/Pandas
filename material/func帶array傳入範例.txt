@@ -1,0 +1,14 @@
+prontera,159,186,4	script	帶值傳入陣列範例	123,{
+	setarray .@test, 1, 2, 3, 4, 5;
+	mes "傳入陣列: "+.@test[0]+","+.@test[1]+","+.@test[2]+","+.@test[3]+","+.@test[4];
+	callfunc("getarraymodify",.@test);
+	mes "回傳陣列: "+.@test[0]+","+.@test[1]+","+.@test[2]+","+.@test[3]+","+.@test[4];
+	close;
+}
+
+function	script	getarraymodify	{
+	deletearray getarg(0);
+	setarray .@test2, 5, 4, 3, 2, 1;
+	copyarray(getarg(0), .@test2, getarraysize(.@test2));
+	return;
+}

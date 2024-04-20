@@ -1,0 +1,83 @@
+/*===========================================================================
+	娱乐脚本  --  群体嘲讽
+	仅供新人娱乐参考。。
+	
+	使用方式:
+	
+	加载本脚本在任意装备的Script: |节点内添加下一行:
+      autobonus3 "{  }",1000,1,6,"{ callfunc\"sy_groupridicule\"; }";
+	  
+	  穿戴修改的装备后，使用剑士的嘲讽技能将触发群体嘲讽[对无法攻击单位无效]
+例:
+  - Id: 1201
+    AegisName: Knife
+    Name: 短剑
+    Type: Weapon
+    SubType: Dagger
+    Buy: 50
+    Sell: 1
+    Weight: 400
+    Attack: 17
+    Range: 1
+    Slots: 3
+    Jobs:
+      Alchemist: true
+      Archer: true
+      Assassin: true
+      BardDancer: true
+      Blacksmith: true
+      Crusader: true
+      Hunter: true
+      KagerouOboro: true
+      Knight: true
+      Mage: true
+      Merchant: true
+      Ninja: true
+      Novice: true
+      Rogue: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Swordman: true
+      Thief: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    Script: |
+      autobonus3 "{  }",1000,1,6,"{ callfunc\"sy_groupridicule\"; }";
+
+===========================================================================*/
+
+
+
+
+
+//  --  群体嘲讽  --
+function	script	sy_groupridicule	{
+	.@gid = getarg(0,getattachedrid());
+	if(!unitexists(.@gid))
+	return -1;
+	.@type = getarg(1,BL_MOB);
+	.@range = getarg(2,12);
+	if(getunittype(.@gid) == BL_PC){
+		getmapxy(.@map$,.@x,.@y,BL_PC,.@gid);
+	} else {
+		getunitdata .@gid,.@data;
+		.@map$ = mapid2name(.@data[5]);
+		.@x = .@data[6];
+		.@y = .@data[7];
+	}
+	.@c = getareagid(.@tid,1,.@type,.@map$,.@x,.@y,.@range);
+	specialeffect2 119;
+	if(.@c > 0){
+		for(.@i = 0 ; .@i < .@c ; .@i++){
+			unitattack .@tid[.@i],.@gid;
+			emotion 6,.@tid[.@i];
+		}
+		bonus_script "{ }",1,2048,0,134;
+	}
+return .@c;
+}

@@ -1,0 +1,20 @@
+
+
+==========地图影射============
+工具：mapcache.exe
+	工具需要放在服务端根目录
+
+客户端：
+	地图名称文件：data\mapnametable.txt
+	地图影射表：data\resnametable.txt
+	背景音乐文件：data\mp3nametable.txt
+
+服务端：
+	地图列表：db\map_index.txt
+	告诉服务器去哪找地图文件：conf\grf-files.txt
+	服务器启动时加载地图列表：conf\maps_athena.conf
+	
+【可以在mapcache.exe同目录下创建一个data，在下面创建一个resnametable.txt放入刚刚添加的内容，再把地图文件改名放到这个位置】
+在这6个位置添加完成以后启动mapcache.xex
+
+

@@ -1,0 +1,45 @@
+/*
+= ½Å±¾Ãû:<<ÉËº¦²âÊÔ½Å±¾>>
+= ÊÊÓÃ·¶Î§:ĞÜÃ¨RA
+= ×÷Õß:ÈËÓã¼§µÄË¼Äî 
+= QQ:327945477
+*/
+
+-	script	ÉËº¦²âÊÔÄ¾×®	-1,{
+	end;
+	
+OnPCAttackExpress:
+if(@attack_target_gid == .mobcid){
+		if ( !.record ) {
+			.record = 1;
+			.sum_dam = @attack_damage_right + @attack_damage_left;
+			sleep3 .test_time*1000;
+			.record = 0;
+			unittalk .mobcid,"²âÊÔÄ¾×® : "+.test_time+"ÃëÄÚÔì³É [ "+callsub(InsertComma,.sum_dam)+" ]ÉËº¦£¬ÃëÉËÎª [ "+callsub(InsertComma,.sum_dam/.test_time)+" ]";
+			end;
+		}
+		.sum_dam = .sum_dam + pc_sum_dama;
+		end;
+}
+
+
+
+end;
+InsertComma:
+	set .@str$, getarg(0);
+	for (set .@i,getstrlen(.@str$)-3; .@i>0; set .@i,.@i-3)
+		set .@str$, insertchar(.@str$,",",.@i);
+	return .@str$;
+
+OnRpawn:
+	monster "prontera",155,111,"ÉËº¦²âÊÔÄ¾×®",2409,1,strnpcinfo(0)+"::OnRpawn";
+	.mobcid = $@mobid[0];
+	end;
+OnInit:
+	.record = 0;
+	.test_time = 3; //ÉèÖÃÍ³¼ÆÊ±¼ä Ãë
+	//²âÊÔÄ§ÎïGID
+	monster "prontera",155,111,"ÉËº¦²âÊÔÄ¾×®",2409,1,strnpcinfo(0)+"::OnRpawn";
+	.mobcid = $@mobid[0];
+	end;
+}

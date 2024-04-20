@@ -1,0 +1,180 @@
+/*----------------------------
+	玩家A花费ROB验证非主城，非副本区域的玩家B
+	玩家B通过验证，奖励玩家B道具
+	玩家B未通过验证扣除ROB,奖励玩家A道具
+	
+	玩家B通过验证时，奖励玩家B道具价值不超过玩家A抽出ROB价值
+	玩家B未通过验证时，奖励玩家A道具价值不超过扣除玩家B费用ROB价值
+	如果玩家B携带rob不足以支付扣除数值，则不会给与玩家A奖励【防止刷奖励】
+	一般用于BOSS区等。
+	可以要求进入区域时求携带足够数量rob才进行传送，保证玩家有随身携带rob
+	
+	验证失败玩家会被传送至主城
+	传送命令在161-164行位置，自行修改
+	发布：山有：761355061
+	供免费转载
+	初始化设置位置25-30行，具体数值自行设置
+------------------------------*/
+
+
+
+prontera,150,119,5	script	初心者#1	-1,{
+	goto Onc;
+end;
+Oninit:
+	.yzfy = 1000000;		//开启验证需要费用
+	.yzsb = 5000000;		//被验证未通过扣除费用
+	.yztg1 = 501;			//被验证玩家通过后奖励道具ID
+	.yztg2 = 2;				//被验证玩家通过后奖励道具数量
+	.yzsb1 = 502;			//被验证玩家未通过开启验证玩家奖励道具ID
+	.yzsb2 = 3;				//被验证玩家未通过开启验证玩家奖励道具数量
+end;
+Onc:
+	if(getnpctimer(1)>0){
+	mes "有玩家在整验证中，请等待验证完成！";
+	end;
+	}
+	callsub yrzt,1;
+	mes "[挂机验证]";
+	mes "这里提供在线验证";
+	mes "每次收费"+.yzfy;
+	mes "如果对方未通过验证,你将获取"+.yzsb+"rob";
+	mes "是否开始验证?";
+	if(prompt("验证:取消")!= 1){callsub yrzt,0;end;}
+	clear;
+	if(zeny<.yzfy){mes "费用不足，无法开启验证";callsub yrzt,0;end;}
+	Zeny-=.yzfy;
+	
+	.aid=getcharid(3);
+	callsub shoujiID;
+	callsub xianshiID;
+	if(getarraysize(.aidz[0])<1){
+		mes "没有可以验证的角色！";
+		callsub yrzt,0;
+		Zeny+=.yzfy;
+		end;
+	}
+	callsub shuruID;
+	if( inarray(.aidz[0],.sr) == -1 ){
+	clear;
+	mes "输入ID有误，请重新输入！";
+	next;
+	clear;
+	callsub xianshiID;
+	callsub shuruID;
+	if( inarray(.aidz[0],.sr) == -1 ){
+		clear;
+		mes "输入ID有误，验证失败！";
+		callsub yrzt,0;
+		end;}
+	}
+	mes "开始验证,请关闭窗口等待结果";
+	close2;
+	callsub yanzheng;
+	end;
+	
+	
+	
+shuruID:
+	mes "输入被验证的玩家的7位ID";
+	input .sr;
+	return;
+end;
+shoujiID:
+	deletearray .aidz[0],-1;
+	addrid(0);
+	if(getcharid(3)!=.aid && strcharinfo(3)!="prontera" && strpos(strcharinfo(3),"#",0)<0 && getgmlevel()<5){
+	setarray .aidz[getarraysize(.aidz)],getcharid(3);end;}
+	if(getcharid(3)!=.aid ){end;}
+	return;
+end;
+xianshiID:
+	for(.@a=0;.@a<getarraysize(.aidz);.@a++){
+	mes ""+rid2name(.aidz[.@a])+" ["+.aidz[.@a]+"]";
+	}
+	return;
+end;
+
+yanzheng:
+
+	sc_start Eff_Stun,5000,0,10000,SCSTART_NOTICKDEF,.sr;
+	setpcblock 47,1,.sr;
+	sleep2 1000;
+	attachrid .sr;
+	disable_items;
+	initnpctimer;
+	@yztg=0;
+	.@a=rand(10,20);
+	.@b=rand(10);
+	.kc=cap(.yzsb,0,zeny);
+	if(rand(2)==0){
+		.@j$="+";
+		.@s=.@a+.@b;
+	}else{
+		.@j$="-";
+		.@s=.@a-.@b;
+	}
+	mes "[在线奖励]";
+	mes "请在25秒内输入结果。";
+	mes "请输入 "+.@a+.@j$+.@b+" 的值";
+	input .@da;
+	setpcblock(47,0);
+debugmes "======问题："+.@s+"===答案："+.@da;
+	if(.@da==.@s){
+	@yztg=1;
+debugmes "======验证通过，获取验证奖励===="+@yztg;
+
+	getitem .yztg1,.yztg2;
+	stopnpctimer;
+	callsub yrzt,0;
+	enable_items;
+	end;
+	}
+debugmes "======验证失败，跳转至验证失败事件===="+@yztg;
+	callsub yanzhengsb;
+	
+end;
+
+	
+yrzt:
+	.yr = getarg(0);
+	if(.yr==0){
+		stopnpctimer("挂机验证计时器");
+		setnpctimer(0,"挂机验证计时器");
+		stopnpctimer;
+	}else{
+		initnpctimer("挂机验证计时器");
+	}
+	return;
+end;
+
+yanzhengsb:
+debugmes "======验证失败，传送回城";
+	enable_items;
+	zeny-=.kc;
+	if(.kc>=.yzsb){
+	getitem .yzsb1,.yzsb2,.aid;}
+	callsub yrzt,0;
+	stopnpctimer;
+	detachnpctimer;
+	setpcblock(47,0);
+//-------------验证失败传送会出位置，自行修改
+//	getmapxy(.@map$,.@x,.@y,BL_NPC,"波利");
+//	warp .@map$,.@x,.@y;
+	warp "Save",0,0;
+end;
+OnTimer25000:
+	attachrid .sr;
+	if(@yztg==0){
+	callsub yanzhengsb;
+	}
+end;
+}
+-	script	挂机验证计时器	-1,{
+end;
+
+OnTimer60000:
+	set getvariableofnpc(.yr,"初心者#1"), 0;
+	stopnpctimer;
+end;
+}

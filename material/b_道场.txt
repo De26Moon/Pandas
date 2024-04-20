@@ -1,0 +1,179 @@
+prontera,146,104,6	script	道场挑战	417,{
+	mes "==================";
+	mes "选择你要挑战的道场难度";
+	mes "==================";
+	callsub Dc,(select(">> 初级 <<:>> 中级 <<:>> 高级 <<:>> 史诗 <<"));
+Dc:
+	if((select("报名参加:取消"))==2){
+	close;}
+	callsub jinru1,getarg(0);
+	end;
+		
+jinru1:
+	if(getarg(0)>.kfd){clear;mes "暂未开放。";close;}
+	if (is_party_leader() == false){clear;mes "只有队长才可以开启挑战。";close;}
+	if(instance_check_party(getcharid(1),1,90) == 0){clear;mes "队伍等级要求：90","队伍内有成员等级不满足开启条件。";close;}
+/*
+	.aid = getcharid(3);
+	addrid(getcharid(1));
+	if(callfunc("Sy_tilid")<3){
+	setarray .aidz[getarraysize(.aidz)],getcharid(3);}
+	if(getcharid(3)!=.aid){end;}
+	if(getarraysize(.aidz)>0){
+		for(.@a=0;.@a<getarraysize(.aidz);.@a++){
+			mes "队员："+rid2name(.aidz[.@a])+" 体力不足.";
+		}
+		end;
+	}
+*/	
+	getpartymember getcharid(1),1;			//取队伍角色ID
+	copyarray .@cid[0],$@partymembercid[0],$@partymembercount;
+	getpartymember getcharid(1),2;			//取队伍账号ID
+	copyarray .@aid[0],$@partymemberaid[0],$@partymembercount;
+	
+	.@a$ = "道场";
+	switch(getarg(0)){
+		case 1:.@b=5;break;
+		case 2:.@b=8;break;
+		case 3:.@b=12;break;
+		case 4:.@b=12;break;}
+	if(getarraysize(.@cid)>.@b){
+	clear;mes .@a$+"人数要求:1-"+.@b,"队伍当前人数超出限制","无法开启挑战";close;}
+	if(instance_create(.@a$)<0){
+	clear;mes "报名失败...","可能原因:","  "+.@a$+"已存在，不可重复创建","  找不到你的队伍信息","  未知错误...";close;}
+	set getinstancevar('Dcx, instance_id(IM_PARTY)),getarg(0);
+	for(.@a=0;.@a<getarraysize(.@cid);.@a=.@a+1){
+	
+		if(isloggedin(.@aid[.@a],.@cid[.@a])==1){
+			if(!checkvending(convertpcinfo(.@cid[.@a],CPC_NAME)) && checksuspend(.@cid[.@a])==SUSPEND_MODE_NONE){
+				instance_enter(.@a$,-1,-1,.@cid[.@a]);
+			}	
+		}
+	}
+	end;
+OnInit:
+	showvend "道场挑战",1,"【道场】";
+//	waitingroom "【道场】",0;
+	.kfd = 2;																							//开放道场到第几个
+	end;
+}
+dc1,69,67,5	script	开始挑战#g2	417,{
+	
+//===========================怪物列表=======================================================
+	switch('Dcx ){
+		case 1:
+			'a$ = "初级道场";
+			'ys = 5000;																					//刷怪间隔
+			'yk = 6;																					//刷怪回合数
+			'sl = 1;																					//刷怪数量
+			setarray 'gwlb[0],24004,24006,24008,24010,24012,24014,24016,24018,24020,24022,24024,24026;
+			setarray 'Dc_Jl[0],7621,2,30043,1,30138,2,30090,3,30045,2,30046,2,30047,2,30048,2,30049,2,30050,2;
+			setarray 'gdjl[0],30029,1;																	//固定奖励道具ID,数量																	
+			break;
+		case 2:
+			'a$ = "中级道场";
+			'ys = 5000;																						
+			'yk = 9;																							
+			'sl = 3;																					//刷怪数量
+			setarray 'gwlb[0],24002,24028,24030,24032,24034,24036,24038,24040,24042,24044,24046,24048;
+			setarray 'Dc_Jl[0],30138,2,30043,2,6909,2,30096,2,7621,2,12210,1,30018,5;
+			setarray 'gdjl[0],30029,2;	
+			break;
+		case 3:
+			'a$ = "高级道场";
+			'ys = 5000;																						
+			'yk = 12;																							
+			'sl = 6;																					//刷怪数量
+			setarray 'gwlb[0],1038,1157,1492,1734,1647,1039,1159,1511,1751,1648,1046,1190,1583,1768,1649,1059,1251,1623,1779,1650,1086,1252,1630,1785,1651,1087,1272,1658,1832,1112,1312,1685,1871,1115,1373,1688,1874,1147,1389,1708,1885,1150,1418,1719,1646;
+			setarray 'Dc_Jl[0],671,2,671,3,671,4,671,5;
+			setarray 'gdjl[0],0,2000000,984,1;	
+			break;
+		case 4:
+			'a$ = "史诗道场";
+			'ys = 5000;																						
+			'yk = 15;																					
+			'sl = 9;																					//刷怪数量		
+			setarray 'gwlb[0],1001,2,1002,2,1004,2,1005,2,1007,2,1009,2,1010,2,1115,1;
+			setarray 'Dc_Jl[0],501,1,501,1,501,1,501,1,501,1,501,1;
+			setarray 'gdjl[0],0,5000000,984,1;	
+			break;}
+//============================================================================================
+	if (is_party_leader() == false) {mes "只有队长才可以开启挑战。";close;}
+	donpcevent instance_npcname("#gl")+"::OnEVENT";
+	addrid(getcharid(1));
+	sy_tili-=3;
+	end;
+	}
+dc1,69,67,0	script	#gl	-1,{
+end;
+XXX1:
+	if(getarg(1)!=0){
+		mapannounce instance_mapname("dc1"), "============="+.@a$+"第"+getarg(0)+"关，剩余数量："+getarg(1)+"=============",bc_map,"0xFFFF00";return;}
+	else{
+		if(getarg(0)<'yk){mapannounce instance_mapname("dc1"), "============="+.@a$+"第"+getarg(0)+"关挑战成功，开始第"+(getarg(0)+1)+"关挑战！=============",bc_map,"0xFFFF00";
+		'x++;
+			sleep3 'ys;return;}
+		else{
+				mapannounce instance_mapname("dc1"), "============="+.@a$+"挑战成功！=============",bc_map,"0xFFFF00";
+				sleep3 3000;
+				enablenpc instance_npcname("领取奖励#g3");}
+		}end;	
+OnEVENT:
+	disablenpc instance_npcname("开始挑战#g2");	
+	'x=1;
+	for(.@a=0;.@a<'sl;.@a++){
+	.@i = rand(getarraysize('gwlb));
+	monster instance_mapname("dc1"),69,67,"BOSS",'gwlb[.@i],1,instance_npcname("#gl")+"::OnMyMobDead";}
+	end;	
+OnMyMobDead:
+	.@e=mobcount(instance_mapname("dc1"),instance_npcname("#gl")+"::OnMyMobDead");
+	callsub XXX1,'x,.@e;
+	if(.@e==0){
+	for(.@a=0;.@a<'sl;.@a++){
+	.@i = rand(getarraysize('gwlb));
+	monster instance_mapname("dc1"),69,67,"BOSS",'gwlb[.@i],1,instance_npcname("#gl")+"::OnMyMobDead";}
+	}end;
+}
+dc1,69,67,5	script	领取奖励#g3	417,{
+    if(is_party_leader()==false){end;}
+	getpartymember getcharid(1),1;													
+	copyarray .@cid[0],$@partymembercid[0],$@partymembercount;
+	getpartymember getcharid(1),2;
+	copyarray .@aid[0],$@partymemberaid[0],$@partymembercount;
+	for(.@a=0;.@a<getarraysize(.@cid);.@a=.@a+1){
+		if(isloggedin(.@aid[.@a],.@cid[.@a])==1 ){			
+			if(strcharinfo(3,.@cid[.@a]) == instance_mapname("dc1")){
+				.@s=rand(0,getarraysize('Dc_Jl)/2-1)*2;	
+				getitem 'Dc_Jl[.@s],'Dc_Jl[.@s+1],.@aid[.@a];	
+				for(.@s=0;.@s<getarraysize('gdjl);.@s+=2){if('gdjl[.@s]==0){Zeny+='gdjl[.@s+1];}else{getitem 'gdjl[.@s],'gdjl[.@s+1],.@aid[.@a];}}
+			}	
+		}
+	}
+	instance_warpall "prontera",116,62;
+		sleep3 2000;
+		#sy_dccs+=1;
+		debugmes "=======今日道场次数:"+#sy_dccs;
+		if(callfunc("Sy_dc_cs")>10){
+			getmapxy(.@map$,.@x,.@y,BL_NPC,"波利");
+			warp .@map$,.@x,.@y;
+			
+		}
+	instance_destroy;
+	end;
+OnInstanceInit:
+	movenpc "领取奖励#g3",rand(62,77),rand(60,75);
+	movenpc "开始挑战#g2",rand(62,77),rand(60,75);
+	disablenpc instance_npcname("领取奖励#g3");
+	end;
+}
+
+
+
+function	script	Sy_dc_cs	{
+	if(#sy_dcsj!=gettime(DT_DAYOFMONTH)){
+		#sy_dcsj=gettime(DT_DAYOFMONTH);
+		#sy_dccs=0;
+	}
+	return #sy_dccs;	
+	end;
+}

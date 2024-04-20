@@ -1,0 +1,95 @@
+-	script	lhzdunnY5	-1,{
+
+OnMinute30:
+	killmonsterall "lhz_dun_n";
+	switch(rand(1,24)) {
+case 1:  
+	announce "元素使西里亚逃逸。",0;
+	monster "lhz_dun_n",140,263,"元素使西里亚", 3242,1;
+	end;
+case 2:  
+	announce "修罗陈理欧逃逸。",0;
+	monster "lhz_dun_n",140,263,"修罗陈理欧", 3243,1;
+	end;
+case 3:  
+	announce "宫廷乐师雅欧帕奇尔逃逸。",0;
+	monster "lhz_dun_n",140,263,"宫廷乐师雅欧帕奇尔", 3245,1;
+	end;
+case 4:  
+	announce "十字切割者艾勒梅斯逃逸。",0;
+	monster "lhz_dun_n",140,263,"十字切割者 艾勒梅斯", 3220,1;
+	end;
+case 5:  
+	announce "大主教玛嘉雷特逃逸。",0;
+	monster "lhz_dun_n",140,263,"大主教 玛嘉雷特", 3221,1;
+	end;
+case 6:  
+	announce "游侠迪文逃逸。",0;
+	monster "lhz_dun_n",140,263,"游侠 迪文", 3222,1;
+	end;
+case 7:  
+	announce "机匠哈沃德逃逸。",0;
+	monster "lhz_dun_n",140,263,"机匠 哈沃德", 3223,1;
+	end;
+case 8:  
+	announce "大法师凯特莉娜逃逸。",0;
+	monster "lhz_dun_n",140,263,"大法师 凯特莉娜", 3224,1;
+	end;
+case 9:  
+	announce "符文骑士赛依连逃逸。",0;
+	monster "lhz_dun_n",140,263,"符文骑士 赛依连", 3243,1;
+	end;
+case 10:  
+	announce "皇家卫士兰达逃逸。",0;
+	monster "lhz_dun_n",140,263,"皇家卫士兰达", 3240,1; 
+	end;
+case 11:  
+	announce "基因学者普拉梅姆逃逸。",0;
+	monster "lhz_dun_n",140,263,"基因学者普拉梅姆", 3241,1;
+	end;
+case 12:  
+	announce "逐影科迪逃逸。",0;
+	monster "lhz_dun_n",140,263,"逐影科迪", 3244,1;
+	end;
+case 13: 
+case 14: 
+case 15: 
+case 16: 
+case 17: 
+case 18: 
+case 19: 
+case 20: 
+case 21:
+case 22: 
+case 23: 
+case 24:  
+	announce "所有实验体逃逸。",0; 
+	monster "lhz_dun_n",0,0,"元素使西里亚", 3242,1;
+	monster "lhz_dun_n",0,0,"修罗陈理欧", 3243,1;
+	monster "lhz_dun_n",0,0,"宫廷乐师雅欧帕奇尔", 3245,1;
+	monster "lhz_dun_n",0,0,"十字切割者艾勒梅斯", 3220,1;
+	monster "lhz_dun_n",0,0,"大主教玛嘉雷特", 3221,1;
+	monster "lhz_dun_n",0,0,"游侠迪文", 3222,1;
+	monster "lhz_dun_n",0,0,"机匠哈沃德", 3223,1;
+	monster "lhz_dun_n",0,0,"大法师凯特莉娜", 3224,1;
+	monster "lhz_dun_n",0,0,"符文骑士赛依连", 3243,1;
+	monster "lhz_dun_n",0,0,"皇家卫士兰达", 3240,1; 
+	monster "lhz_dun_n",0,0,"基因学者普拉梅姆", 3241,1;
+	monster "lhz_dun_n",0,0,"逐影科迪", 3244,1;
+	end;
+	};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

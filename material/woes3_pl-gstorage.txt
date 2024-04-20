@@ -1,0 +1,116 @@
+// WoE Setter 3 Plug-in
+// Player -  Secure Guild Storage
+// By: [GM]Xeon
+// Version: 1.0.0
+
+-	script	WoES3Pl_RGStore	-1,{
+end;
+OnLoadPlugins: //The following section adds the plug-in to the main NPC
+	if (!query_sql("show columns from `guild` like 'gstorage_mode'",.@ignore,.@ignore,.@ignore,.@ignore,.@ignore,.@ignore)) query_sql("ALTER TABLE `guild` ADD COLUMN `gstorage_mode` INTEGER UNSIGNED NOT NULL DEFAULT 0 AFTER `emblem_data`, ADD COLUMN `gstorage_pos` INTEGER UNSIGNED NOT NULL DEFAULT 10 AFTER `gstorage_mode`, ADD COLUMN `gstorage_password` VARCHAR(45) AFTER `gstorage_pos`",.@ignore);
+	set $@woes3_pl_playermenu$[getarraysize($@woes3_pl_playermenu$)], "公会仓库功能";
+	set $@woes3_pl_player$[getarraysize($@woes3_pl_player$)], "GStore";
+	end;
+}
+
+function	script	WoES3Pl_GStore	{
+L_Guild:
+	if (!query_sql("show columns from `guild` like 'gstorage_mode'",@ignore,@ignore,@ignore,@ignore,@ignore,@ignore)) { mes "资料库发生严重错误。请立即回报游戏管理员！"; return; }
+	if (!getcharid(2)) {
+		mes "[公会仓库]";
+		mes "您必须加入公会才能使用此功能！";
+		return;
+	}
+	mes "[公会仓库]";
+	mes "您需要什么服务呢？";
+	next;
+	switch(select("开启公会仓库","查看公仓设定","返回")) {
+		case 1:
+			goto L_UseGStorage;
+		case 2:
+			query_sql "select gstorage_mode,gstorage_pos,gstorage_password from `guild` where `guild_id` = "+getcharid(2),@mode,@pos,@password$;
+			if (strcharinfo(0) == getguildmaster(getcharid(2))) {
+				next;
+				mes "[公会仓库]";
+				mes "公会仓库目前的设定是 "+@mode[0];
+				mes "0=没有限制";
+				mes "1=特定权限";
+				mes "2=密码保护";
+				switch(select("更改设定","设定权限","设定密码","返回")) {
+					case 1:
+						mes "请输入编号";
+						input @temp;
+						if (@temp < 0) set @temp, 0;
+						if (@temp > 2) set @temp, 2;
+						query_sql "update `betterra_main`.`guild` set gstorage_mode = "+@temp+" where guild_id = "+getcharid(2),@ignore;
+						mes "设定变更为 "+@temp;
+						next;
+						goto L_Guild;
+					case 2:
+						mes "请输入权限(此部份同公会简讯)";
+						mes "输入 1=只有会长可用公会仓库，";
+						mes "输入 20=所以会员都可使用。";
+						input @temp;
+						if (@temp < 1) set @temp, 1;
+						if (@temp > 20) set @temp, 20;
+						query_sql "update `betterra_main`.`guild` set gstorage_pos = "+@temp+" where guild_id = "+getcharid(2),@ignore;
+						mes "最低权限变更为 "+@temp;
+						next;
+						goto L_Guild;
+					case 3:
+						mes "请输入公仓密码，输入空格为取消。";
+						input @temp$;
+						set @temp$, escape_sql(@temp$);
+						if (@temp$ == " ") {
+							next;
+							goto L_Guild;
+						}
+						query_sql "update `betterra_main`.`guild` set gstorage_password = '"+escape_sql(@temp$)+"' where guild_id = "+getcharid(2),@ignore;
+						mes "公仓密码变更为 "+@temp$;
+						next;
+						goto L_Guild;
+					case 4:
+						next;
+						goto L_Guild;
+				}
+			} else {
+				query_sql "select gstorage_mode from `betterra_main`.`guild` where guild_id = "+getcharid(2),@mode;
+				mes "[公会仓库]";
+				switch(@mode) {
+					case 0: mes "公会仓库目前无任何限制。"; break;
+					case 1: mes "公会仓库目前只有特定权限的人才可使用。"; break;
+					case 2: mes "公会仓库目前须输入密码才可使用。"; break;
+				}
+				next;
+				goto L_Guild;
+			}
+		case 3:
+			return;
+	}
+
+L_UseGStorage:
+	if (strcharinfo(0) == getguildmaster(getcharid(2))) goto L_UseGStorageSkip;
+	query_sql "select gstorage_mode,gstorage_pos,gstorage_password from `betterra_main`.`guild` where guild_id = "+getcharid(2),@mode,@pos,@password$;
+	if (@mode[0] == 1) {
+		query_sql "select position from `betterra_main`.`guild_member` where guild_id = "+getcharid(2)+" and char_id = "+getcharid(0),@current_pos;
+		if (@current_pos[0] > (@pos[0] - 1)) {
+			mes "[公会仓库]";
+			mes "抱歉，您没办法使用公会仓库！";
+			return;
+		}
+	}
+	if (@mode[0] == 2) {
+		mes "[公会仓库]";
+		mes "公会会长设定了仓库密码，现在请您输入密码：";
+		input @pw$;
+		if (@pw$ != @password$[0]) {
+			next;
+			mes "[公会仓库]";
+			mes "抱歉，密码不正确！";
+			return;
+		}
+	}
+L_UseGStorageSkip:
+	close2;
+	guildopenstorage();
+	end;
+}

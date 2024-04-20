@@ -1,0 +1,538 @@
+//================================================================================================================
+// 脚本：勋章系统
+// 版本：V1.1
+// 适用：pandas
+// 更新：2019-12-25
+// Q Q：191279750
+//----------------------------------------------------------------------------------------------------------------
+// 勋章分色，绿，红，蓝，橙设定（道具及DB需自己添加）
+// 绿色为基础属性，红色为攻击属性，蓝色为防御恢复，橙色为特殊
+// 每种颜色勋章可佩戴数量默认为10个，勋章等级及属性可自行设置
+// 人物勋章总属性变量名char_medal_var
+// 绿色char_medal_var[1-6], bstr, bagi, bvit, bint, bdex, bluk
+// 红色char_medal_var[7-12], bAtk, bMatk, bHit, bCritical, bPerfectHitAddRate, bAspdRate
+// 蓝色char_medal_var[13-18], bDef, bMdef, bFlee, bFlee2, bHPrecovRate, bSPrecovRate
+// 橙色char_medal_var[19-24], bMaxHPrate, bMaxSPrate, bSpeedRate, bLongAtkRate, bCritAtkRate, bAtkRange
+//----------------------------------------------------------------------------------------------------------------
+/*
+//勋章相关
+64201,Oro_medal_green_debris,绿色勋章碎片,3,20,,10,,,,,0xFFFFFFFE,63,2,,,,,,{},{},{}
+64202,Oro_medal_red_debris,红色勋章碎片,3,20,,10,,,,,0xFFFFFFFE,63,2,,,,,,{},{},{}
+64203,Oro_medal_blue_debris,蓝色勋章碎片,3,20,,10,,,,,0xFFFFFFFE,63,2,,,,,,{},{},{}
+64204,Oro_medal_orange_debris,橙色勋章碎片,3,20,,10,,,,,0xFFFFFFFE,63,2,,,,,,{},{},{}
+//绿
+64210,Oro_medal_green_lv1_01,业火[Lv. 1 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64210; },{},{}
+64211,Oro_medal_green_lv1_02,磷火[Lv. 1 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64211; },{},{}
+64212,Oro_medal_green_lv1_03,流火[Lv. 1 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64212; },{},{}
+64213,Oro_medal_green_lv1_04,花火[Lv. 1 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64213; },{},{}
+64214,Oro_medal_green_lv2_01,业火[Lv. 2 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64214; },{},{}
+64215,Oro_medal_green_lv2_02,磷火[Lv. 2 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64215; },{},{}
+64216,Oro_medal_green_lv2_03,流火[Lv. 2 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64216; },{},{}
+64217,Oro_medal_green_lv2_04,花火[Lv. 2 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64217; },{},{}
+64218,Oro_medal_green_lv3_01,业火[Lv. 3 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64218; },{},{}
+64219,Oro_medal_green_lv3_02,磷火[Lv. 3 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64219; },{},{}
+64220,Oro_medal_green_lv3_03,流火[Lv. 3 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64220; },{},{}
+64221,Oro_medal_green_lv3_04,花火[Lv. 3 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64221; },{},{}
+64222,Oro_medal_green_lv4_01,业火[Lv. 4 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64222; },{},{}
+64223,Oro_medal_green_lv4_02,磷火[Lv. 4 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64223; },{},{}
+64224,Oro_medal_green_lv4_03,流火[Lv. 4 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64224; },{},{}
+64225,Oro_medal_green_lv4_04,花火[Lv. 4 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64225; },{},{}
+64226,Oro_medal_green_lv5_01,业火[Lv. 5 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64226; },{},{}
+64227,Oro_medal_green_lv5_02,磷火[Lv. 5 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64227; },{},{}
+64228,Oro_medal_green_lv5_03,流火[Lv. 5 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64228; },{},{}
+64229,Oro_medal_green_lv5_04,花火[Lv. 5 绿色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64229; },{},{}
+//红
+64230,Oro_medal_red_lv1_01,战刃[Lv. 1 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64230; },{},{}
+64231,Oro_medal_red_lv1_02,血刃[Lv. 1 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64231; },{},{}
+64232,Oro_medal_red_lv1_03,光刃[Lv. 1 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64232; },{},{}
+64233,Oro_medal_red_lv1_04,利刃[Lv. 1 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64233; },{},{}
+64234,Oro_medal_red_lv2_01,战刃[Lv. 2 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64234; },{},{}
+64235,Oro_medal_red_lv2_02,血刃[Lv. 2 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64235; },{},{}
+64236,Oro_medal_red_lv2_03,光刃[Lv. 2 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64236; },{},{}
+64237,Oro_medal_red_lv2_04,利刃[Lv. 2 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64237; },{},{}
+64238,Oro_medal_red_lv3_01,战刃[Lv. 3 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64238; },{},{}
+64239,Oro_medal_red_lv3_02,血刃[Lv. 3 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64239; },{},{}
+64240,Oro_medal_red_lv3_03,光刃[Lv. 3 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64240; },{},{}
+64241,Oro_medal_red_lv3_04,利刃[Lv. 3 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64241; },{},{}
+64242,Oro_medal_red_lv4_01,战刃[Lv. 4 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64242; },{},{}
+64243,Oro_medal_red_lv4_02,血刃[Lv. 4 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64243; },{},{}
+64244,Oro_medal_red_lv4_03,光刃[Lv. 4 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64244; },{},{}
+64245,Oro_medal_red_lv4_04,利刃[Lv. 4 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64245; },{},{}
+64246,Oro_medal_red_lv5_01,战刃[Lv. 5 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64246; },{},{}
+64247,Oro_medal_red_lv5_02,血刃[Lv. 5 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64247; },{},{}
+64248,Oro_medal_red_lv5_03,光刃[Lv. 5 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64248; },{},{}
+64249,Oro_medal_red_lv5_04,利刃[Lv. 5 红色],11,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_oro_char_medal", 64249; },{},{}
+*/
+//基础设置
+-	script	E_oro_char_medal_set	-1,{
+end;
+
+OnInit:
+	setarray $oro_medal_color$[1],"^698B22", "^CD0000", "^1874CD","^EE7621","^000000";
+	setarray $oro_medal_color2$[1],0x00FF00, 0xCD0000, 0x1874CD,0xEE7621,0x000000;
+	setarray $oro_medal_color_name$[1],"绿色", "红色", "蓝色","橙色","黑色";
+	setarray $oro_medal_maxcount[1], 10, 10, 10, 10, 10;
+	setarray $oro_medal_name$[1], "Str", "Agi", "Vit", "Int", "Dex", "Luk",
+				"物攻", "魔攻", "命中", "暴击", "必中攻击%", "攻击速度%",
+				"物防", "魔防", "回避", "完全回避", "HP自然恢复%", "SP自然恢复%",
+				"HP上限%", "SP上限%", "移动速度%", "远攻伤害%", "暴击伤害%", "攻击距离";
+	setarray $oro_medal_id[1], bStr, bAgi, bVit, bInt, bDex, bLuk,
+			bAtk, bMatk, bHit, bCritical, bPerfectHitAddRate, bAspdRate,
+			bDef, bMdef, bFlee, bFlee2, bHPrecovRate, bSPrecovRate,
+			bMaxHPrate, bMaxSPrate, bSpeedRate, bLongAtkRate, bCritAtkRate, bAtkRange;
+	setarray $oro_medal_id_64210, 1, 1, 1, 1, 1, 1, 1, 1;	//颜色类别，等级，后面6项为对应的加成值
+	end;
+}
+
+//勋章商店
+-	pointshop	oro_medal_shop	-1,#CashPoints|Cash点数,64092:150,64093:300,64094:500
+
+//勋章管理NPC
+//主要功能：抽取勋章碎片，兑换完整勋章，穿载或卸下勋章
+prontera,131,109,0	script	勋章管理#pro	640,{
+	function medal_change;
+	function medal_unequip;
+	disable_items;
+	mes "你好！";
+	mes "亲爱的，^0000FF"+Strcharinfo(0)+"^000000";
+	mes "我是负责勋章登记的管理员，";
+	mes "请选择你的操作！";
+	switch(select("- 抽取碎片","- 抽取勋章","- 勋章商店(使用Cash点数)","- 查看已佩戴")) {
+	//抽取碎片
+	case 1:
+		switch(select("- 使用RO币抽取","- 使用高级货币抽取")) {
+		//RO币抽取
+		case 1:
+			clear;
+			.@need_zeny = .debris_need_cost[0];
+			mes "^0088FF使用RO币抽取碎片";
+			mes "费用："+.@need_zeny/10000+"wZeny/次.";
+			do{
+				set .@s, select("抽取碎片","取消");
+				if(.@s==1){
+					if(Zeny < .@need_zeny){
+						mes "^FF0000你好像没那么多Zeny!^000000";
+						break;
+					}
+					Zeny -= .@need_zeny;
+					.@per = rand(100);
+					.@i = 0;
+					do{
+						if(.@per <= .debris_zeny_per[.@i]){
+							.@idx = .@i;
+							break;
+						}else .@idx = -1;
+						.@i++;
+					}while(.@i < getarraysize(.debris_zeny_per));
+					if(.@idx == -1){
+						mes "出错了，请联系GM！";
+						break;
+					}
+					.@count = rand(1, .debris_count[.@idx]);
+					getitem .debris_id[.@idx], .@count;
+					mes "^0000FF恭喜你,获得"+.@count+"个"+getitemname(.debris_id[.@idx])+"!^000000";
+				}
+			}while(.@s == 1);
+			break;
+		//高级货币抽取
+		case 2:
+			clear;
+			.@need_zeny = .debris_need_cost[1];
+			mes "^0088FF使用高级货币抽取碎片";
+			mes "费用："+.@need_zeny+"高级货币/次.";
+			do{
+				set .@s, select("抽取碎片","取消");
+				if(.@s==1){
+					if(PandaPoint < .@need_zeny){
+						mes "^FF0000你好像没那么多Zeny!^000000";
+						break;
+					}
+					PandaPoint -= .@need_zeny;
+					.@per = rand(100);
+					.@i = 0;
+					do{
+						if(.@per <= .debris_point_per[.@i]){
+							.@idx = .@i;
+							break;
+						}else .@idx = -1;
+						.@i++;
+					}while(.@i < getarraysize(.debris_point_per));
+					if(.@idx == -1){
+						mes "出错了，请联系GM！";
+						break;
+					}
+					.@count = rand(1, .debris_count[.@idx]);
+					getitem .debris_id[.@idx], .@count;
+					mes "^0000FF恭喜你,获得"+.@count+"个"+getitemname(.debris_id[.@idx])+"!^000000";
+				}
+			}while(.@s == 1);
+			break;
+		}
+		break;
+	//兑换勋章
+	case 2:
+		clear;
+		mes "请选择你要兑换的种类！";
+		switch(select("- 绿色","- 红色","- 蓝色","- 橙色")) {
+		case 1:
+			medal_change("绿色",0);
+			break;
+		case 2:
+			medal_change("红色",1);
+			break;
+		case 3:
+			medal_change("蓝色",2);
+			break;
+		case 4:
+			medal_change("橙色",3);
+			break;			
+		
+		}
+		break;
+	//勋章商店
+	case 3:
+		mes "^777777注：请点击关闭来打开商店^000000";
+		close2;
+		callshop "oro_medal_shop", 1;
+		end;
+	//查看已佩戴
+	case 4:
+		switch(select("- 绿色","- 红色","- 蓝色","- 橙色")) {
+		case 1:
+			medal_unequip("绿色",1);
+			break;
+		case 2:
+			medal_unequip("红色",2);
+			break;
+		case 3:
+			medal_unequip("蓝色",3);
+			break;
+		case 4:
+			medal_unequip("橙色",4);
+			break;
+		}
+		break;
+	}
+	mes "再见！";
+	close;
+
+//勋章查看及卸下
+function	medal_unequip	{
+
+	.@group$ = getarg(0);			//颜色
+	.@type = getarg(1);		//组别
+	.@size = getarraysize(getd("char_medal_menu_id"+.@type));
+	clear;
+	//如果没有佩戴则提示
+	if(.@size < 1){
+		mes "当前类别尚未佩戴任何勋章！";
+		close;
+	}
+	// ------------------显示加成数据---------------------
+	if(.@type == 1) setarray .@idx, 1, 6;
+	if(.@type == 2) setarray .@idx, 7, 12;
+	if(.@type == 3) setarray .@idx, 13, 18;
+	if(.@type == 4) setarray .@idx, 19, 24;
+	mes "------<<<^DC143C"+.@group$+"勋章加成^000000>>>------";
+	mes " - 佩戴数量 : ^DC143C"+.@size+"^000000 / "+$oro_medal_maxcount[.@type];
+	.@i = .@idx[0];
+	do{
+		mes " -"+$oro_medal_color$[.@type]+$oro_medal_name$[.@i]+" : + "+char_medal_var[.@i];
+		.@i++;
+	}while(.@i <= .@idx[1]);
+	mes "^777777注：选择后可卸下该勋章. ^000000";
+	// ------------------显示已佩戴的勋章---------------------
+		//循环组合成菜单
+		for(.@i = 0; .@i < .@size; .@i++) {
+			.@item_id = getd("char_medal_menu_id"+.@type+"["+.@i+"]");
+			set .@menulist$, .@menulist$ + ":" + getitemname(.@item_id);	
+			.@menulist[.@j] = .@i;
+			.@menulist_id[.@j] = .@item_id;
+			.@j++;
+		}
+		//菜单选择的ITEM IDX
+		.@item_idx = .@menulist[select(.@menulist$)-2];
+		set .@s, select("确定卸下","取消");
+		if(.@s == 2) close;
+		clear;
+		mes " "+$oro_medal_color$[.@type]+"Lv."+.@level+" "+getitemname(.@menulist_id[.@item_idx])+" ^000000卸下成功！";
+		deletearray getd("char_medal_menu_id"+.@type+"["+.@item_idx+"]"), 1;
+		getitem .@item_id[.@item_idx], 1;
+		.@item_id = .@item_id[.@item_idx];
+
+		//复制数组变量
+		.@array_size = getarraysize(getd("$oro_medal_id_"+.@item_id));
+		copyarray .@medal_info[0], getd("$oro_medal_id_"+.@item_id+"[0]"), .@array_size;
+		.@type = .@medal_info[0];		
+		.@level = .@medal_info[1];		
+		.@add_var01 = .@medal_info[2];	
+		.@add_var02 = .@medal_info[3];
+		.@add_var03 = .@medal_info[4];
+		.@add_var04 = .@medal_info[5];
+		.@add_var05 = .@medal_info[6];
+		.@add_var06 = .@medal_info[7];
+		//循环赋值
+		for( .@i = .@idx[0]; .@i <= .@idx[1]; .@i++ ){
+			//人物增益属性的主变量数组
+			char_medal_var[.@i] -= getd (".@add_var0"+.@i);
+			//mes "idx"+.@i+"值 "+char_medal_var[.@i];
+		}
+		.@i = .@idx[0];
+		.@v = 1;
+		do{
+			.@var = getd (".@add_var0"+.@v);
+			.@before = char_medal_var[.@i] + .@var;
+			.@now = char_medal_var[.@i];
+			if(.@var) mes " ^A52A2A- "+$oro_medal_name$[.@i]+" : + "+.@before+" -> + "+.@now+" ^FF0000↓"+.@var+"^000000";
+			.@i++;
+			.@v++;
+		}while(.@i <= .@idx[1]);
+		//判断是否还在使用勋章中
+		.@size = getarraysize(getd("char_medal_menu_id"+.@type));
+		if(.@size){
+			setd "char_medal_type_"+.@type , 1;
+		}else{
+			setd "char_medal_type_"+.@type , 0;
+		}
+		return;
+}
+
+//勋章兑换
+function	medal_change	{
+
+	.@type$ = getarg(0);			//颜色
+	.@group_id = getarg(1);		//组别
+	.@debris_id = .debris_id[.@group_id];	//碎片ID
+	.@debris_count = getd(".medal_group_count"+.@group_id);
+	.@array_size = getarraysize(getd(".medal_group_id"+.@group_id));
+	.@medal_idx = rand(.@array_size);
+	.@medal_itemid = getd(".medal_group_id"+.@group_id+"["+.@medal_idx+"]");
+	mes " ' "+.@debris_count+" '个 "+getitemname(.@debris_id)+", ";
+	mes " 兑换";
+	mes " ' 1 '个 "+.@type$+" 类别勋章. ";
+	mes "^777777注：物品为此类别中随机获取！^000000";
+	set .@s, select("确定兑换","取消");
+	if(.@s==2) close;
+	if(countitem(.@debris_id) < .@debris_count){
+		mes "携带的材料不够！";
+		mes "请带来 "+.@debris_count+" 个 "+getitemname(.@debris_id)+". ";
+		close;
+	}
+	delitem .@debris_id, .@debris_count;
+	getitem .@medal_itemid, 1;
+	mes "兑换成功！"+.@debris_id;
+	mes "^0000FF恭喜你,获得了"+getitemname(.@medal_itemid)+"!^000000"+.@debris_count;
+	return;
+}
+
+
+OnInit:
+//-------------------------------------------------------------------------------
+	//碎片ID
+	setarray .debris_id, 64201, 64202, 64203, 64204;
+	//抽取数量
+	setarray .debris_count, 10, 5, 5, 1;
+	//RO币抽取的机率
+	setarray .debris_zeny_per, 70, 85, 95, 100;
+	//高级货币抽取的机率
+	setarray .debris_point_per, 15, 40, 80, 100;
+	//抽取时需要的费用
+	setarray .debris_need_cost, 10000, 500;
+	//绿色勋章ID
+	setarray .medal_group_id0, 64205, 64206;
+	.medal_group_count0 = 100;
+	
+	setarray .medal_group_id1, 64205, 64206;
+	.medal_group_count1 = 100;
+	
+	setarray .medal_group_id2, 64205, 64206;
+	.medal_group_count2 = 100;
+	
+	setarray .medal_group_id3, 64205, 64206;
+	.medal_group_count3 = 100;
+//-------------------------------------------------------------------------------
+	end;
+}
+
+function	script	F_oro_char_medal	{
+	disable_items;
+	.@item_id = getarg(0);	//物品ID
+	//复制数组变量
+	.@array_size = getarraysize(getd("$oro_medal_id_"+.@item_id));
+	copyarray .@medal_info[0], getd("$oro_medal_id_"+.@item_id+"[0]"), .@array_size;
+	.@type = .@medal_info[0];		//勋章类别1为绿色，2为红色，3为蓝色，4为橙色
+	.@level = .@medal_info[1];		//勋章等级，最高为5级
+	.@add_var01 = .@medal_info[2];	//对应增益属性的值
+	.@add_var02 = .@medal_info[3];
+	.@add_var03 = .@medal_info[4];
+	.@add_var04 = .@medal_info[5];
+	.@add_var05 = .@medal_info[6];
+	.@add_var06 = .@medal_info[7];
+	if(.@type == 1) setarray .@idx, 1, 6;
+	if(.@type == 2) setarray .@idx, 7, 12;
+	if(.@type == 3) setarray .@idx, 13, 18;
+	if(.@type == 4) setarray .@idx, 19, 24;
+	mes "-------<<<^DC143C勋章属性^000000>>>-------";
+	mes " "+$oro_medal_color$[.@type]+"- Lv."+.@level+" "+getitemname(.@item_id)+"^000000";
+	.@i = .@idx[0];
+	.@v = 1;
+	do{
+		.@var = getd (".@add_var0"+.@v);
+		if(.@var) mes " ^A52A2A- "+$oro_medal_name$[.@i]+" : +"+.@var+"^000000";
+		.@i++;
+		.@v++;
+	}while(.@i <= .@idx[1]);
+	switch(select("- 佩戴","- 卸下其它")) {
+	//佩戴
+	case 1:
+		clear;
+		mes "-------<<<^DC143C佩戴勋章^000000>>>-------";
+		//先获取当前类别勋章的数量
+		if(getd("oro_char_medal_count_"+.@type) < $oro_medal_maxcount[.@type]){
+			//删除物品
+			delitem .@item_id, 1;
+			mes " "+$oro_medal_color$[.@type]+"Lv."+.@level+" "+getitemname(.@item_id)+" ^000000佩戴成功！";
+			//记录到人物已佩戴勋章的变量数组中去
+			.@size = getarraysize(getd("char_medal_menu_id"+.@type));
+			setd "char_medal_menu_id"+.@type+"["+.@size+"]" , .@item_id;
+			//循环赋值
+			for( .@i = .@idx[0]; .@i <= .@idx[1]; .@i++ ){
+				//人物增益属性的主变量数组
+				char_medal_var[.@i] += getd (".@add_var0"+.@i);
+			}
+			.@i = .@idx[0];
+			.@v = 1;
+			do{
+				.@var = getd (".@add_var0"+.@v);
+				.@before = char_medal_var[.@i] - .@var;
+				.@now = char_medal_var[.@i];
+				if(.@var) mes " ^A52A2A- "+$oro_medal_name$[.@i]+" : + "+.@before+" -> + "+.@now+" ^458B00↑"+.@var+"^000000";
+				.@i++;
+				.@v++;
+			}while(.@i <= .@idx[1]);
+			//标记为使用勋章
+			setd "char_medal_type_"+.@type , 1;
+		}else{
+			mes "^FF0000对不起，数量已满！^000000";
+			mes " ";
+			mes " - 限制佩戴数量为："+$oro_medal_maxcount[.@type]+"个. ";
+			mes " - 当前已佩戴数量为："+.@size+"个. ";
+			mes "^777777注：如要佩戴，请先卸掉一个相同类别的勋章.^000000";
+		}
+		break;
+	//更换
+	case 2:
+		clear;
+		mes "-------<<<^DC143C卸下勋章^000000>>>-------";
+		mes "请选择要卸下的勋章！";
+		.@size = getarraysize(getd("char_medal_menu_id"+.@type));
+		//如果没有佩戴则提示
+		if(.@size < 1){
+			mes "当前类别尚未佩戴任何勋章！";
+			break;
+		}
+		//循环组合成菜单
+		for(.@i = 0; .@i < .@size; .@i++) {
+			.@item_id = getd("char_medal_menu_id"+.@type+"["+.@i+"]");
+			set .@menulist$, .@menulist$ + ":" + getitemname(.@item_id);	
+			.@menulist[.@j] = .@i;
+			.@menulist_id[.@j] = .@item_id;
+			.@j++;
+		}
+		//菜单选择的ITEM IDX
+		.@item_idx = .@menulist[select(.@menulist$)-2];
+		//mes "你卸下了[ "+getitemname(.@menulist_id[.@item_idx])+" ]. ";
+		clear;
+		mes " "+$oro_medal_color$[.@type]+"Lv."+.@level+" "+getitemname(.@menulist_id[.@item_idx])+" ^000000卸下成功！";
+		deletearray getd("char_medal_menu_id"+.@type+"["+.@item_idx+"]"), 1;
+		getitem .@item_id[.@item_idx], 1;
+		.@item_id = .@item_id[.@item_idx];
+
+		//复制数组变量
+		.@array_size = getarraysize(getd("$oro_medal_id_"+.@item_id));
+		copyarray .@medal_info[0], getd("$oro_medal_id_"+.@item_id+"[0]"), .@array_size;
+		.@type = .@medal_info[0];		
+		.@level = .@medal_info[1];		
+		.@add_var01 = .@medal_info[2];	
+		.@add_var02 = .@medal_info[3];
+		.@add_var03 = .@medal_info[4];
+		.@add_var04 = .@medal_info[5];
+		.@add_var05 = .@medal_info[6];
+		.@add_var06 = .@medal_info[7];
+		//循环赋值
+		for( .@i = .@idx[0]; .@i <= .@idx[1]; .@i++ ){
+			//人物增益属性的主变量数组
+			char_medal_var[.@i] -= getd (".@add_var0"+.@i);
+			//mes "idx"+.@i+"值 "+char_medal_var[.@i];
+		}
+		.@i = .@idx[0];
+		.@v = 1;
+		do{
+			.@var = getd (".@add_var0"+.@v);
+			.@before = char_medal_var[.@i] + .@var;
+			.@now = char_medal_var[.@i];
+			if(.@var) mes " ^A52A2A- "+$oro_medal_name$[.@i]+" : + "+.@before+" -> + "+.@now+" ^FF0000↓"+.@var+"^000000";
+			.@i++;
+			.@v++;
+		}while(.@i <= .@idx[1]);
+		.@size = getarraysize(getd("char_medal_menu_id"+.@type));
+		if(.@size){
+			setd "char_medal_type_"+.@type , 1;
+		}else{
+			setd "char_medal_type_"+.@type , 0;
+		}
+		break;
+	case 3:
+		clear;
+		.@size = getarraysize(getd("char_medal_menu_id"+.@type));
+		deletearray getd("char_medal_menu_id"+.@type), .@size;
+		break;
+	}
+	recalculatestat;
+	mes "再见~";
+	close;
+
+}
+
+//----------------------------------勋章增益事件----------------------------------
+-	script	E_oro_medal_extend	-1,{
+end;
+
+OnPCStatCalcEvent:
+	.@type = 1;
+	do{
+		if(.@type == 1) setarray .@idx, 1, 6;
+		if(.@type == 2) setarray .@idx, 7, 12;
+		if(.@type == 3) setarray .@idx, 13, 18;
+		if(.@type == 4) setarray .@idx, 19, 24;
+		if(getd("char_medal_type_"+.@type)){
+			dispbottom " -------<<<"+$oro_medal_color_name$[.@type]+"勋章加成>>>-------", $oro_medal_color2$[.@type];
+			.@i = .@idx[0];
+			do{
+				if(char_medal_var[.@i]) bonus $oro_medal_id[.@i], char_medal_var[.@i];
+				.@i++;
+			}while(.@i <= .@idx[1]);
+		}
+		.@type++;
+	}while(.@type <= 4);
+	end;
+
+OnPCLoginEvent:
+	.@type = 1;
+	do{
+		if(.@type == 1) setarray .@idx, 1, 6;
+		if(.@type == 2) setarray .@idx, 7, 12;
+		if(.@type == 3) setarray .@idx, 13, 18;
+		if(.@type == 4) setarray .@idx, 19, 24;
+		if(getd("char_medal_type_"+.@type)){
+			dispbottom " -------<<<"+$oro_medal_color_name$[.@type]+"勋章加成>>>-------", $oro_medal_color2$[.@type];
+			.@i = .@idx[0];
+			do{
+				dispbottom " -"+$oro_medal_name$[.@i]+" : + "+char_medal_var[.@i], $oro_medal_color2$[.@type];
+				.@i++;
+			}while(.@i <= .@idx[1]);
+		}
+		.@type++;
+	}while(.@type <= 4);
+	end;
+}

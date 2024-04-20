@@ -1,0 +1,20 @@
+  - Id: 601
+    AegisName: Wing_Of_Fly
+    Name: 苍蝇翅膀
+    Type: Delayconsume
+    Buy: 250
+    Weight: 50
+    Flags:
+      BuyingStore: true
+    Script: |
+      warp "Random",0,0;
+  - Id: 602
+    AegisName: Wing_Of_Butterfly
+    Name: 蝴蝶翅膀
+    Type: Delayconsume
+    Buy: 1000
+    Weight: 50
+    Flags:
+      BuyingStore: true
+    Script: |
+      warp "SavePoint",0,0;

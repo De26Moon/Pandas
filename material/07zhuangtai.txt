@@ -1,0 +1,41 @@
+prontera.gat,150,104,3	script	属性妹子	583,{
+
+
+	mes"[状态服务]";
+	mes"^FF0000还记得以前时候见了牧师就喊12吗？^000000";
+	mes"请在你能看见我的地方大喊^FF000012^000000.";
+	mes"我会为你增加buff.";
+	next;
+	mes"";
+	close;
+
+
+talk12:
+        npctalk " "+strcharinfo(0)+" 接受祝福吧!";
+	sc_start SC_CONCENTRATE,7200000,10;//心神凝聚
+	sc_start SC_ENDURE,7200000,10;//霸体
+	sc_start SC_ANGELUS,7200000,10;//天使之障壁
+	sc_start SC_BLESSING,7200000,10;//天使之赐福
+	sc_start SC_INCREASEAGI,7200000,10;//加速术
+	sc_start SC_IMPOSITIO,7200000,10;//神威祈福
+	sc_start SC_GLORIA,7200000,10;//幸运颂歌
+	sc_start SC_CP_WEAPON,7200000,10;//化学武器保护
+	sc_start SC_CP_SHIELD,7200000,10;//化学盾牌保护
+	sc_start SC_CP_ARMOR,7200000,10;//化学盔甲保护
+	sc_start SC_CP_HELM,7200000,10;//化学头盔保护
+	sc_start SC_KAIZEL,7200000,10;//凯易哲 复活
+	sc_start SC_STRFOOD,7200000,10;//加STR
+	sc_start SC_AGIFOOD,7200000,10;//加AGI
+	sc_start SC_VITFOOD,7200000,10;//加VIT
+	sc_start SC_INTFOOD,7200000,10;//加INT
+	sc_start SC_DEXFOOD,7200000,10;//加DEX
+	sc_start SC_LUKFOOD,7200000,10;//加LUK
+
+
+OnInit:
+	defpattern 1,"([^:]+):.\\s*12.*", "talk12";
+        activatepset 1;
+
+end;
+
+}

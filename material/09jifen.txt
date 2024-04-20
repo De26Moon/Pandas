@@ -1,0 +1,25 @@
+-	script	PCLoginEvent	-1,{	
+
+OnPCLoginEvent:
+// 上线提示
+ 	dispbottom "[登陆时间]『"+gettimestr("%Y年%m月%d日 %H:%M:%S",50)+"』";
+	dispbottom "人物在线后自动开始增长商城点数";
+	dispbottom "您的商城点数: [ "+ #CASHPOINTS +" ]";
+	addtimer 300000,"在线积分::OnGivejife";
+	end;
+}
+
+// 在线积分系统
+-	script	在线积分	-1,{
+OnGivejife:
+if (#CASHPOINTS>999999){dispbottom "你的商城点数已满，不能继续挂商城点数了!!!";end;}
+	deltimer "在线积分::OnGivejife";
+	set #CASHPOINTS,#CASHPOINTS+1;
+	dispbottom "[积分提示] 增长1点商城点数,您目前的点数为["+#CASHPOINTS+"]! ["+ gettimestr("%Y年%m月%d日 %H:%M:%S",50) +"] ";
+		addtimer 300000,"在线积分::OnGivejife";
+		end;
+
+OnPCLogoutEvent:
+	deltimer "在线积分::OnGivejife";
+	end;
+}

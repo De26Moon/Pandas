@@ -1,0 +1,89 @@
+/*
+	自动记录服务器内所有野外boss信息
+
+	脚本: 野外BOSS传送
+	适用: pandas
+	作者: 山有
+	扣扣: 761355061
+*/
+
+izlude,127,144,4	script	野外BOSS传送#sy_0719	73,{
+	getbossinfo();
+	mes "[野外BOSS传送]";
+	if(@boss_count < 1 && getarraysize($sy_boss_mapname$) < 1){
+		mes "请联系GM按流程导入BOSS列表.";
+		end;
+	}
+	for(.@a = 0 ; .@a < @boss_count ; .@a++){
+		.@ci = inarray($sy_boss_mapname$,@boss_mapname$[.@a]);
+		if(.@ci == -1){
+			.@ji = getarraysize($sy_boss_mapname$);
+			$sy_boss_mapname$[ .@ji ] = @boss_mapname$[.@a];
+			$sy_boss_mobid[.@ji] = @boss_classid[.@a];
+		} else {
+			if($sy_boss_mobid[.@ci] != @boss_classid[.@a]) {
+				.@ji = getarraysize($sy_boss_mapname$);
+				$sy_boss_mapname$[ .@ji ] = @boss_mapname$[.@a];
+				$sy_boss_mobid[.@ji] = @boss_classid[.@a];
+			}
+		}
+	}
+On_fy:
+	clear;
+	deletearray .@warp_map$;
+	mes "请选择你要传送的BOSS~";
+	.@i_count = getarraysize($sy_boss_mapname$);
+	.@i_max = 0;
+	for(.@a = .@ys * 10 ; (.@a < .@i_count && .@i_max++ < 10) ; .@a++){
+		getbossinfo $sy_boss_mapname$[.@a],$sy_boss_mobid[.@a];
+		if(@boss_count < 1){
+			mes "[^3333FF"+$sy_boss_mobid[.@a]+"^000000]^CC00FF"+strmobinfo(2,$sy_boss_mobid[.@a])+"^000000[存活]";
+			.@warp_map$[.@a] = "[^3333FF"+$sy_boss_mobid[.@a]+"^000000]^CC00FF"+strmobinfo(2,$sy_boss_mobid[.@a])+"^000000[存活]";
+		} else {
+			$sy_boss_count[.@a] = @boss_count;
+			.@ch = @boss_count;
+			for(.@s = 0 ; .@s < @boss_count ; .@s++){
+				if(@boss_spawn[.@s]){
+					.@ch -= 1;
+					if(!.@fhsj){
+						.@fhsj = @boss_spawn[.@s];
+					} else {
+						.@fhsj = min(@boss_spawn[.@s],.@fhsj);
+					}
+				}
+			}
+			mes "[^3333FF"+$sy_boss_mobid[.@a]+"^000000]^CC00FF"+strmobinfo(2,$sy_boss_mobid[.@a])+"^000000[存活"+.@ch+"只]"+(.@fhsj?"[^FF0000"+.@fhsj/1000+"^000000秒后复活]":"");
+			.@warp_map$[.@a] = "[^3333FF"+$sy_boss_mobid[.@a]+"^000000]^CC00FF"+strmobinfo(2,$sy_boss_mobid[.@a])+"^000000[存活"+.@ch+"只]"+(.@fhsj?"[^FF0000"+.@fhsj/1000+"^000000秒后复活]":"");
+			.@fhsj = 0;
+		}
+	}
+	.@warp_map$[.@a] = " > > > 下一页 > > >";
+	if((.@i = prompt(implode(.@warp_map$,":"))) < 255){
+		.@i = .@i - 1;
+		if(.@i == .@a){
+			.@ys = (.@i==.@i_count)?0:.@ys+1;
+			goto On_fy;
+		}
+		warp $sy_boss_mapname$[.@i],0,0;
+	}
+end;
+Oninit:
+	setBattleFlag "dynamic_mobs",1;
+	getbossinfo();
+	for(.@a = 0 ; .@a < $@boss_count ; .@a++){
+		.@ci = inarray($sy_boss_mapname$,$@boss_mapname$[.@a]);
+		if(.@ci == -1){
+			.@ji = getarraysize($sy_boss_mapname$);
+			$sy_boss_mapname$[ .@ji ] = $@boss_mapname$[.@a];
+			$sy_boss_mobid[.@ji] = $@boss_classid[.@a];
+		} else {
+			if($sy_boss_mobid[.@ci] != $@boss_classid[.@a]) {
+				.@ji = getarraysize($sy_boss_mapname$);
+				$sy_boss_mapname$[ .@ji ] = $@boss_mapname$[.@a];
+				$sy_boss_mobid[.@ji] = $@boss_classid[.@a];
+			}
+		}
+	}
+	setBattleFlag "dynamic_mobs",0;
+end;
+}

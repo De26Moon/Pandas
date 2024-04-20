@@ -1,0 +1,30 @@
+xmas_in,172,102,0	script	#hdxxq1	139,16,16,{
+end;
+
+OnTimer1000:
+	script4each "#hdxxq1::Onpd1",2,"xmas_in",155,100,20;
+	initnpctimer;
+end;
+	
+Onpd1:
+	specialeffect2 128;
+	zeny+=1;
+	BaseExp+=666;
+	JobExp+=666;
+end;
+
+
+Oninit:
+	initnpctimer;
+end;
+}
+
+/*
+		script4each "#hdxxq1::Onpd1",2,"xmas_in",155,100,20;
+		
+		
+以地图某个点为中心半径距离内的单位		例: script4each "{<脚本>}",2,<"地图名称">,<中心坐标x>,<中心坐标y>,<范围>;
+
+
+当中心坐标在无法到达的位置时，脚本无法正常运行
+*/

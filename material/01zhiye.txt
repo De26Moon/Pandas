@@ -1,0 +1,871 @@
+prontera,161,105,3	script	职业天使	811,{
+	mes " [职业天使] ";
+	mes "请选择你需要的服务";;
+	next;
+switch(select("我要转职","我要转生","学习新技能","重置点数","领取或处理技能点","重置为初心者","一二转职业道具","三转职业道具","特殊服务")){
+	case 1: //转职
+	mes "[职业天使]";
+	if (JobLevel<10||SkillPoint!=0) { mes "您的职业等级不足，或有剩余职业点数，无法转职！"; close;end;}
+	mes "你要转什么职业?";	next;
+	switch(Class){
+
+	case 0: //初
+	set @xz,select("剑士","魔法师","弓箭手","服侍","商人","盗贼","超级初心者","神枪手","忍者","跆拳","初心宝宝");{
+	setarray @jobcode[0],0,1,2,3,4,5,6,23,24,25,4046,4023;
+	if (@jobcode[@xz]==23&&BaseLevel<40) { mes "[职业天使]"; mes "您的基本等级不足40级，无法转职！"; close;end; }
+	jobchange @jobcode[@xz];
+	if (@jobcode[@xz]==23) { set SkillPoint,20; }
+	if (@jobcode[@xz]==4023) { set JobLevel,10; set SkillPoint,0; }
+	nude;
+	end;
+	close;
+	}
+
+	case 1: //剑
+	set @xz,select("骑士","十字军");
+	setarray @jobcode[0],0,7,14;
+	goto ZZ_finish1;
+
+	case 2: //法
+	set @xz,select("巫师","贤者");
+	setarray @jobcode[0],0,9,16;
+	goto ZZ_finish1;
+
+	case 3: //弓
+	set @xz,select("猎人","诗人/舞娘");
+	if (Sex==0) { setarray @jobcode[0],0,11,20;}
+	if (Sex==1) { setarray @jobcode[0],0,11,19;}
+	goto ZZ_finish1;
+
+	case 4: //服
+	set @xz,select("牧师","武僧");
+	setarray @jobcode[0],0,8,15;
+	goto ZZ_finish1;
+
+	case 5: //商
+	set @xz,select("铁匠","炼金术士");
+	setarray @jobcode[0],0,10,18;
+	goto ZZ_finish1;
+
+	case 6: //盗
+	set @xz,select("刺客","流氓");
+	setarray @jobcode[0],0,12,17;
+	goto ZZ_finish1;
+
+	case 24: //枪手
+	set @xz,select("反叛者");
+	setarray @jobcode[0],0,4215;
+	goto ZZ_finish1;
+
+	case 25: //忍者
+	set @xz,select("影狼","胧");
+	setarray @jobcode[0],0,4211,4212;
+	goto ZZ_finish1;
+
+	case 4046: //拳
+	set @xz,select("拳圣","悟灵士");
+	setarray @jobcode[0],0,4047,4049;
+	goto ZZ_finish1;
+
+	case 4001: //初
+	set @xz,select("剑士","魔法师","弓箭手","服侍","商人","盗贼","超级初心者","神枪手","忍者","跆拳","初心宝宝");{
+	if (JobLevel<10||SkillPoint!=0) { mes "您的职业等级不足，或有剩余职业点数，无法转职！"; close;end;}
+	setarray @jobcode[0],0,4002,4003,4004,4005,4006,4007,23,24,25,4046,4023;
+	if (@jobcode[@xz]==23&&BaseLevel<40) { mes "[职业天使]"; mes "您的基本等级不足40级，无法转职！";close;end; }
+	jobchange @jobcode[@xz];
+	if (@jobcode[@xz]==23) { set SkillPoint,20; }
+	if (@jobcode[@xz]==4023) { set JobLevel,10; set SkillPoint,0; }
+	nude;
+	close;end;
+	}
+
+	case 4002: //剑
+	set @xz,select("骑士领主","圣殿十字军");
+	setarray @jobcode[0],0,4008,4015;
+	goto ZZ_finish1;
+
+	case 4003: //法
+	set @xz,select("超魔导士","智者");
+	setarray @jobcode[0],0,4010,4017;
+	goto ZZ_finish1;
+
+	case 4004: //弓
+	set @xz,select("神射手","搞笑艺人/冷艳舞姬");
+	setarray @jobcode[0],0,4012,4021;
+	if (Sex==0) {setarray @jobcode[0],0,4012,4021;}
+	if (Sex==1) {setarray @jobcode[0],0,4012,4020;}
+	goto ZZ_finish1;
+
+	case 4005: //服
+	set @xz,select("神官","武术宗师");
+	setarray @jobcode[0],0,4009,4016;
+	goto ZZ_finish1;
+
+	case 4006: //商
+	set @xz,select("神工匠","创造者");
+	setarray @jobcode[0],0,4011,4019;
+	goto ZZ_finish1;
+
+	case 4007: //盗
+	set @xz,select("十字刺客","神行太保");
+	setarray @jobcode[0],0,4013,4018;
+	goto ZZ_finish1;
+
+	case 4023: //宝宝职业初
+	set @xz,select("剑士宝宝","法师宝宝","弓手宝宝","服侍宝宝","商人宝宝","盗贼宝宝","超初宝宝");
+	setarray @jobcode[0],0,4024,4025,4026,4027,4028,4029,4045;
+	if (@jobcode[@xz]==4045&&BaseLevel<40) { mes "[职业天使]"; mes "您的基本等级不足40级，无法转职！";end; }
+	if (@jobcode[@xz]==4045) { set SkillPoint,20; }
+	jobchange @jobcode[@xz];
+	nude;
+	close;end;
+
+	case 4024: //剑
+	set @xz,select("骑士宝宝","十字军宝宝");
+	setarray @jobcode[0],0,4030,4037;
+	goto ZZ_finish1;
+
+	case 4025: //法
+	set @xz,select("巫师宝宝","贤者宝宝");
+	setarray @jobcode[0],0,4032,4039;
+	goto ZZ_finish1;
+
+	case 4026: //弓
+	set @xz,select("猎人宝宝","诗人/舞女宝宝");
+	if (Sex==0) {setarray @jobcode[0],0,4034,4043;}
+	if (Sex==1) {setarray @jobcode[0],0,4034,4042;}
+	goto ZZ_finish1;
+
+	case 4027: //服
+	set @xz,select("牧师宝宝","武僧宝宝");
+	setarray @jobcode[0],0,4031,4038;
+	goto ZZ_finish1;
+
+	case 4028: //商
+	set @xz,select("铁匠宝宝","炼金术士宝宝");
+	setarray @jobcode[0],0,4033,4041;
+	goto ZZ_finish1;
+
+	case 4029: //盗
+	set @xz,select("刺客宝宝","流氓宝宝");
+	setarray @jobcode[0],0,4035,4040;
+	goto ZZ_finish1;
+
+
+
+
+	case 4008://骑士领主
+//------------符文骑士------------------
+   mes "您是要转成卢恩骑士吗?";
+        next;
+menu "确定",Mjolnir,"取消",Leave;
+Mjolnir:
+	if(BaseLevel < 99 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4060;
+	goto ZZ_finish2;
+
+	case 4015://圣殿十字军
+//-----皇家卫士-----------
+   mes "您是要转成皇家卫士吗?";
+        next;
+ menu "确定",Mjolnir6,"取消",Leave;
+Mjolnir6:
+	if(BaseLevel < 99 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4073;
+	goto ZZ_finish2;
+
+
+	case 4010://超魔导士
+//-----大法师-----------
+   mes "您是要转成大法师吗?";
+        next;
+ menu "确定",Mjolnir4,"取消",Leave;
+Mjolnir4:
+	if(BaseLevel < 99 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4061;
+	goto ZZ_finish2;
+
+
+	case 4017://智者
+//-----元素使-----------
+   mes "您是要转成元素使吗?";
+        next;
+ menu "确定",Mjolnir7,"取消",Leave;
+Mjolnir7:
+	if(BaseLevel < 99 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4074;
+	goto ZZ_finish2;
+
+
+	case 4012://神射手
+//-----游侠-----------
+   mes "您是要转成游侠吗?";
+        next;
+menu "确定",Mjolnir1,"取消",Leave;
+Mjolnir1:
+	if(BaseLevel < 99 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4062;
+	goto ZZ_finish2;
+
+
+
+	case 4020://搞笑艺人
+//-----宫廷乐师-----------
+   mes "您是要转成宫廷乐师吗?";
+        next;
+ menu "确定",Mjolnir11,"取消",Leave;
+Mjolnir11:
+	if(BaseLevel < 99 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4075;
+	goto ZZ_finish2;
+
+
+	case 4021://冷艳舞姬
+//-----漫游舞者-----------
+   mes "您是要转成漫游舞者吗?";
+        next;
+ menu "确定",Mjolnir12,"取消",Leave;
+Mjolnir12:
+	if(BaseLevel < 99 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4076;
+	goto ZZ_finish2;
+
+	case 4009://神官
+//-----大主教-----------
+   mes "您是要转成大主教吗?";
+        next;
+menu "确定",Mjolnir3,"取消",Leave;
+Mjolnir3:
+	if(BaseLevel < 99 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4063;
+	goto ZZ_finish2;
+
+
+	case 4016://武术宗师
+//-----修罗-----------
+   mes "您是要转成修罗吗?";
+        next;
+ menu "确定",Mjolnir8,"取消",Leave;
+Mjolnir8:
+	if(BaseLevel < 99 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4077;
+	goto ZZ_finish2;
+
+
+	case 4011://神工匠
+//-----机匠-----------
+   mes "您是要转成机匠吗?";
+        next;
+ menu "确定",Mjolnir5,"取消",Leave;
+Mjolnir5:
+	if(BaseLevel < 99 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4064;
+	goto ZZ_finish2;
+
+
+	case 4019://创造者
+//-----基因学者-----------
+ mes "您是要转成基因学者吗?";
+        next;
+ menu "确定",Mjolnir9,"取消",Leave;
+Mjolnir9:
+	if(BaseLevel < 99 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4078;
+	goto ZZ_finish2;
+
+
+	case 4013://十字刺客
+//-----十字切割者-----------
+   mes "您是要转成十字切割者吗?";
+        next;
+menu "确定",Mjolnir2,"取消",Leave;
+Mjolnir2:
+	if(BaseLevel < 99 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4065;
+	goto ZZ_finish2;
+
+
+	case 4018://神行太保
+//-----逐影-----------
+   mes "您是要转成逐影吗?";
+        next;
+ menu "确定",Mjolnir10,"取消",Leave;
+Mjolnir10:
+	if(BaseLevel < 99 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4079;
+	goto ZZ_finish2;
+
+	case 4060://卢恩骑士
+//-----龙骑士-----------
+   mes "您是要转成龙骑士吗?";
+        next;
+menu "确定",Mjolnir13,"取消",Leave;
+Mjolnir13:
+	if(BaseLevel < 200 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4252;
+	goto ZZ_finish2;
+
+
+	case 4061://大法师
+//-----首席法师-----------
+   mes "您是要转成首席法师吗?";
+        next;
+menu "确定",Mjolnir14,"取消",Leave;
+Mjolnir14:
+	if(BaseLevel < 200 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4255;
+	goto ZZ_finish2;
+
+
+	case 4062://游侠
+//-----风鹰-----------
+   mes "您是要转成风鹰吗?";
+        next;
+menu "确定",Mjolnir15,"取消",Leave;
+Mjolnir15:
+	if(BaseLevel < 200 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4257;
+	goto ZZ_finish2;
+
+
+	case 4063://大主教
+//-----枢机主教-----------
+   mes "您是要转成枢机主教吗?";
+        next;
+menu "确定",Mjolnir16,"取消",Leave;
+Mjolnir16:
+	if(BaseLevel < 200 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4256;
+	goto ZZ_finish2;
+
+
+	case 4064://机匠
+//-----巨匠-----------
+   mes "您是要转成巨匠吗?";
+        next;
+menu "确定",Mjolnir17,"取消",Leave;
+Mjolnir17:
+	if(BaseLevel < 200 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4253;
+	goto ZZ_finish2;
+
+
+	case 4065://十字斩首者
+//-----十字暗影-----------
+   mes "您是要转成十字暗影吗?";
+        next;
+menu "确定",Mjolnir18,"取消",Leave;
+Mjolnir18:
+	if(BaseLevel < 200 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4254;
+	goto ZZ_finish2;
+
+
+	case 4073://皇家卫士
+//-----帝国守卫-----------
+   mes "您是要转成帝国守卫吗?";
+        next;
+menu "确定",Mjolnir19,"取消",Leave;
+Mjolnir19:
+	if(BaseLevel < 200 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4258;
+	goto ZZ_finish2;
+
+
+	case 4074://元素使
+//-----元素大师-----------
+   mes "您是要转成元素大师吗?";
+        next;
+menu "确定",Mjolnir20,"取消",Leave;
+Mjolnir20:
+	if(BaseLevel < 200 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4261;
+	goto ZZ_finish2;
+
+
+	case 4075://宫廷乐师
+//-----游唱诗人-----------
+   mes "您是要转成游唱诗人吗?";
+        next;
+menu "确定",Mjolnir21,"取消",Leave;
+Mjolnir21:
+	if(BaseLevel < 200 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4263;
+	goto ZZ_finish2;
+
+
+	case 4076://浪姬舞者
+//-----游唱乐姬-----------
+   mes "您是要转成游唱乐姬吗?";
+        next;
+menu "确定",Mjolnir22,"取消",Leave;
+Mjolnir22:
+	if(BaseLevel < 200 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4264;
+	goto ZZ_finish2;
+
+
+	case 4077://修罗
+//-----审判官-----------
+   mes "您是要转成审判官吗?";
+        next;
+menu "确定",Mjolnir23,"取消",Leave;
+Mjolnir23:
+	if(BaseLevel < 200 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4262;
+	goto ZZ_finish2;
+
+	case 4078://基因学者
+//-----生物学家-----------
+   mes "您是要转成生物学家吗?";
+        next;
+menu "确定",Mjolnir24,"取消",Leave;
+Mjolnir24:
+	if(BaseLevel < 200 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4259;
+	goto ZZ_finish2;
+
+	case 4079://魅影追踪者
+//-----深渊追踪者-----------
+   mes "您是要转成深渊追踪者吗?";
+        next;
+menu "确定",Mjolnir25,"取消",Leave;
+Mjolnir25:
+	if(BaseLevel < 200 || JobLevel < 70 || SkillPoint!=0) goto nono;
+jobchange 4260;
+	goto ZZ_finish2;
+
+
+
+
+default: //其他
+	mes "[职业天使]";
+	mes "对不起，没有您可以转的职业。";
+	close;
+	end;
+
+
+ZZ_finish1:
+	if (JobLevel<40||SkillPoint!=0) { mes "您的基本等级不足40级，或有剩余职业点数，无法转职！";close;end; }
+	jobchange @jobcode[@xz];
+	goto ZZ_finish2;
+
+ZZ_finish2:
+	mes "[职业天使]";
+	mes "恭喜您转职成功！";
+	close;end;
+
+
+nono:
+        mes "[职业天使]";
+	mes "您有剩余职业点数，无法转职！"; 
+        mes "我只为符合条件的二转职业提供自由转职。";
+        mes "等级不能低于99";
+        mes "职业等级低于70否则都不能转职。";
+	close;end;
+
+//取消
+Leave:
+             mes "[职业天使]";
+             mes "有需要的时候随时欢迎";
+	close;end;
+
+	}
+
+
+case 2: //转生
+	mes "[职业天使]";
+	if (100>1) mes "您目前的转生次数为"+metempsychosis+"次，";
+	mes "确定要转生吗？";
+	next;
+	menu "确定转生",-;
+	mes "[职业天使]";
+	if (metempsychosis>9999) { mes "您已经无法再转生了!"; close; }
+	if (BaseLevel<99||(Class>=0&&Class<=6)||(Class>=23&&Class<=25)||(Class>=4001&&Class<=4007)||(Class>=4023&&Class<=4029)||JobLevel<50) {
+	mes "对不起，您的等级不够"+99+"级或职业等级不够50级或不是二转职业。";
+	close;
+	}
+	if (checkcart()>0||checkfalcon()>0||checkriding()>0||checkmadogear()>0||checkriding()>0||checkriding()>0) { mes "请您把手推车、鹰、鸟、龙、机甲等移除。"; close; }
+	if (Zeny<10000) { mes "我需要"+10000+"Zeny。"; close; }
+	set Zeny,Zeny-10000;
+	set Reclass,Class;
+	setoption 0;
+	jobchange 4001;
+	resetskill;
+	resetstatus;
+	set SkillPoint,0;
+	set StatusPoint,0;
+	set BaseLevel,1;
+	set JobLevel,1;
+	set BaseExp,0;
+	set JobExp,0;
+        nude;
+	set metempsychosis,metempsychosis+1;
+	if (metempsychosis>=2) set StatusPoint,500*metempsychosis;
+	if (metempsychosis==1) set StatusPoint,300;
+	set metempsychosis_skpoint,0;
+	mes "恭喜您转生成功。";
+	end;
+
+
+
+
+case 3: //技能
+	mes "[职业天使]";
+	mes "您将会在我这里学到每一个职业的新技能";
+	mes "当然，必须要对应职业才可以学到该技能咯。";
+	next;
+	switch(class){
+	case 0: //初心
+	case 23:
+	case 4001:
+	case 4023:
+	case 4045:
+	if (getskilllv(142)==0) skill 142,1,0;
+	if (getskilllv(143)==0 && Class!=23 && Class!=4045) skill 143,1,0;
+	end;
+	case 1: //剑士
+	case 4002:
+	case 14: //十字军
+	case 21:
+	case 4015:
+	case 4022:
+	case 7: //骑士
+	case 13:
+	case 4008:
+	case 4014:
+	case 4024:
+	case 4030:
+	case 4037:
+	case 4036:
+	case 4044:
+	if (getskilllv(144)==0) skill 144,1,0;
+	if (getskilllv(145)==0) skill 145,1,0;
+	if (getskilllv(146)==0) skill 146,1,0;
+	if (getskilllv(1001)==0 && Class==7) skill 1001,1,0;
+	if (getskilllv(1001)==0 && Class==13) skill 1001,1,0;
+	if (getskilllv(1001)==0 && Class==4008) skill 1001,1,0;
+	if (getskilllv(1001)==0 && Class==4014) skill 1001,1,0;
+	if (getskilllv(1002)==0 && Class==14) skill 1002,1,0;
+	if (getskilllv(1002)==0 && Class==21) skill 1002,1,0;
+	if (getskilllv(1002)==0 && Class==4015) skill 1002,1,0;
+	if (getskilllv(1002)==0 && Class==4022) skill 1002,1,0;
+	end;
+	case 2: //魔法师
+	case 4003:
+	case 9: //巫师
+	case 4010:
+	case 4017: //贤者
+	case 16:
+	case 4025:
+	case 4032:
+	case 4039:
+	if (getskilllv(157)==0) skill 157,1,0;
+	if (getskilllv(1006)==0 && Class==9) skill 1006,1,0;
+	if (getskilllv(1006)==0 && Class==4010) skill 1006,1,0;
+	if (getskilllv(1007)==0 && Class==16) skill 1007,1,0;
+	if (getskilllv(1007)==0 && Class==4017) skill 1007,1,0;
+	if ((getskilllv(1008)+getskilllv(1017)+getskilllv(1018)+getskilllv(1019)==0) && Class==16) {
+	mes "[职业天使]";
+	mes "这里有四种技能可以学习！";
+	mes "^ff2030但只能学习其中的一种^000000";
+	mes "您要学习哪一种呢？";
+	next;
+	switch(select("水属性转换","地属性转换","火属性转换","风属性转换")) {
+	case 1:	skill 1008,1,0;	end;
+	case 2:	skill 1017,1,0;	end;
+	case 3:	skill 1018,1,0;	end;
+	case 4:	skill 1019,1,0;	end;
+	}
+	}
+	if ((getskilllv(1008)+getskilllv(1017)+getskilllv(1018)+getskilllv(1019)==0) && Class==4017) {
+	mes "[职业天使]";
+	mes "这里有四种技能可以学习！";
+	mes "^ff2030但只能学习其中的一种^000000";
+	mes "您要学习哪一种呢？";
+	next;
+	switch(select("水属性转换","地属性转换","火属性转换","风属性转换")) {
+	case 1:	skill 1008,1,0;	end;
+	case 2:	skill 1017,1,0;	end;
+	case 3:	skill 1018,1,0;	end;
+	case 4:	skill 1019,1,0;	end;
+	}
+	}
+	end;
+	case 3: //弓箭手
+	case 4004:
+	case 11: //猎人
+	case 4012:
+	case 19: //吟游诗人
+	case 4020:
+	case 20: //舞娘
+	case 4021:
+	case 4026:
+	case 4034:
+	case 4042:
+	case 4043:
+	if (getskilllv(147)==0) skill 147,1,0;
+	if (getskilllv(148)==0) skill 148,1,0;
+	if (getskilllv(1009)==0 && Class==11) skill 1009,1,0;
+	if (getskilllv(1009)==0 && Class==4012) skill 1009,1,0;
+	if (getskilllv(1010)==0 && Class==19) skill 1010,1,0;
+	if (getskilllv(1010)==0 && Class==4020) skill 1010,1,0;
+	if (getskilllv(1011)==0 && Class==20) skill 1011,1,0;
+	if (getskilllv(1011)==0 && Class==4021) skill 1011,1,0;
+	end;
+	case 4: //服事
+	case 4005:
+	case 8: //祭司
+	case 4009:
+	case 15: //武道家
+	case 4016:
+	case 4027:
+	case 4031:
+	case 4038:
+	if (getskilllv(156)==0) skill 156,1,0;
+	if (getskilllv(1014)==0 && Class==8) skill 1014,1,0;
+	if (getskilllv(1014)==0 && Class==4009) skill 1014,1,0;
+	if (getskilllv(1015)==0 && Class==15) skill 1015,1,0;
+	if (getskilllv(1015)==0 && Class==4016) skill 1015,1,0;
+	if (getskilllv(1016)==0 && Class==15) skill 1016,1,0;
+	if (getskilllv(1016)==0 && Class==4016) skill 1016,1,0;
+	end;
+	case 5: //商人
+	case 4006:
+	case 10: //铁匠
+	case 4011:
+	case 18: //炼金
+	case 4019:
+	case 4028:
+	case 4033:
+	case 4041:
+	if (getskilllv(153)==0) skill 153,1,0;
+	if (getskilllv(154)==0) skill 154,1,0;
+	if (getskilllv(155)==0) skill 155,1,0;
+	if (getskilllv(1012)==0 && Class==10) skill 1012,1,0;
+	if (getskilllv(1012)==0 && Class==4011) skill 1012,1,0;
+	if (getskilllv(1013)==0 && Class==10) skill 1013,1,0;
+	if (getskilllv(1013)==0 && Class==4011) skill 1013,1,0;
+	if (getskilllv(238)==0 && Class==18) skill 238,1,0;
+	if (getskilllv(238)==0 && Class==4019) skill 238,1,0;
+	end;
+	case 6: //盗贼
+	case 4007:
+	case 12: //刺客
+	case 4013:
+	case 17: //流氓
+	case 4018:
+	case 4029:
+	case 4035:
+	case 4040:
+	if (getskilllv(149)==0) skill 149,1,0;
+	if (getskilllv(150)==0) skill 150,1,0;
+	if (getskilllv(151)==0) skill 151,1,0;
+	if (getskilllv(152)==0) skill 152,1,0;
+	if (getskilllv(1003)==0 && Class==12) skill 1003,1,0;
+	if (getskilllv(1003)==0 && Class==4013) skill 1003,1,0;
+	if (getskilllv(1004)==0 && Class==12) skill 1004,1,0;
+	if (getskilllv(1004)==0 && Class==4013) skill 1004,1,0;
+	if (getskilllv(1005)==0 && Class==17) skill 1005,1,0;
+	if (getskilllv(1005)==0 && Class==4018) skill 1005,1,0;
+	end;
+	case 4048: //媒灵
+	case 4047: //拳圣
+	case 4049: //悟灵士
+	case 4046: //跆拳道
+	if (getskilllv(493)==0) skill 493,1,0;
+	end;
+	default: //枪手
+	mes "[职业天使]";
+	mes "这个职业暂时没有新技能学习！";
+	close;
+	}
+	mes "[职业天使]";
+	mes "我已经把新技能教给您了，打开技能表看一下吧！";
+	end;
+
+
+
+case 4: //重置
+	mes "[职业天使]";
+	mes "您想重置什么呢？";
+	next;
+	set @menu,select("属性点(费用"+100000+")","技能点(费用"+100000+")","属性点和技能点(费用"+100000+")");
+	mes "[职业天使]";
+	if (Zeny<100000) { mes "您好像没那么多钱。"; close; }
+	set Zeny,Zeny-100000;
+	switch(@menu) {
+	case 1: resetstatus; 	end;
+	case 2: resetskill;end;
+	case 3: resetskill; resetstatus; 	end;
+	}
+	mes "重置成功，这次可不要再加错了哦~";
+	close;
+	end;
+
+
+
+
+case 5: //技能点
+	mes "[职业天使]";
+	mes "您想怎样处理技能点呢?";
+	next;
+	set @menu_sk,select("领取转生技能点","处理多余技能点(没有后悔药)","离开");
+	mes "[职业天使]";
+	switch(@menu_sk) {
+	case 1:
+	if (metempsychosis_skpoint==1) { mes "只有重置技能点或再次转生后才可以重新领取技能点"; close; }
+	if (class==0||class==4001||class==23||class>=4023&&class<=4045) { mes "小Baby不要捣乱?"; close; } 
+	set SkillPoint,SkillPoint+metempsychosis;
+	set metempsychosis_skpoint,1;
+	end;
+
+	case 2: 
+	mes "确定要把多余的技能点处理掉吗?";
+	set @menu_sk_zero,select("确定","离开");
+	switch(@menu_sk_zero) {
+	case 1: set SkillPoint,0;
+	end;
+	case 2: mes "多余技能点没有处理";
+	close;
+	end;
+	}
+	end;
+	case 3: 
+	close;
+	end;
+	}
+
+case 6: //重置为初心者
+	{
+	mes "[职业天使]";
+	mes "这会把你的职业重置为初心者!";
+	mes "重新从初心者开始,不影响转生次数!";
+	mes "可以重新选择职业!";
+	switch(select("重置为初心者","离开"))
+	{
+	case 1:	set Reclass,0;
+	setoption 0;
+	jobchange 0,0;
+	resetskill;
+	resetstatus;
+	set SkillPoint,0;
+	set StatusPoint,0;
+	set BaseLevel,1;
+	set JobLevel,1;
+	set BaseExp,0;
+	set JobExp,0;
+	set metempsychosis_skpoint,0;
+	if (metempsychosis>=2) set StatusPoint,500*metempsychosis;
+	if (metempsychosis==1) set StatusPoint,300;
+	if (metempsychosis==0) set StatusPoint,40;
+	end;
+	case 2: close;
+	end;
+	}	
+	}
+
+
+case 7: //租赁
+	mes "[职业天使]";
+	if (checkcart()) { mes "您已经装备了手推车"; close; }
+	if (checkriding()) { mes "您不是有鸟骑了吗？"; close; }
+	if (checkfalcon()) { mes "您不是有鹰了吗？"; close; }
+	switch(Class){
+	case 5: //车
+	case 10:
+	case 18:
+	case 23:
+	case 4006:
+	case 4011:
+	case 4019:
+	case 4028:
+	case 4033:
+	case 4041:
+	case 4045:
+	case 4058:
+	case 4071:
+	case 4064:
+	case 4078:
+	if (getskilllv(39)<1) { mes "抱歉！您没有学会手推车使用这项技能。"; close; }
+	if (Zeny<10000) { mes "很抱歉，您的金钱不足。这至少需要 "+10000+" Zeny。"; close; }
+	set Zeny,Zeny-10000;
+	if (Class==23) setcart 4;
+	else setcart 1;
+	mes "给您的小车。";
+	end;
+	case 7: //鸟
+	case 14:
+	case 4008:
+	case 4015:
+	case 4030:
+	case 4037:
+	if (getskilllv(63)<1) { mes "抱歉！您没有学会骑乘术这项技能。"; close; }
+	if (Zeny<10000) { mes "很抱歉，您的金钱不足。这至少需要 "+10000+" Zeny。"; close; }
+	set Zeny,Zeny-10000;
+	mes "给您的大鸟。";
+	setriding;
+	end;
+	case 11: //鹰
+	case 4012:
+	case 4034:
+	case 4056:
+	case 4062:
+	if (getskilllv(127)<1) { mes "抱歉！您没有学会训鹰术这项技能。"; close; }
+	if (Zeny<10000) { mes "很抱歉，您的金钱不足。这至少需要 "+10000+" Zeny。"; close; }
+	set Zeny,Zeny-10000;
+	mes "给您的猎鹰。";
+	setfalcon;
+	end;
+	default:
+	mes "对不起，没有您这个职业的道具租赁服务。";
+	close;
+	end;
+	}
+	end;
+
+
+
+
+case 8: //三转职业道具
+	mes "[职业天使]";
+	if (checkmadogear()) { mes "你已经坐在机甲里面了."; close; }
+	if (checkriding()) { mes "您不是有坐骑了吗？"; close; }
+if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T) {
+	if (!getskilllv("KN_RIDING")) {mes "您学会训龙术我才敢给您租龙啊!";close;}
+	setdragon;
+	mes "给你龙了，欢迎再来!";
+	close;
+	}
+
+if (Class == Job_Royal_Guard || Class == Job_Royal_Guard_T) {
+	if(!getskilllv("KN_RIDING")) {mes "请先学会乘骑术, 好吗?";close;}
+	setriding;
+	mes "给你狮鹫了，欢迎再来！";
+	close;
+}
+
+if (Class == Job_Mechanic || Class == Job_Mechanic_T || Class == Job_Baby_Mechanic) {
+	if (!getskilllv("NC_MADOLICENCE")) {mes "拿到了驾驶执照再来见我!";close;}
+	setmadogear;
+	mes "质保三年, 记得带发票来找我!";
+	close;
+}
+	mes "对不起，没有您这个职业的道具租赁服务。";
+	close;
+	end;
+
+
+
+
+case 9: //特殊服务
+
+	mes "[职业天使]";
+	mes "现在没有特殊服务哦！";
+close;
+end;
+
+
+
+	}
+	}

@@ -1,0 +1,77 @@
+prontera,148,112,5	script	小服侍#xfs	30004,{
+
+
+	.npc_can_go = 0;
+	npctalk strnpcinfo(1)+" : 你好，"+strcharinfo(0)+"!";
+	initnpctimer;
+	end;
+
+talk:
+	if(.busy == 1){
+		npctalk strnpcinfo(1)+" : "+strcharinfo(0)+" 等会儿，在忙呢~!";
+		end;
+	}
+	if(.npc_can_go == 1) .npc_can_go = 0;
+	.@char_gid = getcharid(3);
+	.@i = 0;
+	do{
+		.busy = 1;
+		unitskilluseid .npc_gid, .skillid[.@i], .skilllv[.@i], .@char_gid;
+		.@i++;
+		sleep2 1500;
+	}while(.@i < getarraysize(.skillid));
+	npctalk strnpcinfo(1)+" : "+strcharinfo(0)+" 走起!";
+	.busy = 0;
+	initnpctimer;
+	end;
+
+//自动开始走路
+OnTimer10000:
+	stopnpctimer;
+	.npc_can_go = 1;
+
+//移动NPC
+OnWalk:
+	if(.npc_can_go == 1){
+		npcspeed 150;
+		while(1){
+			if(.npc_can_go != 1) break;
+			.@i = 0;
+			getmapxy(.m$, .x, .y, BL_NPC);
+			do{
+				if(.@i > 20) break;
+				getfreecell(.m$, .@new_x, .@new_y, .x, .y, 10, 10, 2);
+				.@i++;
+				sleep 10;
+			}while( .x < 145 || .x > 163 || .y > 185 || .y < 70);
+			npcwalkto .@new_x, .@new_y;
+			sleep rand(5000,15000);			
+		}
+	}else{
+		donpcevent strnpcinfo(3)+"::OnStopWalk";
+	}
+	end;
+	
+OnStopWalk:
+	.npc_can_go = 0;
+	npcstop;
+	initnpctimer;
+	end;
+
+OnStartWalk:
+	npcspeed 120;
+	.npc_can_go = 1;
+	end;
+
+OnInit:
+	.npc_gid = getnpcid(0);
+	setarray .skillid,28,29,34,73,33;	//加速术29, 治愈术28, 天使之赐福34, 霸邪之阵73 ,幸运之颂歌75
+	setarray .skilllv,10,10,10,10,10;
+	defpattern 1, "([^:]+):.*\\s123.*", "talk";
+	activatepset 1;
+	donpcevent strnpcinfo(3)+"::OnStartWalk";
+	end;
+}
+
+
+

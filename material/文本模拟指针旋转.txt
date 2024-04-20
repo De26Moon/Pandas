@@ -1,0 +1,76 @@
+
+/*
+	模拟文本指针旋转抽奖
+	1.0.根据传入结果旋转到指定位置
+	1.1 跳过开始部分旋转,使开始位置同意为0方向
+	1.2.调整旋转速度,使不同结果结束速度一致
+	1.3.加入计时器,使旋转可以提前关闭
+
+	指针方向个NPC朝向数值一致，同样是数组索引
+
+脚本流程
+	1.初始化下配置奖励数组
+	2.随机放道具奖励
+	3.在发放道具前加入文本框模拟抽奖过程
+	
+*/
+
+
+
+
+
+prontera,188,188,0	script	Test#0	563,{
+function sy_x;
+function sy_x_;
+	sy_x_(0);
+	menu "抽奖",A1,"取消",-;
+end;
+Oninit:
+	//道具ID  道具名称长度过长可能打乱文本排序，自行调整
+	setarray .itemid[0],1105,1205,1101,2101,4001,1202,1203,4015;
+	
+	for(.@a = 0 ; .@a < 8 ;.@a++){
+		.itemnaemlen[.@a] = getstrlen(.itemname$[.@a] = getitemname(.itemid[.@a]));
+	}
+end;
+A1:
+	@mes = 1;
+	initnpctimer 1;
+	close2;
+	@mes = 0;
+end;
+OnTimer1:
+	.@i = rand(8);
+	sy_x(.@i);
+	getitem .itemid[.@i],1;
+end;
+function	sy_x	{
+	.@val1 = getarg(0,0);
+	.@val2 = .@val1 + 16;
+	mes " ";
+	for(; .@val2 > (.@val1 - 1) && @mes ; .@val2--){
+		if(!.@mes){
+			if(!(.@val2%8)){
+				.@mes = 1;
+			} else {
+				continue;
+			}
+		}
+		clear;
+		sy_x_(.@val2%8);
+		sleep2 500 + (.@val1 - .@val2) * 20 ;
+	}
+return;
+}
+function	sy_x_	{
+		setd ".@f"+(getarg(0,0))+"$" , "^FF0000";
+		mes sprintf("%-11s%11s%13s",.itemname$[1],.itemname$[0],.itemname$[7]);
+		mes sprintf("^F7F7F7-----------%s↖^F7F7F7----%s↑^F7F7F7----%s↗^F7F7F7----------",.@f1$,.@f0$,.@f7$);
+		mes sprintf("^F7F7F7--------------%s↖^F7F7F7-%s↑^F7F7F7-%s↗^F7F7F7-------------",.@f1$,.@f0$,.@f7$);
+		mes sprintf("^000000%-10s^F7F7F7%s←- ←-^F7F7F7  %s-→ -→^000000%9s^F7F7F7",.itemname$[2],.@f2$,.@f6$,.itemname$[6]);
+		mes sprintf("^F7F7F7--------------%s↙^F7F7F7-%s↓^F7F7F7-%s↘^F7F7F7-------------",.@f3$,.@f4$,.@f5$);
+		mes sprintf("^F7F7F7-----------%s↙^F7F7F7----%s↓^F7F7F7----%s↘^F7F7F7----------",.@f3$,.@f4$,.@f5$);
+		mes sprintf("^000000%-11s%11s%13s",.itemname$[3],.itemname$[4],.itemname$[5]);
+}
+end;
+}

@@ -1,0 +1,90 @@
+//-----------需要的全局变量------------------
+-	script	#sy_cbt_xb	-1,{
+end;
+Oninit:
+//地图数组
+	setarray $cbdt$[0],"moc_pryd04","gef_dun02","mjolnir_04","prt_sewb4","gef_fild03","treasure02","pay_fild10","anthell02","pay_dun04","in_sphinx5";
+//地图名称数组
+	setarray $cbdm$[0],"俄塞里斯领地","死灵领地","蜂后领地","黄金虫领地","兽人英雄领地","海盗湾领域","虎王领域","蚁后领域","月夜猫领地","法老王领域";
+//随机奖励数组，道具ID,最小数量,最大数量.....
+	setarray $cbtjl1[0],30029,3,13,30030,3,13,30031,1,4;
+//随机奖励。道具id，道具数量
+	setarray $cbtjl2[0],30267,1,30268,1,30031,1,30262,1,30263,1,30257,1,30258,1;
+end;
+Onxx:
+end;
+}
+/*----------【Sy寻宝函数】----------------------  
+	用于道具触发，寻找指定坐标宝藏获取奖励----[山有]
+参数1：寻宝奖励类型
+		0：普通奖励
+		1：高级奖励
+		
+参数2: 藏宝图道具ID
+		用于寻宝成功后删除道具
+
+---------------------------------------------------------*/
+
+function	script	sy_cbt_xb	{
+	if(cbt_map$==""){
+		cbt_map$ = $cbdt$[rand(getarraysize($cbdt$))];
+		monster cbt_map$,0,0,"1",1002,1,"#sy_cbt_xb::Onxx";
+		getunitdata($@mobid[0],.@GW);
+		cbt_mapx=.@GW[6];
+		cbt_mapy=.@GW[7];
+		killmonster cbt_map$,"#sy_cbt_xb::Onxx";
+	}
+	getmapxy(.@map$,.@x,.@y);
+	if(.@map$ != cbt_map$){
+		announce "藏宝图的指引：请前往"+$cbdm$[inarray($cbdt$[0],cbt_map$)]+"探查。",bc_self,0xFFFF00;
+	}else{
+		if(.@x>cbt_mapx){
+			.@xc = .@x - cbt_mapx;
+			.@fw$ = "西"; 
+		}else if(.@x<cbt_mapx){
+			.@xc = cbt_mapx - .@x;
+			.@fw$ = "东"; 
+		}
+		if(.@y>cbt_mapy){
+			.@yc = .@y - cbt_mapy;
+			.@fw$ = .@fw$ + "南"; 
+		}else if(.@y<cbt_mapy){
+			.@yc = cbt_mapy - .@y;
+			.@fw$ = .@fw$ + "北"; 
+		}
+		if(distance(.@x,.@y,cbt_mapx,cbt_mapy)>15){
+			announce "藏宝图的指引：感受到了宝藏的气息,前往"+.@fw$+"方探查",bc_self,0xFFFF00;
+			end;
+		}else if(distance(.@x,.@y,cbt_mapx,cbt_mapy)>3){
+			announce "藏宝图的指引：感受到了浓烈的宝藏气息,就在附近了,向"+.@fw$+"方探查",bc_self,0xFFFF00;
+		}else if(distance(.@x,.@y,cbt_mapx,cbt_mapy)>0){
+			announce "藏宝图的指引：感受到了强烈的宝藏气息,很近了",bc_self,0xFFFF00;
+		}else{
+			announce "藏宝图的指引：找到宝藏了",bc_self,0xFFFF00;
+			progressbar "0xFF6600",6;
+			announce "===== 恭喜玩家 ["+strcharinfo(0)+"] 找到了遗落的宝藏 =====",bc_all,0xFFFF00;
+			delitem getarg(1),1;
+			cbt_map$="";
+			cbt_mapx = 0;
+			cbt_mapy = 0;
+			for(.@a=0;.@a<getarraysize($cbtjl1);.@a+=3){
+				.@sl = rand($cbtjl1[.@a+1],$cbtjl1[.@a+2]);
+				for(.@b=0;.@b<.@sl;.@b++){
+					next_dropitem_special -1,0,8;
+					makeitem $cbtjl1[.@a],1,.@map$,.@x,.@y;
+					sleep2 500;
+				}
+			}
+			for(.@a=0;.@a<getarraysize($cbtjl2);.@a+=2){
+				for(.@b=0;.@b<$cbtjl2[.@a+1];;.@b++){
+					if(rand(10)<2){
+						next_dropitem_special -1,0,9;
+						makeitem $cbtjl2[.@a],1,.@map$,.@x,.@y;
+						sleep2 500;
+					}
+				}
+			}
+		}
+	}
+end;
+}

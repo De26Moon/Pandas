@@ -1,0 +1,130 @@
+//------一个简单的装备制作范例------
+//
+//--使用商店作为选择制作装备的界面--
+//
+//
+//-----------build by lpig----------
+
+
+//定义一个基础商店
+-	shop	MakerShopList	-1,501:1
+
+//基础设定
+-	script	makershop#conf	-1,{
+	end;
+OnInit:
+	//设定可以制作的物品列表
+	setarray .MakerShop_Item_Id[0],1201,2101,1401;
+	//写入商店过程
+	npcshopdelitem "MakerShopList",501;
+	for(set .@a,0;.@a<getarraysize(.MakerShop_Item_Id);set .@a,.@a+1)
+	{
+		npcshopadditem "MakerShopList",.MakerShop_Item_Id[.@a],1;
+	}
+	end;
+}
+
+//触发商店的npc
+prontera,152,152,4	script	制作商店	678,{
+	mes "你可以制作列表中的物品";
+	mes "将物品正常购买即可开始制作";
+	mes "仅有被购买的第一件物品会被制作";
+	mes "每次制作仅限于一件哟~";
+	mes "在按下close按钮后,制作列表就会打开";
+	close2;
+	callshop "MakerShopList",1;
+	npcshopattach "MakerShopList";
+	end;
+OnBuyItem:
+	switch(@bought_nameid)
+	{
+		//在此为每种制作物品设定材料列表
+		//制作需要的材料
+		//case 要制作的装备id:
+		//zeny,cash,itemid1,itemcount1,itemid2,itemcount2  ....中间可添加多个物品材料.... ,0;
+		//需要的zeny,需要的cash,需要的物品id1,需要的物品数量1,需要的物品id2,需要的物品数量2,  .......  ,以0结尾;
+		//breka;结束材料设定
+		case 1201:
+			setarray .@make[0],10000,10,501,1,502,1,503,1,0;
+			break;
+		case 2101:
+			setarray .@make[0],1000,100,601,1,602,1,0;
+			break;
+		
+		case 1401:
+			setarray .@make[0],100000,0,1201,1,2101,1,501,1,601,1,0;
+			break;
+		
+	}
+	//公告需要的材料
+	mes "要制作 "+getitemname(@bought_nameid)+" 需要";
+	if(.@make[0])
+	{
+		mes ""+.@make[0]+" Zeny";
+	}
+	if(.@make[1])
+	{
+		mes ""+.@make[1]+" Cash";
+	}
+	for(set .@a,2;.@a<getarraysize(.@make);set .@a,.@a+2)
+	{
+		if(.@make[.@a] && .@make[(.@a+1)])
+		{
+			mes ""+.@make[.@a]+" "+.@make[(.@a+1)]+"个";
+		}
+	}
+	mes "你要制作 "+getitemname(@bought_nameid)+"吗?";
+	if(select("我要制作","取消")==2)
+	{
+		close;
+		end;
+	}
+	clear;
+	//判定材料是否满足
+	
+	if(.@make[0] && Zeny < .@make[0])
+	{
+		mes "你的Zeny 不足 "+.@make[0]+"";
+		mes "制作失败";
+		close;
+		end;
+	}
+	if(.@make[1] && #CASHPOINTS < .@make[1])
+	{
+		mes "你的 Cash 不足 "+.@make[1]+"";
+		mes "制作失败";
+		close;
+		end;
+	}
+	for(set .@a,2;.@a<getarraysize(.@make);set .@a,.@a+2)
+	{
+		if(.@make[.@a] && .@make[(.@a+1)] && countitem(.@make[.@a]) < .@make[(.@a+1)])
+		{
+			mes "你的"+.@make[.@a]+" 不足 "+.@make[(.@a+1)]+"个";
+			mes "制作失败";
+			close;
+			end;
+		}
+	}
+	//扣除制作材料
+	
+	if(.@make[0] && Zeny >= .@make[0])
+	{
+		set Zeny,Zeny - .@make[0];
+	}
+	if(.@make[1] && #CASHPOINTS >= .@make[1])
+	{
+		set #CASHPOINTS,#CASHPOINTS - .@make[1];
+	}
+	for(set .@a,2;.@a<getarraysize(.@make);set .@a,.@a+2)
+	{
+		if(.@make[.@a] && .@make[(.@a+1)] && countitem(.@make[.@a]) >= .@make[(.@a+1)])
+		{
+			delitem .@make[.@a],.@make[(.@a+1)];
+		}
+	}
+	getitem @bought_nameid,1;
+	mes "制作完成了!";
+	close;
+	end;
+}

@@ -1,0 +1,74 @@
+
+/*=================================================================
+	一些新手应该蛮感兴趣花里胡哨脚本
+	适用：pandas
+	作者：山有
+	
+	特性: 愈战愈勇
+	愈战愈勇: 	使用近程攻击连续战斗时,从战斗中提取战斗属性增强自身.
+				每次攻击都提高自身[面板]属性,持续3秒(可叠加).
+				在切换攻击目标时清空属性增益.
+
+	使用方式: 加载本脚本后，在任意装备脚本[Script字段]下添加脚本:
+		callfunc "sy_HarderAndHarder";
+		
+例：
+  - Id: 1101
+    AegisName: Sword
+    Name: 长剑
+    Type: Weapon
+    SubType: 1hSword
+    Buy: 100
+    Sell: 1
+    Weight: 500
+    Attack: 25
+    Range: 1
+    Slots: 3
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Novice: true
+      Rogue: true
+      SuperNovice: true
+      Swordman: true
+      Thief: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    Script: |
+      callfunc "sy_HarderAndHarder";
+===================================================================*/
+
+//---------------------脚本主体------------------------------------
+function	script	sy_HarderAndHarder	{
+	autobonus "{ callfunc(\"sy_HarderAndHarder_bonus\"); }",1000,3000,BF_SHORT,"{ callfunc(\"sy_HarderAndHarder_\"); }";
+return;
+}
+function	script	sy_HarderAndHarder_bonus	{
+		bonus bStr,@sy_HarderAndHarder_bonus[2];
+		bonus bAgi,@sy_HarderAndHarder_bonus[3];
+		bonus bVit,@sy_HarderAndHarder_bonus[4];
+		bonus bInt,@sy_HarderAndHarder_bonus[5];
+		bonus bDex,@sy_HarderAndHarder_bonus[6];
+		bonus bLuk,@sy_HarderAndHarder_bonus[7];
+return;
+}
+function	script	sy_HarderAndHarder_	{
+	.@target = getunittarget(getattachedrid());
+	if(gettimetick(2)  > @sy_HarderAndHarder_bonus + 3 
+	|| @sy_HarderAndHarder_bonus[1] != .@target)
+	deletearray @sy_HarderAndHarder_bonus;
+	@sy_HarderAndHarder_bonus = gettimetick(2);
+	@sy_HarderAndHarder_bonus[1] = .@target;
+	.@rand = rand(2,7);
+	@sy_HarderAndHarder_bonus[.@rand]++;
+	specialeffect2 33;
+return;
+}
+//-----------------------------------------------------------------

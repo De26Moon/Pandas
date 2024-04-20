@@ -1,0 +1,259 @@
+// ===============================================
+// 名 称:  挂机 - 基础测试版
+// 版 本:  0.1
+// 适 用:  pandas
+// Q  Q:  191279750 [ 定制请联系 ]
+// 更 新:  2023-01-10
+// ---------------------------------------------------------------------------------
+// 说 明:  如有BUG请联系
+//           在物品或NPC中加入 callfunc "Oro_Bot"; 调用即可.
+// 转 载:  请保留以上全部信息
+// ---------------------------------------------------------------------------------
+function	script	Oro_Bot	{
+	doevent "E_Oro_Bot::OnBotRun";
+	end;
+}
+
+
+-	script	E_Oro_Bot	-1,{
+function bot_find_target;
+function bot_move;
+function bot_attack;
+end;
+
+// 脚本运行结束
+OnBotStop:
+	dispbottom "结束挂机.";
+	@bot_run = 0;
+	end;
+
+// 脚本运行开始
+OnBotRun:
+	if(@bot_run == 1) {
+		callsub OnBotStop;
+	}else{
+		dispbottom "开始挂机.";
+		@bot_run = 1;
+		@check_round = 0;
+		@check_stay = 0;
+		@bot_map$ = strcharinfo(3);
+		callsub OnBotStart;
+	}
+	end;
+	
+// 攻击目标
+OnBotAttack:
+	.@aid = getcharid(3);
+	.@mob_gid = getarg(0);
+	bot_attack(.@aid, .@mob_gid, .@atk_type);
+	addtimer 500, "E_Oro_Bot::OnCheckMobDead";
+	end;
+	
+// 检查魔物是否死亡
+OnCheckMobDead:
+	deltimer "E_Oro_Bot::OnCheckMobDead";
+	// 计算怪物和玩家之间的间距,如怪物瞬移则取消攻击
+	getmapxy(.@m$, .@x, .@y, BL_PC);
+	getunitdata(@mob_gid, .@mob_db);
+	.@mob_x = .@mob_db[UMOB_X];
+	.@mob_y = .@mob_db[UMOB_Y];	
+	
+	if(unitexists(@mob_gid,1)){
+		.@mob_hp = .@mob_db[UMOB_HP];
+		.@mob_maxhp = .@mob_db[UMOB_MAXHP];
+		@check_round++;
+		// 5次检查未作出伤害则强制瞬移
+		if(@check_round > 5 && .@mob_hp == .@mob_maxhp){
+			dispbottom "无法正常攻击.";
+			@check_round = 0;
+			callsub OnBotDoFly;
+			end;
+		}
+	}
+
+	.@range = distance(.@x, .@y, .@mob_x, .@mob_y);
+	if(.@range > 10){
+		dispbottom "怪物距离太远.";
+		callsub OnBotDoFly;
+	}else if(!unitexists(@mob_gid,1)){
+		dispbottom "魔物死亡.";
+		@check_round = 0;
+		sleep2 500;
+		callsub OnBotStart;	
+	}else{
+		addtimer 500, "E_Oro_Bot::OnCheckMobDead";
+	}
+	end;
+	
+// 瞬移
+OnBotDoFly:
+	warp @bot_map$,0,0;
+	sleep2 1000;
+	callsub OnBotStart;
+	end;
+
+
+// 开启挂机
+OnBotStart:
+	if(@bot_run == 0) { callsub OnBotStop; end; }
+	.@aid = getcharid(3);
+	@mob_gid = 0;
+	// 寻找目标
+	.@result_gid = bot_find_target(.@aid);
+	//dispbottom ".@result gid: "+.@result_gid;
+
+	if(@no_enemy >= 5){
+		@no_enemy = 0;
+		dispbottom "未发现目标次数达标,瞬移.";
+		callsub OnBotDoFly;
+		end;
+	}
+	// 未发现目标,继续移动
+	if(.@result_gid < 1){
+		//freeloop(1);
+		@no_enemy++;
+		dispbottom "未发现目标次数: "+@no_enemy;
+		bot_move(.@aid);
+		//freeloop(0);
+	}else{
+		@no_enemy = 0;
+		@mob_gid = .@result_gid;
+		.@mobname$ = rid2name(@mob_gid);
+		dispbottom "攻击魔物: "+.@mobname$;
+		callsub OnBotAttack, .@result_gid;
+	}
+	end;
+
+// 移动完成
+OnBotDoneMove:
+	getmapxy(.@m$, .@x, .@y, BL_PC);
+	//addtimer 100, "E_Oro_Bot::OnCheckBotXY";
+	//sleep2 1000;
+	dispbottom "移动事件.";
+	if(.@x == @next_x && .@y == @next_y) {
+		dispbottom "移动完成.";
+		callsub OnBotStart;
+	}else{
+		dispbottom "无法完成移动,瞬移.";
+		callsub OnBotDoFly;
+	}
+	end;
+
+// 检查魔物是否原地停留
+OnCheckBotXY:
+	if(@bot_run == 0) { callsub OnBotStop; end; }
+	deltimer "E_Oro_Bot::OnCheckBotXY";
+	getmapxy(.@m$, .@x, .@y, BL_PC);
+	if(@stay_x == 0 && @stay_y == 0){
+		@stay_x = .@x;
+		@stay_y = .@y;
+	}else if(@stay_x == .@x && @stay_y == .@y){
+		if(@check_stay < 5){
+			@check_stay++;
+			dispbottom "原地停留次数+1";
+		}else{
+			@check_stay = 0;
+			@stay_x = 0;
+			@stay_y = 0;
+			dispbottom "[BOT]: 由于人物长时间没有移动过,重置人物位置.";
+			callsub OnBotDoFly;
+		}
+	}else{
+		@stay_x = .@x;
+		@stay_y = .@y;
+		@check_stay = 0;
+		dispbottom "更新Bot坐标.";
+	}
+	addtimer 1000, "E_Oro_Bot::OnCheckBotXY";
+	end;
+	
+	// 寻找目标
+	function	bot_find_target	{
+		.@aid = getarg(0);
+		.@count = getargcount();
+		getmapxy(.@m$, .@x, .@y, BL_PC);
+		.@result = getareagid(.@gids, 1, BL_MOB, .@m$, .@x, .@y, 10);
+		if(.@result > 0){
+			// 查找指定怪物
+			if(.@count > 1){
+				.@mob_id = getarg(1);
+				.@mob_name$ = strmobinfo(2, .@mob_id);
+				//dispbottom "攻击指定怪物ID："+.@mob_id;
+				for( .@i = 1; .@i < .@result; .@i++ ){
+					.@db_mobname$[.@i] = rid2name(.@gids[.@i]);
+				}
+				.@idx = inarray(.@db_mobname$, .@mob_name$);
+				if(.@idx == -1){
+					.@result = -1;
+				}else .@result_gid = .@gids[.@idx];		//返回指定魔物GID
+			}else{
+				.@idx = rand(getarraysize(.@gids));	//未指定则随机
+				.@result_gid = .@gids[.@idx];
+			}
+		}
+		return .@result_gid;
+	}
+
+	// 攻击
+	function	bot_attack	{
+		.@aid = getarg(0);
+		.@mob_gid = getarg(1);
+		.@atk_type = getarg(2);
+		detachrid;
+		unitattack .@aid, .@mob_gid, 1;
+		attachrid(.@aid);
+		return;
+	}
+	
+	// 移动
+	function	bot_move	{
+		.@aid = getarg(0);
+		getmapxy(.@m$, .@x, .@y, BL_PC);
+		@next_x = 0;
+		@next_y = 0;
+		//freeloop(1);
+		.@i = 0;
+		do{
+			// 10次内无法获得行走坐标则强制瞬移
+			if(.@i > 5){
+				dispbottom "无法获取移动坐标,瞬移.";
+				callsub OnBotDoFly;
+				end;
+			}
+			// x坐标走向
+			if(.@x < 100) .@new_x = .@x + rand(3,6);
+			else if(.@x >= 10 && .@x < 200) .@new_x = .@x + rand(-3,3);
+			else .@new_x = .@x + rand(-5,-10);
+			// y坐标走向
+			if(.@y < 100) .@new_y = .@y + rand(3,6);
+			else if(.@y >= 10 && .@y < 200) .@new_y = .@y + rand(-3,3);
+			else .@new_y = .@y + rand(-5,-10);
+			
+			.@range = distance(.@x, .@y, .@new_x, .@new_y);
+			if(.@range > 3 && .@range < 7){
+				@next_x = .@new_x;
+				@next_y = .@new_y;
+			}
+			sleep2 10;
+			.@i++;
+		}while( !checkcell(.@m$, @next_x, @next_y, cell_chkpass));
+		//freeloop(0);
+		dispbottom "准备移动到新坐标.X: "+@next_x+", Y: "+@next_y;
+		.@range = distance(.@x, .@y, @next_x, @next_y);
+		dispbottom "距离: "+.@range;
+		if(.@range > 6) {
+			dispbottom "坐标距离过远,瞬移.";
+			callsub OnBotDoFly;
+		}else {
+			unitwalk .@aid, @next_x, @next_y, "E_Oro_Bot::OnBotDoneMove";
+		}
+		return;
+	}
+
+// 魔物被杀死后
+OnNPCKillEvent:
+	
+
+	end;
+
+}

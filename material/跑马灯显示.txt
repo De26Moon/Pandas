@@ -1,0 +1,16 @@
+prontera,150,77,0	script	显示#01	612,{
+OnTimer250:
+	if(.Location > .Totallength){
+		.Location -= .Totallength;
+	}
+	showscript substr(.txt$ + .txt$,.Location,.Location + .Length);
+	.Location += 2;
+	initnpctimer;
+end;
+Oninit:
+	.txt$ = "循环显示，在尾巴上加一些空格，注意长度避免乱码        ";
+	.Length = 31;												//	每次显示的文本长度
+	.Totallength = getstrlen(.txt$);
+	initnpctimer;
+end;
+}

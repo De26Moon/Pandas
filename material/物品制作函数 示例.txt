@@ -1,0 +1,52 @@
+//callfunc "物品制作FUC",获得物品id,费用,材料1,数量1,材料2,数量2......
+function	script	物品制作FUC	{
+	.@slots = getitemslots(getarg(0));
+	if(.@slots) mes "- 制作 ^4a94f7"+mesitemlink(getarg(0))+"["+.@slots+"s]^000000";
+	else mes "- 制作 "+mesitemlink(getarg(0));
+	if(getarg(1)) mes "- 费用 ^FF8000"+getarg(1)+"^000000 zeny";
+	mes "--材料-----------------------------";
+	for(set .@i,2; .@i<getargcount()-1; set .@i,.@i+2){
+		set .@s,getitemslots(getarg(.@i));
+		if(countitem(getarg(.@i)) < getarg(.@i+1)){
+			if(.@s) mes mesitemlink(getarg(.@i))+"^4a94f7["+.@s+"s]^000000 ^f7f7f7_^000000 x "+getarg(.@i+1)+" : ^FF0000-"+(getarg(.@i+1) - countitem(getarg(.@i)))+"^000000";
+			else mes mesitemlink(getarg(.@i))+" ^f7f7f7_^000000 x "+getarg(.@i+1)+" : ^FF0000-"+(getarg(.@i+1) - countitem(getarg(.@i)))+"^000000";
+		}else{
+			if(.@s) mes mesitemlink(getarg(.@i))+"^4a94f7["+.@s+"s]^000000 ^f7f7f7_^000000 x "+getarg(.@i+1)+" : ^228B22√ok^000000";
+			else mes mesitemlink(getarg(.@i))+" ^f7f7f7_^000000 x "+getarg(.@i+1)+" : ^228B22√ok^000000";
+		}
+	}
+	next;
+	menu "开始制作",-;
+	for(set .@i,2; .@i<getargcount()-1; set .@i,.@i+2){
+		if(countitem(getarg(.@i)) < getarg(.@i+1)){
+		mes "[制作人员]";
+		mes "材料"+mesitemlink(getarg(.@i))+"不足，请确认数量!";
+		close; }
+	}
+	if(zeny < getarg(1)){
+		mes "[制作人员]";
+		mes "请带足够的Zeny再来找我吧!";
+		close; }
+	mes "[制作人员]";
+	mes "制作成功，这就是你要的东西。";
+	mes "欢迎下次再光临。";
+	getitem getarg(0),1;
+	for(set .@i,2; .@i < getargcount()-1; set .@i,.@i+2) delitem getarg(.@i),getarg(.@i+1);
+	if(getarg(1)) zeny = zeny - getarg(1);
+	close;
+}
+
+prontera,153,187,5	script	物品制作	902,{
+	callfunc "物品制作FUC",2406,0,507,10,523,2,2404,1,757,1;
+end;
+}
+
+-	shop	makeshop	-1,2399:-1,1143:-1
+prontera,156,187,5	script	商店制作	52,{
+	callshop "makeshop",1;
+	npcshopattach("makeshop");
+	end;
+OnBuyItem:
+	callfunc "物品制作FUC",@bought_nameid[0];
+end;
+}

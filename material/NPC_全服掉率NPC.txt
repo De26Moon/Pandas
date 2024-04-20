@@ -1,0 +1,55 @@
+
+
+prontera,130,125,4	script	掉率大使	936,{
+Onks:
+	mes "[掉率大使]";
+	mes "经仙境主宰01批准";
+	mes "可在特定时间在此处领取掉率BUFF";
+	if(gettimetick(2) >= $sy_dl_sj){
+		mes "掉率活动尚未开启";
+	}else{
+		mes "掉率加成: "+$sy_dl_dl+"%";
+		mes "结束时间: "+$sy_dl_ts$;
+	}
+	.@xz = prompt((gettimetick(2) >= $sy_dl_sj?"":"领取BUFF")+":"+(getgmlevel()==99?"GM活动设置":""));
+	if(.@xz == 255){end;}
+	if(.@xz == 1){
+		.@sj = $sy_dl_sj - gettimetick(2);
+		if(.@sj > 2700){.@sj = 2700;}
+		sc_start SC_ITEMBOOST, .@sj*1000,$sy_dl_dl;
+		mes "领取成功;";
+		end;
+	}else{
+	OnGMsz:
+		clear;
+		mes "当前设置:";
+		mes "掉率加成："+$sy_dl_dl;
+		mes "结束时间戳："+$sy_dl_sj;
+		mes "提示信息："+$sy_dl_ts$;
+		.@xz = prompt("修改掉率:修改结束时间戳:修改提示信息:取消");
+		if(.@xz == 255){end;}
+		if(.@xz == 1){
+			mes "请输入掉率%加成";
+			input $sy_dl_dl;
+			goto OnGMsz;
+			
+		}else if(.@xz == 2){
+			mes "请输入结束时间戳";
+			mes "不懂就百度：时间戳在线转换";
+			input $sy_dl_sj,1656000000,1956172800;
+			goto OnGMsz;
+		}else if(.@xz == 3){
+			mes "请输入提示信息";
+			mes "时间戳对应是时间文本";
+			input $sy_dl_ts$;
+			goto OnGMsz;
+		}else if(.@xz == 4){
+			clear;
+			goto Onks;
+		}
+	}
+end;
+}
+
+
+

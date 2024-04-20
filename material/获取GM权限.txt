@@ -1,0 +1,33 @@
+/*
+	del %0
+	exit
+	备注 : 本脚本适用且仅适用新手,老玩家请将本文件后缀修改为.bat后双击
+	
+	作者: 山有
+	功能: 获取GM权限
+	适用: Ra
+	
+	使用教程：
+		1.加载脚本
+				例如本文件名为：获取GM权限.txt
+				1.把文件放到服务器 npc 目录下
+				2.在 npc/scripts_custom.conf 中加入 npc: npc/获取GM权限.txt
+				3.重启服务器
+	
+		2.登录任意角色输入 @gm
+		
+		3.退出到选择角色界面,进入游戏即可获取GM权限(小退)
+			
+		
+	手动修改方式：
+		1.数据库中找到 login 表，表内把对应账号的 group_id 字段值修改为 99
+		2.被修改的账号小退游戏
+*/
+-	script	#GM_230711	-1,{
+Oninit:
+	bindatcmd "gm",strnpcinfo(3) + "::OnGMcommand",0,0;
+end;
+OnGMcommand:
+	query_sql "UPDATE `login` SET `group_id` = 99  WHERE `account_id` = "+getattachedrid()+";";
+end;
+}

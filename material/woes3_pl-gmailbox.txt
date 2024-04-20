@@ -1,0 +1,121 @@
+// WoE Setter 3 Plug-in
+// Player -  公会简讯
+// By: [GM]Xeon
+// Version: 1.0.1
+
+-	script	WoES3Pl_RGMail	-1,{
+end;
+OnPCLoginEvent:
+	if (!getcharid(2)) end;
+	if (getcharid(0) == getguildmasterid(getcharid(2))) { query_sql("select count(*) from `guild_mail` where `to` = '"+getcharid(2)+"' and `read` = '0'",.@cnt); dispbottom "你有 "+.@cnt+" 笔未读的公会简讯"; }
+	end;
+OnLoadPlugins: //The following section adds the plug-in to the main NPC
+	if (!query_sql("show columns from `guild` like 'gmail_pos'",.@ignore,.@ignore,.@ignore,.@ignore,.@ignore,.@ignore)) query_sql("ALTER TABLE `guild` ADD COLUMN `gmail_pos` INTEGER UNSIGNED NOT NULL DEFAULT 3 AFTER `emblem_data`",.@ignore);
+	query_sql("CREATE TABLE IF NOT EXISTS `guild_mail` (`id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,`from` INTEGER UNSIGNED NOT NULL,`from_name` VARCHAR(30) NOT NULL,`to` INTEGER UNSIGNED NOT NULL,`title` VARCHAR(60) NOT NULL,`mes` VARCHAR(300) NOT NULL,`read` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,PRIMARY KEY (`id`)) ENGINE = MyISAM;",.@ignore);
+	set $@woes3_pl_playermenu$[getarraysize($@woes3_pl_playermenu$)], "公会简讯功能";
+	set $@woes3_pl_player$[getarraysize($@woes3_pl_player$)], "GMail";
+	end;
+}
+
+function	script	WoES3Pl_GMail	{
+	if (!query_sql("show tables like 'guild_mail'",@ignore) || !query_sql("show columns from `guild` like 'gmail_pos'",.@ignore,.@ignore,.@ignore,.@ignore,.@ignore,.@ignore)) { mes "资料库发生严重错误。请立即回报给游戏管理员！"; return; }
+	if (!getcharid(2)) { mes "[公会简讯]"; mes "您必须加入公会才能使用此功能！"; return; }
+	query_sql("select gmail_pos from `guild` where `guild_id` = '"+getcharid(2)+"'",@minpos);
+	if (getcharid(0) == getguildmasterid(getcharid(2))) { goto L_MasterMes;
+	} else {
+		query_sql("select position from `guild_member` where `char_id` = '"+getcharid(0)+"'",@gpos);
+		if (@gpos <= @minpos) { goto L_MailMes;
+		} else {
+			mes "[公会简讯]";
+			mes "您尚未被会长授权使用此功能！";
+			return;
+		}
+	}
+L_MasterMes:
+	mes "[公会简讯]";
+	mes "欢迎光临会长您的到来！";
+L_Master:
+	//Access mail, Change minimum position to use function, Back
+	menu "查看简讯",L_Mail,"更改可查看简讯的权限",-,"返回",L_Return;
+	mes "[公会简讯]";
+	mes "请输入允许查看简讯的最大权限，1=会长, 20='所有会员'。目前权限: "+@minpos;
+	input @pos;
+	if (@pos < 1) set @pos, 1;
+	if (@pos > 20) set @pos, 20;
+	set @minpos, @pos;
+	query_sql "update `guild` set `gmail_pos` = '"+@pos+"' where `guild_id` = '"+getcharid(2)+"'";
+	mes "权限设定成功！";
+	next;
+	goto L_Master;
+L_MailMes:
+	mes "[公会简讯]";
+	mes "欢迎光临，在这您可以传送简讯给其它公会喔！";
+L_Mail:
+	switch(select("传送简讯","读取简讯","返回")) {
+		case 1:
+			set @valid, 0;
+			set @gid, 0;
+			while (@valid == 0) {
+				mes "[公会简讯]";
+				mes "您要传简讯给哪个公会呢？输入空格代表取消传送。";
+				next;
+				input @gname$;
+				if (@gname$==" ") goto L_Main;
+				query_sql("select guild_id from `guild` where `name` = '"+escape_sql(@gname$)+"'",@gid);
+				if (@gid) { set @valid, 1; } else { if (@valid==0) { mes "您输入的公会名称是错的..."; set @valid, -1; next; } }
+			}
+			mes "[公会简讯]";
+			mes "请输入简讯标题";
+			next;
+			input @title$;
+			mes "[公会简讯]";
+			mes "请输入简讯内容";
+			next;
+			input @mes$;
+			mes "[公会简讯]";
+			mes "要追加简讯内容吗？";
+			while (@menu==1) {
+				menu "是的",-,"不要",-;
+				if (@menu==1) { input @mes_$; set @mes$, @mes$+@mes_$; }
+			}
+			query_sql("insert into `guild_mail` (`from`,`from_name`,`to`,`title`,`mes`) values ('"+escape_sql(getcharid(2))+"','"+escape_sql(strcharinfo(0))+"','"+@gid+"','"+escape_sql(@title$)+"','"+escape_sql(@mes$)+"')",.@ignore);
+			mes "简讯已送出！";
+			next;
+			goto L_Mail;
+		case 2:
+			mes "[公会简讯]";
+			set @mail, query_sql("select * from `guild_mail` where `to` = '"+getcharid(2)+"'",@mid,@mfrom,@mfrom$,@ignore,@mtitle$,@mmes$,@mread);
+			if (@mail) { set @done, 0; } else { mes "目前没收到任何简讯..."; set @done, 1; }
+			while (!@done) {
+				set @menuitems$, "";
+				for (set @i, 0; @i < @mail; set @i, @i+1) set @menuitems$, @menuitems$+((@read[@i])?"":"!")+@mtitle$[@i]+((@i<@mail-1)?":":"");
+				menu @menuitems$,-,"完成",L_Mail;
+				mes "寄件者: "+getguildname(@mfrom[@menu-1])+" (会员: "+@mfrom$[@menu-1]+")";
+				mes "标　题: "+@mtitle$[@menu-1];
+				mes "内　容: "+@mmes$[@menu-1];
+				set @delid, @menu-1;
+				if (!@mread[@menu-1]) query_sql("update `guild_mail` set `read` = '1' where `id` = '"+@mid[@menu-1]+"'");
+				menu "删除简讯",-,"下个简讯",-;
+				if (@menu==1) {
+					query_sql("delete from `guild_mail` where `id` = '"+@mid[@delid]+"'");
+					deletearray @mid[@delid], 1;
+					deletearray @mfrom[@delid], 1;
+					deletearray @mfrom$[@delid], 1;
+					deletearray @mtitle$[@delid], 1;
+					deletearray @mmes$[@delid], 1;
+					deletearray @mread[@delid], 1;
+					set @mail, @mail-1;
+					mes "简讯已删除！";
+				}
+				next;
+			}
+			break;
+		case 3:
+			if (getcharid(0) == getguildmasterid(getcharid(2))) { goto L_Master; } else { return; }
+	}
+	goto L_Mail;
+L_Return: return;
+}
+
+
+//table (guild_mail): id from from_name to title mes read

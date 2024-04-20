@@ -1,0 +1,208 @@
+prontera.gat,161,89,5	script	老爷爷	61,{
+
+mes"你好！我可以为你兑换属性和技能点等";
+mes"请问你想要兑换什么.";
+mes"你有"+#CASHPOINTS+"点Cash";
+mes"我可以兑换以下东西,请问你有什么需要？";
+next;
+switch(select("Zeny兑换商城点数","商城点数兑换属性点","商城点数兑换技能点","商城点数兑换特殊能力点","商城点数兑换Zeny","归零","其他功能")){
+case 1: //Zeny兑换Cash
+	set  @jifen01, 0;
+	mes"[老爷爷]";
+	mes"这儿可以用Zeny兑换商城点数";
+	mes"每1000Zeny换1点";
+	mes"请问你需要兑换多少cash点？";
+	next;
+	input  @jifen01;
+	if (@jifen01==0) {mes"[老爷爷]";mes "不兑换是吧,再见."; close;}
+	if (Zeny<@jifen01*1000) { mes "您好像没那么多钱."; close; }
+	set Zeny,Zeny-@jifen01*1000;
+	set #CASHPOINTS,#CASHPOINTS+@jifen01;
+	mes"[老爷爷]";
+	mes"你现在有"+#CASHPOINTS+"点Cash";
+	dispbottom "你兑换了"+@jifen01+"商城点,现有商城点数["+#CASHPOINTS+"]!";
+	end;
+	close;
+
+case 2://兑换属性点
+	set  @jifen01, 0;
+	mes"[老爷爷]";
+	mes"这儿可以用商城点数兑换属性点";
+	mes"每50Cash换1点属性点";
+	mes"你可以兑换"+#CASHPOINTS/50+"点属性点";
+	mes"请问你需要兑换多少属性点";
+	next;
+	input  @jifen01;
+	if (@jifen01==0) {mes"[老爷爷]";mes "不兑换是吧,再见."; close;}
+	if (#CASHPOINTS<@jifen01*50) { mes "您好像没那么多Cash."; close; }
+	set #CASHPOINTS,#CASHPOINTS-@jifen01*50;
+	set StatusPoint,@jifen01+StatusPoint;
+	mes"[老爷爷]";
+	mes"你现在有"+#CASHPOINTS+"点Cash";
+	dispbottom "你兑换了"+@jifen01+"属性点,现有商城点数["+#CASHPOINTS+"]!";
+	end;
+	close;
+
+
+case 3://兑换技能点
+	set  @jifen01, 0;
+	mes"[老爷爷]";
+	mes"这儿可以用商城点数兑换技能点,";
+	mes"每500Cash换1点技能点";
+	mes"你可以兑换"+#CASHPOINTS/500+"点技能点";
+	mes"请问你需要兑换多少技能点？";
+	next;
+	input  @jifen01;
+	if (@jifen01==0) {mes"[老爷爷]";mes "不兑换是吧,再见."; close;}
+	if (#CASHPOINTS<@jifen01*500) { mes "您好像没那么多Cash."; close; }
+	set #CASHPOINTS,#CASHPOINTS-@jifen01*500;
+	set SkillPoint,@jifen01+SkillPoint;
+	mes"[老爷爷]";
+	mes"你现在有"+#CASHPOINTS+"点Cash";
+	dispbottom "你兑换了"+@jifen01+"技能点,现有商城点数["+#CASHPOINTS+"]!";
+	end;
+	close;
+
+case 4://兑换特殊能力点
+	set  @jifen01, 0;
+	mes"[老爷爷]";
+	mes"这儿可以用商城点数兑换特殊能力点,";
+	mes"每500Cash换1点特殊能力点";
+	mes"你可以兑换"+#CASHPOINTS/500+"点特殊能力点";
+	mes"请问你需要兑换多少特殊能力点？";
+	next;
+	input  @jifen01;
+	if (@jifen01==0) {mes"[老爷爷]";mes "不兑换是吧,再见."; close;}
+	if (#CASHPOINTS<@jifen01*500) { mes "您好像没那么多Cash."; close; }
+	set #CASHPOINTS,#CASHPOINTS-@jifen01*500;
+	set TraitPoint,@jifen01+TraitPoint;
+	mes"[老爷爷]";
+	mes"你现在有"+#CASHPOINTS+"点Cash";
+	dispbottom "你兑换了"+@jifen01+"特殊能力点,现有商城点数["+#CASHPOINTS+"]!";
+	end;
+	close;
+
+
+
+
+
+case 5://兑换Zeny
+	set  @jifen01, 0;
+	mes"[老爷爷]";
+	mes"这儿可以用商城点数兑换Zeny,";
+	mes"每1点兑换500Zeny";
+	mes"请问你需要兑换多少商城点？";
+	next;
+	input  @jifen01;
+	if (@jifen01==0) {mes"[老爷爷]";mes "不兑换是吧,再见."; close;}
+	if (#CASHPOINTS<@jifen01) { mes "您好像没那么多Cash."; close; }
+	set #CASHPOINTS,#CASHPOINTS-@jifen01;
+	set Zeny,Zeny+@jifen01*500;
+	mes"[老爷爷]";
+	mes"你现在有"+#CASHPOINTS+"点Cash";
+	dispbottom "你兑换了"+@jifen01*500+"Zeny,现有商城点数["+#CASHPOINTS+"]!";
+	end;
+	close;
+
+case 6://清零
+	mes"[老爷爷]";
+	mes "确定要把多余的点数处理掉吗?";
+	mes "这儿将商城点数、多余的属性点和技能点清零?";
+	switch(select("确定","离开")){
+	case 1: 
+		set SkillPoint,0;
+		set StatusPoint,0;
+		set #CASHPOINTS,0;
+		set TraitPoint,0;
+		next;
+		mes"[老爷爷]";
+		mes"你现在有"+#CASHPOINTS+"点Cash";
+		dispbottom "现有商城点数["+#CASHPOINTS+"]!";
+		end;
+		close;
+	case 2: //
+		mes "没有清零";
+		close;
+		end;
+	}
+
+
+case 7: //其他功能
+	mes"[老爷爷]";
+	mes"欢迎[" + strcharinfo(0)+((Sex==1)?"]先生":"]小姐");
+	mes"其他功能，给你新人超级物品一套吧";
+	next;
+	switch(select("确定","离开")){
+	case 1:
+	setarray @OptID[0],1,2,3,4,5;
+	setarray @OptVal[0],100,100,100,100,100;
+	setarray @OptParam[0],0,0,0,0,0;
+	getitem3 19602,1,1,20,0,4276,4403,4403,4403,@OptID[0],@OptVal[0],@OptParam[0];// 隐形帽子
+
+	setarray @OptID[0],6,7,8,9,10;
+	setarray @OptVal[0],100,100,100,100,100;
+	setarray @OptParam[0],0,0,0,0,0;
+	getitem3 19603,1,1,20,0,4132,4374,4148,4148,@OptID[0],@OptVal[0],@OptParam[0];// 隐形眼镜
+
+	setarray @OptID[0],11,12,13,14,15;
+	setarray @OptVal[0],100,100,100,100,10;
+	setarray @OptParam[0],0,0,0,0,0;
+	getitem3 19604,1,1,20,0,4349,4145,4145,4145,@OptID[0],@OptVal[0],@OptParam[0];// 隐形口罩
+
+	setarray @OptID[0],16,17,18,19,20;
+	setarray @OptVal[0],100,100,100,100,100;
+	setarray @OptParam[0],0,0,0,0,0;
+	getitem3 20506,1,1,20,0,4636,4330,4143,4127,@OptID[0],@OptVal[0],@OptParam[0];// 隐形披风
+
+	setarray @OptID[0],21,22,23,24,1;
+	setarray @OptVal[0],100,10,10,10,100;
+	setarray @OptParam[0],0,0,0,0,0;
+	getitem3 24027,1,1,20,0,4112,4124,4121,4144,@OptID[0],@OptVal[0],@OptParam[0];	// 影子仙境铠甲
+
+	setarray @OptID[0],25,26,27,28,29;
+	setarray @OptVal[0],100,100,100,100,100;
+	setarray @OptParam[0],0,0,0,0,0;
+	getitem3 24026,1,1,20,0,4137,4142,4236,4147,@OptID[0],@OptVal[0],@OptParam[0];	// 影子仙境神盾
+
+	setarray @OptID[0],30,31,32,33,34;
+	setarray @OptVal[0],100,100,100,100,100;
+	setarray @OptParam[0],0,0,0,0,0;
+	getitem3 24025,1,1,20,0,4134,4135,4131,4131,@OptID[0],@OptVal[0],@OptParam[0];	// 影子仙境战靴
+
+	setarray @OptID[0],168,169,170,171,172;
+	setarray @OptVal[0],100,100,100,100,100;
+	setarray @OptParam[0],0,0,0,0,0;
+	getitem3 24078,1,1,20,0,4419,4318,4305,4431,@OptID[0],@OptVal[0],@OptParam[0];	// 影子手套
+
+
+	setarray @OptID[0],153,154,160,161,162;
+	setarray @OptVal[0],100,100,100,100,100;
+	setarray @OptParam[0],0,0,0,0,0;
+	getitem3 24079,1,1,20,0,4352,4456,4549,4408,@OptID[0],@OptVal[0],@OptParam[0];	// 影子仙境耳环
+
+	setarray @OptID[0],155,156,190,191,192;
+	setarray @OptVal[0],100,100,100,100,100;
+	setarray @OptParam[0],0,0,0,0,0;
+	getitem3 24080,1,1,20,0,4635,4342,4520,4556,@OptID[0],@OptVal[0],@OptParam[0];	// 影子仙境坠子
+
+	setarray @OptID[0],82,149,150,151,152;
+	setarray @OptVal[0],100,100,100,100,100;
+	setarray @OptParam[0],0,0,0,0,0;
+	getitem3 2306,1,1,20,0,0,29110,29110,29110,@OptID[0],@OptVal[0],@OptParam[0];	// 冒险衣
+
+
+
+	mes"[老爷爷]";
+	mes"给你了，打开背包看一下。";
+	close;
+	end;
+	case 2: 
+	close;
+	end;
+	}
+
+
+
+
+}
+}
