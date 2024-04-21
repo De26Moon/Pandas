@@ -1828,7 +1828,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if (md) {
 			if (md->pandas.damagetaken < 0) {
 				// 若魔物自己没有承伤倍率, 那么就用 db 里面的设置来计算
-				if (md->db->damagetaken != 100)
+				// if (md->db->damagetaken != 100)
+				if (md->db->damagetaken > 100)
 					damage = i64max(damage * md->db->damagetaken / 100, 1);
 			}
 			else {
