@@ -15,8 +15,17 @@ prontera,165,107,4	script	¿Œ∏Î	801,{
 			callshop "prison_pigeon_shop",1;
 			end;
 		case 2:
+			set .@eqi_ref_max_lv,9;
+			for (set .@eqi_idx,EQI_ACC_L; .@eqi_idx<EQI_MAX; set .@eqi_idx,.@eqi_idx+1) {
+				if (getequipisequiped(.@eqi_idx) && getequipisenableref(.@eqi_idx)) {
+					for (set .@eqi_ref_lv,getequiprefinerycnt(.@eqi_idx); .@eqi_ref_lv<.@eqi_ref_max_lv; set .@eqi_ref_lv,.@eqi_ref_lv+1) {
+						successrefitem .@eqi_idx;
+					}
+				}
+			}
+			specialeffect2 EF_REFINEFAIL;
 			mes "[¿Œ∏Î]";
-			mes "ƒ„±º±~";
+			mes "¡Ô¡À¡Ô¡À~";
 			close;
 		}
 	case 2:
