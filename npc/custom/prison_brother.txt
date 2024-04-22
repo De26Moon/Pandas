@@ -35,8 +35,6 @@ prontera,165,107,4	script	牢鸽	801,{
 	}
 }
 
--	shop	牢二#shop::prison_two_shop	-1,xxx:648
-
 prontera,146,107,6	script	牢二	878,{
 	mes "[牢二]";
 	mes "怎么形容我最贴切？";
