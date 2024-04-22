@@ -1,4 +1,4 @@
--	shop	牢鸽#shop::prison_pigeon_shop	-1,522:100,536:100,608:300,525:500,678:1000,7139:200,14517:1000,14518:1000,14519:1000,14520:1000,12645:1000,12020:1000,12114:1000,12115:1000,12116:1000,12117:1000,12202:10000,12203:10000,12204:10000,12205:10000,12206:10000,12207:10000,12214:1000,645:1200,656:2200,657:4500
+-	shop	牢鸽#shop::prison_pigeon_shop	-1,522:100,536:100,608:300,525:500,678:1000,7139:200,14517:1000,14518:1000,14519:1000,14520:1000,12645:1000,12020:1000,12114:1000,12115:1000,12116:1000,12117:1000,12202:10000,12203:10000,12204:10000,12205:10000,12206:10000,12207:10000,12214:1000,645:1200,656:2200,657:4500,6484:10000
 
 prontera,165,107,4	script	牢鸽	801,{
 	mes "[牢鸽]";
@@ -35,19 +35,13 @@ prontera,165,107,4	script	牢鸽	801,{
 	}
 }
 
-prontera,146,107,6	script	牢二	878,{
-	if (prison_two_tick > gettimetick(2)) {
-		mes "[牢二]";
-		mes "你有点粘人了~";
-		specialeffect2 EF_HIT1;
-		percentheal -10,-10;
-		close;
-	}
+-	shop	牢二#shop::prison_two_shop	-1,xxx:648
 
+prontera,146,107,6	script	牢二	878,{
 	mes "[牢二]";
-	mes "哪个词形容我最贴切？";
+	mes "怎么形容我最贴切？";
 	next;
-	switch (select("持久:专一:持久专一")) {
+	switch (select("持久:专一:持久专一:古希腊掌管氪金的神")) {
 	case 1:
 		mes "[牢二]";
 		mes "讨厌~";
@@ -65,11 +59,37 @@ prontera,146,107,6	script	牢二	878,{
 		sc_start SC_BLEEDING,10000,0;
 		close;
 	case 3:
+		if (prison_two_tick > gettimetick(2)) {
+			mes "[牢二]";
+			mes "你有点粘人了~";
+			specialeffect2 EF_HIT1;
+			percentheal -10,-10;
+			close;
+		}
+
 		mes "[牢二]";
 		mes "赏你了~";
 		specialeffect2 EF_COIN;
 		Zeny += 10000;
 		prison_two_tick = gettimetick(2) + 60;
+		close;
+	case 4:
+		mes "[牢二]";
+		mes "要充几个648？";
+		next;
+		input .@input_count;
+		if (.@input_count * 648 > Zeny) {
+			mes "[牢二]";
+			mes "买不起别玩~";
+			sc_start SC_CURSE,60000,0;
+			specialeffect2 EF_HIT2;
+			percentheal -99,-99;
+		} else {
+			mes "[牢二]";
+			mes "起飞~";
+			Zeny -= (.@input_count * 648);
+			#CASHPOINTS += .@input_count;
+		}
 		close;
 	}
 }

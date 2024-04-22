@@ -40,6 +40,12 @@
 		sc_start SC_CP_SHIELD,600000,0;
 		sc_start SC_CP_ARMOR,600000,0;
 		sc_start SC_CP_HELM,600000,0;
+		sc_start SC_FOOD_STR_CASH,1800000,10;
+		sc_start SC_FOOD_AGI_CASH,1800000,10;
+		sc_start SC_FOOD_VIT_CASH,1800000,10;
+		sc_start SC_FOOD_INT_CASH,1800000,10;
+		sc_start SC_FOOD_DEX_CASH,1800000,10;
+		sc_start SC_FOOD_LUK_CASH,1800000,10;
 	}
 	if (.@Delay)
 		@HD = gettimetick(2) + .@Delay;
