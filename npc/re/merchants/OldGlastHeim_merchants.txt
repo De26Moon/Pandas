@@ -427,7 +427,7 @@ glast_01,184,283,4	script	Dark magic master#pa082	1_F_01,{
 	if (.@card[2] > 0) {
 		mes "[Dark magic master]";
 		mes "These boots have already passed the enchanting limit. We can't enchant them any more.";
-		mes "But if you believe ^FF0000Prison Pigeon, you can reset all the enchants!^000000";
+		mes "But if you believe ^FF0000Prison Pigeon^000000, you can reset all the enchants!";
 		next;
 		if (select ("LGSMDDX", "I believe!") == 1) {
 			mes "[Dark magic master]";
