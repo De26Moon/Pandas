@@ -16,7 +16,7 @@
 
 // Main NPC :: 201105_luk_enc
 //============================================================
-prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
+prt_in,26,73,3	script	Devil Enchant Master#prq	63,{
 	disable_items;
 	if (checkweight(1201,1) == 0) {
 		mes "You are carrying too many items, please reduce it and come back again!";
