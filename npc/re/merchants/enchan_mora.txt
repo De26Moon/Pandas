@@ -1779,9 +1779,3 @@ mora,134,166,4	script	Bulberry Westhood#pa0829	509,{
 		}
 	}
 }
-
-mora,154,98,5	script	Artifact Recycler	515,{
-	mes "[Artifact Recycler]";
-	close;
-}
-
