@@ -4,7 +4,7 @@ prontera,165,107,4	script	牢鸽	801,{
 	mes "[牢鸽]";
 	mes "组撒？";
 	next;
-	switch (select("牢:鸽")) {
+	switch (select("牢:鸽:古希腊掌管加班的神")) {
 	case 1:
 		mes "[牢鸽]";
 		mes "你别慌~";
@@ -27,6 +27,22 @@ prontera,165,107,4	script	牢鸽	801,{
 			mes "[牢鸽]";
 			mes "溜了溜了~";
 			close;
+		case 3:
+			for (set .@idx,1; .@idx < 5; set .@idx,.@idx+1) {
+				if ($@overtime_work_station[.@idx] == 0) {
+					set $@overtime_work_station[.@idx],getcharid(0);
+					warp "06guild_0"+.@idx,51,51;
+					donpcevent "加班的牢鸽#"+ .@idx +"::OnEnterMap";
+					end;
+				}
+			}
+
+			mes "[牢鸽]";
+			for (set .@idx,1; .@idx < 5; set .@idx,.@idx+1) {
+				mes "^FF0000"+strcharinfo(0, $@overtime_work_station[.@idx])+"^000000";
+			}
+			mes "这四个逼正在加班，快去看看哪个是工贼！";
+			close;
 		}
 	case 2:
 		mes "[牢鸽]";
@@ -34,6 +50,92 @@ prontera,165,107,4	script	牢鸽	801,{
 		close;
 	}
 }
+
+-	script	加班的牢鸽	-1,{
+	mes "[加班的牢鸽]";
+	mes "开始加班？";
+	next;
+	if (select("无情:溜了溜了") == 2) {
+		callsub OnCleanMap;
+		warp "prontera",156,118;
+	} else {
+		doevent "加班::OnStart";
+	}
+	end;
+
+OnEnterMap:
+	killmonsterall "this";
+	initnpctimer; 
+	end;
+
+OnTimer5000:
+	if (getmapusers() == 0) {
+		callsub OnCleanMap;
+	} else {
+		initnpctimer;
+	}
+	end;
+
+OnCleanMap:
+	.@idx = atoi(strnpcinfo(2));
+	set $@overtime_work_station[.@idx],0;
+	stopnpctimer;
+	killmonsterall "this";
+	end;
+}
+
+-	script	加班	-1,{
+	end;
+
+OnStart:
+	killmonsterall "this";
+	monster "this",50,50,"牢鸽的工位",2411,1,"加班::OnMobDead";
+	getmapxy(.@map$, .@x, .@y, BL_PC);
+	.@mob_count = getareagid(.@mob_gids, 0, BL_MOB, .@map$);
+	.@mob_gid = .@mob_gids[0]
+	.@account_id = getcharid(3);
+	detachrid;
+	unitattack .@account_id, .@mob_gid, 1;
+	attachrid(.@account_id);
+	end;
+
+OnMobDead:
+	dispbottom "太磨了！拿好你的加班费滚去继续！";
+	specialeffect2 EF_COIN;
+	Zeny += 1000000;
+	callsub OnStart;
+	end;
+}
+
+06guild_01,49,49,4	duplicate(加班的牢鸽)	加班的牢鸽#1	849
+06guild_02,49,49,4	duplicate(加班的牢鸽)	加班的牢鸽#2	849
+06guild_03,49,49,4	duplicate(加班的牢鸽)	加班的牢鸽#3	849
+06guild_04,49,49,4	duplicate(加班的牢鸽)	加班的牢鸽#4	849
+
+06guild_01	mapflag	nowarpto
+06guild_02	mapflag	nowarpto
+06guild_03	mapflag	nowarpto
+06guild_04	mapflag	nowarpto
+06guild_01	mapflag	nomemo
+06guild_02	mapflag	nomemo
+06guild_03	mapflag	nomemo
+06guild_04	mapflag	nomemo
+06guild_01	mapflag	noteleport
+06guild_02	mapflag	noteleport
+06guild_03	mapflag	noteleport
+06guild_04	mapflag	noteleport
+06guild_01	mapflag	nosave	SavePoint
+06guild_02	mapflag	nosave	SavePoint
+06guild_03	mapflag	nosave	SavePoint
+06guild_04	mapflag	nosave	SavePoint
+06guild_01	mapflag	nopenalty
+06guild_02	mapflag	nopenalty
+06guild_03	mapflag	nopenalty
+06guild_04	mapflag	nopenalty
+
+
+
+
 
 prontera,146,107,6	script	牢二	878,{
 	mes "[牢二]";
