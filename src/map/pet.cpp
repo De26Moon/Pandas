@@ -259,10 +259,12 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			return 0;
 		}
 
-		pet->die = die;
+		// pet->die = die;
+		pet->die = 0;
 	}else{
 		if( !exists ){
-			pet->die = -20;
+			// pet->die = -20;
+			pet->die = 0;
 		}
 	}
 
