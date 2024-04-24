@@ -14231,22 +14231,22 @@ prt_cas,165,255,7	script	Commissary#ep16	4_M_JOB_KNIGHT2,{
 	case 1:
 		.@type$ = "Consumable";
 		setarray .@data[0],
-			22899,2,	// City Map
-			11600,6,	// Shining Holy Water
-			22848,6,	// Prison Key
-			22847,6;	// Prontera Badge
+			22899,1,	// City Map
+			11600,1,	// Shining Holy Water
+			22848,1,	// Prison Key
+			22847,1;	// Prontera Badge
 		break;
 	case 2:
 		.@type$ = "Armor";
 		setarray .@data[0],
-			28354,300,	// City Map[1]
-			28355,800,	// Shining Holy Water [1]
-			28900,800,	// Royal Guard Shield
-			28356,300,	// Prontera Badge
-			15146,1200,	// Flattery Robe
-			15147,1200,	// Invective Robe
-			20246,2200,	// Costume Time Decor
-			20247,2200;	// Black Hand of Destiny
+			28354,10,	// City Map[1]
+			28355,25,	// Shining Holy Water [1]
+			28900,25,	// Royal Guard Shield
+			28356,10,	// Prontera Badge
+			15146,40,	// Flattery Robe
+			15147,40,	// Invective Robe
+			20246,70,	// Costume Time Decor
+			20247,70;	// Black Hand of Destiny
 		break;
 	case 3:
 		mes "[Commissary Arner]";
@@ -16206,10 +16206,10 @@ prt_pri00,61,136,3	script	Dylan#pa0829	4_CAT_SAILOR5,{
 		mes "Listen carefully. I won't say twice.";
 		next;
 		mes "[Dylan]";
-		mes "I'll enhance one of the Flattery Robe or Invective Robe slot for 20 Honor Marks. I can enhance up to 2 slots. And I take 10 Honor Marks for the reset. Do you follow me so far?";
+		mes "I'll enhance one of the Flattery Robe or Invective Robe slot for 1 Honor Marks. I can enhance up to 2 slots. And I take 1 Honor Marks for the reset. Do you follow me so far?";
 		next;
 		mes "[Dylan]";
-		mes "Next, for the Prontera Badge. I'll take 5 Honor Marks to enhance 1 slot. I can enhance up to 2 slots. And I take 10 Honor Marks for the reset.";
+		mes "Next, for the Prontera Badge. I'll take 1 Honor Marks to enhance 1 slot. I can enhance up to 2 slots. And I take 1 Honor Marks for the reset.";
 		next;
 		mes "[Dylan]";
 		mes "I don't perform the reset anytime. I'll do it when the 2 slots are enhanced for that you cannot enhance the item anymore. And... Then...";
@@ -16222,19 +16222,19 @@ prt_pri00,61,136,3	script	Dylan#pa0829	4_CAT_SAILOR5,{
 		close;
 	case 2:
 		mes "[Dylan]";
-		mes "You need 20 Honor Marks for each slot of Flattery Robe or Invective Robe. Do you want to enhance it?";
+		mes "You need 1 Honor Marks for each slot of Flattery Robe or Invective Robe. Do you want to enhance it?";
 		break;
 	case 3:
 		mes "[Dylan]";
-		mes "You need 5 Honor Marks to enhance one slot of the Prontera Badge you are wearing in the left slot of your body. Would you enhance it?";
+		mes "You need 1 Honor Marks to enhance one slot of the Prontera Badge you are wearing in the left slot of your body. Would you enhance it?";
 		break;
 	case 4:
 		mes "[Dylan]";
-		mes "You need 10 Honor Marks to reset Invective Robe or Flattery Robe. The equipment won't be destroyed. The bound cards and the refinement level would remain the same as well.";
+		mes "You need 1 Honor Marks to reset Invective Robe or Flattery Robe. The equipment won't be destroyed. The bound cards and the refinement level would remain the same as well.";
 		break;
 	case 5:
 		mes "[Dylan]";
-		mes "You need 10 Honor Marks to reset the Prontera Badge you are wearing in the left slot of your body.";
+		mes "You need 1 Honor Marks to reset the Prontera Badge you are wearing in the left slot of your body.";
 		next;
 		mes "[Dylan]";
 		mes "As I told you, it is difficult to reset the badge, ^ff0000The chance of success is 80%.^000000 If it fails, everything will be gone. Would you reset it?";
@@ -16270,7 +16270,7 @@ prt_pri00,61,136,3	script	Dylan#pa0829	4_CAT_SAILOR5,{
 			mes "It cannot be enhanced anymore. Do you have anything else to enhance?";
 			close;
 		}
-		if (countitem(6919) < 20) {
+		if (countitem(6919) < 1) {
 			mes "[Dylan]";
 			mes "Hey, buddy. You cannot deal with me if you don't have any Honor Marks.";
 			close;
@@ -16301,7 +16301,7 @@ prt_pri00,61,136,3	script	Dylan#pa0829	4_CAT_SAILOR5,{
 			.@card_index = 2;
 
 		.@card[ .@card_index ] = .@en_name;
-		delitem 6919,20;
+		delitem 6919,1;
 		delequip EQI_ARMOR;
 		getitem2 .@item_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
 		break;
@@ -16323,7 +16323,7 @@ prt_pri00,61,136,3	script	Dylan#pa0829	4_CAT_SAILOR5,{
 			mes "It cannot be enhanced anymore. Do you have anything else to enhance?";
 			close;
 		}
-		if (countitem(6919) < 5) {
+		if (countitem(6919) < 1) {
 			mes "[Dylan]";
 			mes "Hey, buddy. You cannot deal with me if you don't have any Honor Marks.";
 			close;
@@ -16367,7 +16367,7 @@ prt_pri00,61,136,3	script	Dylan#pa0829	4_CAT_SAILOR5,{
 			.@card_index = 2;
 		.@card[ .@card_index ] = .@en_name;
 
-		delitem 6919,5;
+		delitem 6919,1;
 		delequip EQI_ACC_L;
 		getitem2 28356,1,1,0,0,0,0,.@card[2],.@card[3];
 		break;
@@ -16392,12 +16392,12 @@ prt_pri00,61,136,3	script	Dylan#pa0829	4_CAT_SAILOR5,{
 			mes "Oh, this item is not enhanced completely. I cannot reset it yet.";
 			close;
 		}
-		if (countitem(6919) < 10) {
+		if (countitem(6919) < 1) {
 			mes "[Dylan]";
 			mes "Hey, buddy. You cannot deal with me if you don't have any Honor Marks.";
 			close;
 		}
-		delitem 6919,10;
+		delitem 6919,1;
 		delequip EQI_ARMOR;
 		getitem2 .@item_id,1,1,.@refine,0,.@card[0],0,0,0;
 		break;
@@ -16419,13 +16419,13 @@ prt_pri00,61,136,3	script	Dylan#pa0829	4_CAT_SAILOR5,{
 			mes "Stop fooling around. If you want to enhance it, come to me wearing the Prontera Badge.";
 			close;
 		}
-		if (countitem(6919) < 10) {
+		if (countitem(6919) < 1) {
 			mes "[Dylan]";
 			mes "Hey, buddy. You cannot deal with me if you don't have any Honor Marks.";
 			close;
 		}
 		delequip EQI_ACC_L;
-		delitem 6919,10;
+		delitem 6919,1;
 		mes "[Dylan]";
 		if (rand(1,100) < 80) {
 			mes "Hum, it has been processed well. Check out the item.";
