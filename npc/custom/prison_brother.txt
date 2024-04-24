@@ -64,12 +64,14 @@ prontera,165,107,4	script	牢鸽	801,{
 	end;
 
 OnEnterMap:
-	killmonsterall "this";
+	.@idx = atoi(strnpcinfo(2));
+	killmonsterall "06guild_0"+.@idx;
 	initnpctimer; 
 	end;
 
 OnTimer5000:
-	if (getmapusers() == 0) {
+	.@idx = atoi(strnpcinfo(2));
+	if (getmapusers("06guild_0"+.@idx) == 0) {
 		callsub OnCleanMap;
 	} else {
 		initnpctimer;
@@ -80,7 +82,7 @@ OnCleanMap:
 	.@idx = atoi(strnpcinfo(2));
 	set $@overtime_work_station[.@idx],0;
 	stopnpctimer;
-	killmonsterall "this";
+	killmonsterall "06guild_0"+.@idx;
 	end;
 }
 
@@ -88,9 +90,9 @@ OnCleanMap:
 	end;
 
 OnStart:
-	killmonsterall "this";
-	monster "this",50,50,"牢鸽的工位",2411,1,"加班::OnMobDead";
 	getmapxy(.@map$, .@x, .@y, BL_PC);
+	killmonsterall .@map$;
+	monster .@map$,50,50,"牢鸽的工位",2411,1,"加班::OnMobDead";
 	.@mob_count = getareagid(.@mob_gids, 0, BL_MOB, .@map$);
 	.@mob_gid = .@mob_gids[0]
 	.@account_id = getcharid(3);
