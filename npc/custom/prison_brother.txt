@@ -168,10 +168,10 @@ OnMobDead:
 06guild_03,49,49,4	duplicate(加班的牢鸽)	加班的牢鸽#3	849
 06guild_04,49,49,4	duplicate(加班的牢鸽)	加班的牢鸽#4	849
 
-06guild_01	mapflag	nowarpto
-06guild_02	mapflag	nowarpto
-06guild_03	mapflag	nowarpto
-06guild_04	mapflag	nowarpto
+//06guild_01	mapflag	nowarpto
+//06guild_02	mapflag	nowarpto
+//06guild_03	mapflag	nowarpto
+//06guild_04	mapflag	nowarpto
 06guild_01	mapflag	nomemo
 06guild_02	mapflag	nomemo
 06guild_03	mapflag	nomemo
