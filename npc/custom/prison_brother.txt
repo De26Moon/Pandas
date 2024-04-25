@@ -66,11 +66,17 @@ function set_station_user;
 		case 3:
 			for (set .@idx,1; .@idx < 5; set .@idx,.@idx+1) {
 				.@user = get_station_user(.@idx);
+				dispbottom "test:"+.@idx+"/"+.@user;
 				if (.@user == 0) {
+					dispbottom "test:step1";
 					close2;
+					dispbottom "test:step2";
 					set_station_user(.@idx, getcharid(0));
+					dispbottom "test:step3";
 					warp "06guild_0"+.@idx,51,51;
+					dispbottom "test:step4";
 					donpcevent "¼Ó°àµÄÀÎ¸ë#"+ .@idx +"::OnEnterMap";
+					dispbottom "test:step5";
 					end;
 				}
 			}
@@ -122,9 +128,7 @@ function clean_map;
 	} else {
 		close2;
 		clean_map(atoi(strnpcinfo(2)));
-		dispbottom "test1";
 		warp "prontera",161,107;
-		dispbottom "test2";
 		end;
 	}
 
