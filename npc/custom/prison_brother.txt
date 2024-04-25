@@ -101,6 +101,7 @@ function set_station_user;
 		close2;
 		callsub OnCleanMap;
 		warp "prontera",161,107;
+		dispbottom "test";
 		end;
 	}
 
