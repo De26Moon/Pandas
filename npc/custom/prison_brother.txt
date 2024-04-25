@@ -68,12 +68,14 @@ function set_station_user;
 				.@user = get_station_user(.@idx);
 				if (.@user == 0) {
 					set_station_user(.@idx, getcharid(0));
+					close2;
 					warp "06guild_0"+.@idx,51,51;
 					donpcevent "加班的牢鸽#"+ .@idx +"::OnEnterMap";
 					end;
 				}
 			}
 
+			next;
 			mes "[牢鸽]";
 			for (set .@idx,1; .@idx < 5; set .@idx,.@idx+1) {
 				mes "^FF0000"+strcharinfo(0, get_station_user(.@idx))+"^000000";
@@ -93,8 +95,10 @@ function set_station_user;
 	mes "开始加班？";
 	next;
 	if (select("无情的混工时机器:溜了溜了") == 1) {
+		close2;
 		doevent "加班::OnStart";
 	} else {
+		close2;
 		callsub OnCleanMap;
 		warp "prontera",161,107;
 	}
@@ -144,7 +148,7 @@ OnStart:
 	killmonsterall .@map$;
 	monster .@map$,53,53,"牢鸽的工位",2411,1,"加班::OnMobDead";
 	getareagid(.@mob_gids, 0, BL_MOB, .@map$);
-	.@mob_gid = .@mob_gids[0]
+	.@mob_gid = .@mob_gids[0];
 	.@account_id = getcharid(3);
 	detachrid;
 	unitattack .@account_id, .@mob_gid, 1;
