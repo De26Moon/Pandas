@@ -68,10 +68,9 @@ function set_station_user;
 				.@user = get_station_user(.@idx);
 				if (.@user == 0) {
 					set_station_user(.@idx, getcharid(0));
-					close2;
 					warp "06guild_0"+.@idx,51,51,getcharid(0);
 					donpcevent "加班的牢鸽#"+ .@idx +"::OnEnterMap";
-					end;
+					close;
 				}
 			}
 
@@ -95,14 +94,13 @@ function set_station_user;
 	mes "开始加班？";
 	next;
 	if (select("无情的混工时机器:溜了溜了") == 1) {
-		close2;
 		doevent "加班::OnStart";
+		end;
 	} else {
-		close2;
 		callsub OnCleanMap;
 		warp "prontera",161,107,getcharid(0);
+		close;
 	}
-	end;
 
 OnEnterMap:
 	.@idx = atoi(strnpcinfo(2));
