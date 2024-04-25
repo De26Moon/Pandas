@@ -170,10 +170,10 @@ OnMobDead:
 06guild_03,49,49,4	duplicate(加班的牢鸽)	加班的牢鸽#3	849
 06guild_04,49,49,4	duplicate(加班的牢鸽)	加班的牢鸽#4	849
 
-//06guild_01	mapflag	nowarpto
-//06guild_02	mapflag	nowarpto
-//06guild_03	mapflag	nowarpto
-//06guild_04	mapflag	nowarpto
+06guild_01	mapflag	nowarpto
+06guild_02	mapflag	nowarpto
+06guild_03	mapflag	nowarpto
+06guild_04	mapflag	nowarpto
 06guild_01	mapflag	nomemo
 06guild_02	mapflag	nomemo
 06guild_03	mapflag	nomemo
@@ -190,6 +190,14 @@ OnMobDead:
 06guild_02	mapflag	nopenalty
 06guild_03	mapflag	nopenalty
 06guild_04	mapflag	nopenalty
+06guild_01	mapflag	noequip	1132
+06guild_02	mapflag	noequip	1132
+06guild_03	mapflag	noequip	1132
+06guild_04	mapflag	noequip	1132
+06guild_01	mapflag	nocard	4276:4540
+06guild_02	mapflag	nocard	4276:4540
+06guild_03	mapflag	nocard	4276:4540
+06guild_04	mapflag	nocard	4276:4540
 
 
 
