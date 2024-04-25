@@ -190,14 +190,10 @@ OnMobDead:
 06guild_02	mapflag	nopenalty
 06guild_03	mapflag	nopenalty
 06guild_04	mapflag	nopenalty
-06guild_01	mapflag	noequip	1132
-06guild_02	mapflag	noequip	1132
-06guild_03	mapflag	noequip	1132
-06guild_04	mapflag	noequip	1132
-06guild_01	mapflag	nocard	4276:4540
-06guild_02	mapflag	nocard	4276:4540
-06guild_03	mapflag	nocard	4276:4540
-06guild_04	mapflag	nocard	4276:4540
+06guild_01	mapflag	restricted	4096
+06guild_02	mapflag	restricted	4096
+06guild_03	mapflag	restricted	4096
+06guild_04	mapflag	restricted	4096
 
 
 
