@@ -57,7 +57,7 @@ prontera,165,107,4	script	牢鸽	801,{
 	next;
 	if (select("无情:溜了溜了") == 2) {
 		callsub OnCleanMap;
-		warp "prontera",156,118;
+		warp "prontera",161,107;
 	} else {
 		doevent "加班::OnStart";
 	}
@@ -92,7 +92,7 @@ OnCleanMap:
 OnStart:
 	getmapxy(.@map$, .@x, .@y, BL_PC);
 	killmonsterall .@map$;
-	monster .@map$,50,50,"牢鸽的工位",2411,1,"加班::OnMobDead";
+	monster .@map$,53,53,"牢鸽的工位",2411,1,"加班::OnMobDead";
 	.@mob_count = getareagid(.@mob_gids, 0, BL_MOB, .@map$);
 	.@mob_gid = .@mob_gids[0]
 	.@account_id = getcharid(3);
