@@ -91,6 +91,28 @@ function set_station_user;
 }
 
 -	script	加班的牢鸽	-1,{
+function clean_map;
+
+	function clean_map {
+		.@idx = getarg(0);
+		stopnpctimer;
+		switch (.@idx) {
+		case 1:
+			set $@overtime_work_station_1, 0;
+			break;
+		case 2:
+			set $@overtime_work_station_2, 0;
+			break;
+		case 3:
+			set $@overtime_work_station_3, 0;
+			break;
+		case 4:
+			set $@overtime_work_station_4, 0;
+			break;
+		}
+		killmonsterall "06guild_0"+.@idx;
+	}
+
 	mes "[加班的牢鸽]";
 	mes "开始加班？";
 	next;
@@ -99,9 +121,10 @@ function set_station_user;
 		end;
 	} else {
 		close2;
-		callsub OnCleanMap;
+		clean_map(atoi(strnpcinfo(2)));
+		dispbottom "test1";
 		warp "prontera",161,107;
-		dispbottom "test";
+		dispbottom "test2";
 		end;
 	}
 
@@ -114,30 +137,10 @@ OnEnterMap:
 OnTimer5000:
 	.@idx = atoi(strnpcinfo(2));
 	if (getmapusers("06guild_0"+.@idx) == 0) {
-		callsub OnCleanMap;
+		clean_map(.@idx);
 	} else {
 		initnpctimer;
 	}
-	end;
-
-OnCleanMap:
-	stopnpctimer;
-	.@idx = atoi(strnpcinfo(2));
-	switch (.@idx) {
-	case 1:
-		set $@overtime_work_station_1, 0;
-		break;
-	case 2:
-		set $@overtime_work_station_2, 0;
-		break;
-	case 3:
-		set $@overtime_work_station_3, 0;
-		break;
-	case 4:
-		set $@overtime_work_station_4, 0;
-		break;
-	}
-	killmonsterall "06guild_0"+.@idx;
 	end;
 }
 
