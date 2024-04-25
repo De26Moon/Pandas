@@ -1,6 +1,42 @@
 -	shop	牢鸽#shop::prison_pigeon_shop	-1,522:100,536:100,608:300,525:500,678:1000,7139:200,14517:1000,14518:1000,14519:1000,14520:1000,12645:1000,12020:1000,12114:1000,12115:1000,12116:1000,12117:1000,12202:10000,12203:10000,12204:10000,12205:10000,12206:10000,12207:10000,12214:1000,645:1200,656:2200,657:4500,6484:10000
 
 prontera,165,107,4	script	牢鸽	801,{
+function get_station_user;
+function set_station_user;
+
+	function get_station_user {
+		.@idx = getarg(0);
+		switch (.@idx) {
+		case 1:
+			return $@overtime_work_station_1;
+		case 2:
+			return $@overtime_work_station_2;
+		case 3:
+			return $@overtime_work_station_3;
+		case 4:
+			return $@overtime_work_station_4;
+		}
+	}
+
+	function set_station_user {
+		.@idx = getarg(0);
+		.@user = getarg(1);
+		switch (.@idx) {
+		case 1:
+			set $@overtime_work_station_1, .@user;
+			break;
+		case 2:
+			set $@overtime_work_station_2, .@user;
+			break;
+		case 3:
+			set $@overtime_work_station_3, .@user;
+			break;
+		case 4:
+			set $@overtime_work_station_4, .@user;
+			break;
+		}
+	}
+
 	mes "[牢鸽]";
 	mes "组撒？";
 	next;
@@ -29,8 +65,9 @@ prontera,165,107,4	script	牢鸽	801,{
 			close;
 		case 3:
 			for (set .@idx,1; .@idx < 5; set .@idx,.@idx+1) {
-				if ($@overtime_work_station[.@idx] == 0) {
-					set $@overtime_work_station[.@idx],getcharid(0);
+				.@user = get_station_user(.@idx);
+				if (.@user == 0) {
+					set_station_user(.@idx, getcharid(0));
 					warp "06guild_0"+.@idx,51,51;
 					donpcevent "加班的牢鸽#"+ .@idx +"::OnEnterMap";
 					end;
@@ -39,7 +76,7 @@ prontera,165,107,4	script	牢鸽	801,{
 
 			mes "[牢鸽]";
 			for (set .@idx,1; .@idx < 5; set .@idx,.@idx+1) {
-				mes "^FF0000"+strcharinfo(0, $@overtime_work_station[.@idx])+"^000000";
+				mes "^FF0000"+strcharinfo(0, get_station_user(.@idx))+"^000000";
 			}
 			mes "这四个逼正在加班，快去看看哪个是工贼！";
 			close;
@@ -55,18 +92,18 @@ prontera,165,107,4	script	牢鸽	801,{
 	mes "[加班的牢鸽]";
 	mes "开始加班？";
 	next;
-	if (select("无情:溜了溜了") == 2) {
+	if (select("无情的混工时机器:溜了溜了") == 1) {
+		doevent "加班::OnStart";
+	} else {
 		callsub OnCleanMap;
 		warp "prontera",161,107;
-	} else {
-		doevent "加班::OnStart";
 	}
 	end;
 
 OnEnterMap:
 	.@idx = atoi(strnpcinfo(2));
 	killmonsterall "06guild_0"+.@idx;
-	initnpctimer; 
+	initnpctimer;
 	end;
 
 OnTimer5000:
@@ -79,9 +116,22 @@ OnTimer5000:
 	end;
 
 OnCleanMap:
-	.@idx = atoi(strnpcinfo(2));
-	set $@overtime_work_station[.@idx],0;
 	stopnpctimer;
+	.@idx = atoi(strnpcinfo(2));
+	switch (.@idx) {
+	case 1:
+		set $@overtime_work_station_1, 0;
+		break;
+	case 2:
+		set $@overtime_work_station_2, 0;
+		break;
+	case 3:
+		set $@overtime_work_station_3, 0;
+		break;
+	case 4:
+		set $@overtime_work_station_4, 0;
+		break;
+	}
 	killmonsterall "06guild_0"+.@idx;
 	end;
 }
@@ -93,7 +143,7 @@ OnStart:
 	getmapxy(.@map$, .@x, .@y, BL_PC);
 	killmonsterall .@map$;
 	monster .@map$,53,53,"牢鸽的工位",2411,1,"加班::OnMobDead";
-	.@mob_count = getareagid(.@mob_gids, 0, BL_MOB, .@map$);
+	getareagid(.@mob_gids, 0, BL_MOB, .@map$);
 	.@mob_gid = .@mob_gids[0]
 	.@account_id = getcharid(3);
 	detachrid;
@@ -102,7 +152,7 @@ OnStart:
 	end;
 
 OnMobDead:
-	dispbottom "太磨了！拿好你的加班费滚去继续！";
+	dispbottom "摸鱼大成功";
 	specialeffect2 EF_COIN;
 	Zeny += 1000000;
 	callsub OnStart;
