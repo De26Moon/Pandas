@@ -69,7 +69,7 @@ function set_station_user;
 				if (.@user == 0) {
 					set_station_user(.@idx, getcharid(0));
 					close2;
-					warp "06guild_0"+.@idx,51,51;
+					warp "06guild_0"+.@idx,51,51,getcharid(0);
 					donpcevent "¼Ó°àµÄÀÎ¸ë#"+ .@idx +"::OnEnterMap";
 					end;
 				}
@@ -100,7 +100,7 @@ function set_station_user;
 	} else {
 		close2;
 		callsub OnCleanMap;
-		warp "prontera",161,107;
+		warp "prontera",161,107,getcharid(0);
 	}
 	end;
 
