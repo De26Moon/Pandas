@@ -69,7 +69,7 @@ function set_station_user;
 				if (.@user == 0) {
 					close2;
 					set_station_user(.@idx, getcharid(0));
-					warp "06guild_0"+.@idx,51,51,getcharid(0);
+					warp "06guild_0"+.@idx,51,51;
 					donpcevent "加班的牢鸽#"+ .@idx +"::OnEnterMap";
 					end;
 				}
@@ -100,7 +100,7 @@ function set_station_user;
 	} else {
 		close2;
 		callsub OnCleanMap;
-		warp "prontera",161,107,getcharid(0);
+		warp "prontera",161,107;
 		end;
 	}
 
@@ -168,6 +168,10 @@ OnMobDead:
 06guild_03,49,49,4	duplicate(加班的牢鸽)	加班的牢鸽#3	849
 06guild_04,49,49,4	duplicate(加班的牢鸽)	加班的牢鸽#4	849
 
+06guild_01	mapflag	nowarpto
+06guild_02	mapflag	nowarpto
+06guild_03	mapflag	nowarpto
+06guild_04	mapflag	nowarpto
 06guild_01	mapflag	nomemo
 06guild_02	mapflag	nomemo
 06guild_03	mapflag	nomemo
