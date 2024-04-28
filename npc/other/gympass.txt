@@ -17,7 +17,8 @@
 //= 1.3 Updated script, and fixed potential errors. [L0ne_W0lf]
 //============================================================ 
 
-payon,173,141,4	script	Ripped Cabus#GymPass	899,{
+-	script	Ripped Cabus	-1,{
+
 	mes "[Ripped]";
 	mes "Hey, there. People aren't";
 	mes "as physically active as they";
@@ -148,3 +149,8 @@ payon,173,141,4	script	Ripped Cabus#GymPass	899,{
 		}
 	}
 }
+
+// duplicate
+
+payon,173,141,4	duplicate(Ripped Cabus)	Ripped Cabus#man	899
+prontera,160,136,4	duplicate(Ripped Cabus)	–÷πÛΩ°…Ì#pman	899
