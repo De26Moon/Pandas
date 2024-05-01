@@ -14,8 +14,8 @@
 
 # -*- coding: utf-8 -*-
 
-import environment
-environment.initialize()
+#import environment
+#environment.initialize()
 
 import glob
 import os

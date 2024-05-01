@@ -1,4 +1,4 @@
-#
+﻿#
 # Table structure for table `mob_skill_db2_re`
 #
 
@@ -81,85 +81,85 @@ CREATE TABLE IF NOT EXISTS `mob_skill_db2_re` (
 #	-3: added for all mobs.
 
 # rAthena Dev Team
-#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'Valaris@AL_TELEPORT','idle',26,1,10000,0,0,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'Valaris@AL_TELEPORT','walk',26,1,500,0,5000,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'Valaris@KN_BRANDISHSPEAR','attack',57,10,2000,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'Valaris@MO_BODYRELOCATION','chase',264,1,200,200,1000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'Valaris@NPC_ARMORBRAKE','attack',344,10,2000,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'Valaris@NPC_CALLSLAVE','attack',352,1,10000,0,30000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'Valaris@NPC_CALLSLAVE','idle',352,1,10000,0,30000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'Valaris@NPC_DARKBREATH','attack',202,5,2000,800,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'Valaris@NPC_DARKSTRIKE','chase',340,10,200,0,1000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'Valaris@NPC_GUIDEDATTACK','attack',172,5,500,0,20000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'Valaris@NPC_POWERUP','attack',349,5,10000,0,30000,'yes','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,'6',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'Valaris@NPC_SUMMONSLAVE','attack',196,6,10000,700,10000,'no','self','slavele','3',1902,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'Valaris@NPC_SUMMONSLAVE','idle',196,6,10000,700,10000,'no','self','slavele','3',1902,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'Valaris@WZ_VERMILION','attack',85,10,2000,500,2000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'Valaris@WZ_VERMILION','chase',85,10,200,500,2000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'Valaris@WZ_VERMILION','chase',85,10,500,500,2000,'no','target','skillused','18',NULL,NULL,NULL,NULL,NULL,'29',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1901,'Valaris\'s Worshipper@AL_TELEPORT','idle',26,1,10000,0,0,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1901,'Valaris\'s Worshipper@NPC_CURSEATTACK','attack',181,3,500,800,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1901,'Valaris\'s Worshipper@NPC_DARKNESSATTACK','attack',190,2,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1901,'Valaris\'s Worshipper@NPC_EMOTION','chase',197,1,20,0,5000,'yes','self','always','0',19,129,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1901,'Valaris\'s Worshipper@NPC_EMOTION','idle',197,1,200,0,5000,'yes','self','always','0',6,1173,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1901,'Valaris\'s Worshipper@NPC_EMOTION','walk',197,1,200,0,5000,'yes','self','always','0',2,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1901,'Valaris\'s Worshipper@NPC_HALLUCINATION','attack',207,1,500,500,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1901,'Valaris\'s Worshipper@NPC_HALLUCINATION','chase',207,1,50,500,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1901,'Valaris\'s Worshipper@SA_DISPELL','attack',289,1,0,0,30000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'MC Cameri@AL_TELEPORT','idle',26,1,10000,0,0,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'MC Cameri@AL_TELEPORT','walk',26,1,500,0,5000,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'MC Cameri@KN_BRANDISHSPEAR','attack',57,10,2000,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'MC Cameri@MO_BODYRELOCATION','chase',264,1,200,200,1000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'MC Cameri@NPC_ARMORBRAKE','attack',344,10,2000,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'MC Cameri@NPC_DARKBREATH','attack',202,5,2000,800,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'MC Cameri@NPC_DARKSTRIKE','chase',340,10,200,0,1000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'MC Cameri@NPC_GUIDEDATTACK','attack',172,5,500,0,20000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'MC Cameri@NPC_POWERUP','attack',349,5,10000,0,30000,'yes','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,'6',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'MC Cameri@WZ_VERMILION','attack',85,10,2000,500,2000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'MC Cameri@WZ_VERMILION','chase',85,10,200,500,2000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'MC Cameri@WZ_VERMILION','chase',85,10,500,500,2000,'no','target','skillused','18',NULL,NULL,NULL,NULL,NULL,'29',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'Poki#3@AC_DOUBLE','attack',46,10,500,1000,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'Poki#3@AC_SHOWER','attack',47,8,2000,1000,5000,'no','target','attackpcgt','2',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'Poki#3@BS_MAXIMIZE','chase',114,5,500,1000,5000,'no','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'Poki#3@BS_MAXIMIZE','attack',114,5,500,1000,5000,'no','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'Poki#3@NPC_AGIUP','chase',350,5,2500,0,5000,'no','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'Poki#3@NPC_POWERUP','attack',349,5,500,0,30000,'yes','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'Poki#3@SN_SHARPSHOOTING','attack',382,5,500,1000,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'Poki#3@HT_SKIDTRAP','idle',115,5,50,0,5000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'Poki#3@HT_FREEZINGTRAP','idle',120,5,50,0,300000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'Poki#3@HT_FREEZINGTRAP','idle',121,5,50,0,300000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'Poki#3@AC_CHARGEARROW','attack',148,1,500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'Poki#3@HT_FLASHER','idle',120,5,50,0,300000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'Poki#3@NPC_SUMMONSLAVE','idle',196,5,10000,2000,120000,'no','self','slavele','1',1659,1660,1661,1662,1663,'0',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'Poki#3@NPC_CALLSLAVE','attack',352,1,2000,0,10000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'Poki#3@NPC_CALLSLAVE','idle',352,1,2000,0,10000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'Poki#3@NPC_CHANGEWATER','attack',162,1,10000,2000,600000,'no','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'Poki#3@NPC_CHANGETELEKINESIS','attack',169,1,500,2000,5000,'no','self','myhpltmaxrate','10',NULL,NULL,NULL,NULL,NULL,'7',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'Poki#3@AL_TELEPORT','idle',26,1,10000,0,0,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'弓箭手监护人魔物@瞬间移动','idle',26,1,10000,0,0,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'弓箭手监护人魔物@瞬间移动','walk',26,1,500,0,5000,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'弓箭手监护人魔物@骑乘攻击','attack',57,10,2000,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'弓箭手监护人魔物@弓身弹影','chase',264,1,200,200,1000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'弓箭手监护人魔物@破坏铠甲','attack',344,10,2000,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'弓箭手监护人魔物@召回随从','attack',352,1,10000,0,30000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'弓箭手监护人魔物@召回随从','idle',352,1,10000,0,30000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'弓箭手监护人魔物@黑暗呼吸','attack',202,5,2000,800,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'弓箭手监护人魔物@暗灵召唤','chase',340,10,200,0,1000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'弓箭手监护人魔物@必中攻击','attack',172,5,500,0,20000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'弓箭手监护人魔物@力量提升','attack',349,5,10000,0,30000,'yes','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,'6',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'弓箭手监护人魔物@召唤随从','attack',196,6,10000,700,10000,'no','self','slavele','3',1902,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'弓箭手监护人魔物@召唤随从','idle',196,6,10000,700,10000,'no','self','slavele','3',1902,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'弓箭手监护人魔物@怒雷强击','attack',85,10,2000,500,2000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'弓箭手监护人魔物@怒雷强击','chase',85,10,200,500,2000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1900,'弓箭手监护人魔物@怒雷强击','chase',85,10,500,500,2000,'no','target','skillused','18',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1901,'秃鹰@瞬间移动','idle',26,1,10000,0,0,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1901,'秃鹰@诅咒攻击','attack',181,3,500,800,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1901,'秃鹰@暗属性攻击','attack',190,2,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1901,'秃鹰@表情','chase',197,1,20,0,5000,'yes','self','always','0',19,129,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1901,'秃鹰@表情','idle',197,1,200,0,5000,'yes','self','always','0',6,1173,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1901,'秃鹰@表情','walk',197,1,200,0,5000,'yes','self','always','0',2,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1901,'秃鹰@幻觉','attack',207,1,500,500,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1901,'秃鹰@幻觉','chase',207,1,50,500,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1901,'秃鹰@魔法效果解除','attack',289,1,0,0,30000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'宝物箱子@瞬间移动','idle',26,1,10000,0,0,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'宝物箱子@瞬间移动','walk',26,1,500,0,5000,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'宝物箱子@骑乘攻击','attack',57,10,2000,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'宝物箱子@弓身弹影','chase',264,1,200,200,1000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'宝物箱子@破坏铠甲','attack',344,10,2000,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'宝物箱子@黑暗呼吸','attack',202,5,2000,800,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'宝物箱子@暗灵召唤','chase',340,10,200,0,1000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'宝物箱子@必中攻击','attack',172,5,500,0,20000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'宝物箱子@力量提升','attack',349,5,10000,0,30000,'yes','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,'6',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'宝物箱子@怒雷强击','attack',85,10,2000,500,2000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'宝物箱子@怒雷强击','chase',85,10,200,500,2000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1902,'宝物箱子@怒雷强击','chase',85,10,500,500,2000,'no','target','skillused','18',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'宝物箱子@二连矢','attack',46,10,500,1000,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'宝物箱子@箭雨','attack',47,8,2000,1000,5000,'no','target','attackpcgt','2',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'宝物箱子@武器值最大化','chase',114,5,500,1000,5000,'no','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'宝物箱子@武器值最大化','attack',114,5,500,1000,5000,'no','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'宝物箱子@速度提升','chase',350,5,2500,0,5000,'no','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'宝物箱子@力量提升','attack',349,5,500,0,30000,'yes','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'宝物箱子@锐利射击','attack',382,5,500,1000,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'宝物箱子@滑动陷阱','idle',115,5,50,0,5000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'宝物箱子@强光陷阱','idle',120,5,50,0,300000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'宝物箱子@霜冻陷阱','idle',121,5,50,0,300000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'宝物箱子@冲锋箭','attack',148,1,500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'宝物箱子@强光陷阱','idle',120,5,50,0,300000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'宝物箱子@召唤随从','idle',196,5,10000,2000,120000,'no','self','slavele','1',1659,1660,1661,1662,1663,'0',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'宝物箱子@召回随从','attack',352,1,2000,0,10000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'宝物箱子@召回随从','idle',352,1,2000,0,10000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'宝物箱子@水属性转换','attack',162,1,10000,2000,600000,'no','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'宝物箱子@念属性转换','attack',169,1,500,2000,5000,'no','self','myhpltmaxrate','10',NULL,NULL,NULL,NULL,NULL,'7',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1903,'宝物箱子@瞬间移动','idle',26,1,10000,0,0,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 # Easter Bunny (not in the db?? it's in db2!)
-#REPLACE INTO `mob_skill_db2_re` VALUES (1921,'Easter Bunny@NPC_SUMMONSLAVE','attack',196,5,10000,3000,10000,'no','self','slavele','2',1063,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1921,'Easter Bunny@NPC_SUMMONSLAVE','idle',196,5,5000,2000,40000,'no','self','always','2',1920,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1921,'梦罗克门徒之喜乐@召唤随从','attack',196,5,10000,3000,10000,'no','self','slavele','2',1063,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1921,'梦罗克门徒之喜乐@召唤随从','idle',196,5,5000,2000,40000,'no','self','always','2',1920,NULL,NULL,NULL,NULL,NULL,NULL);
 
 #Custom Fire Poring. Warning, Colides with META_DENIRO
-#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'Fire Poring@AL_HEAL','idle',28,10,10000,0,2000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,'4',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'Fire Poring@AL_HEAL','walk',28,10,10000,0,2000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,'4',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'Fire Poring@AL_TELEPORT','attack',26,1,1000,5000,60000,'no','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'Fire Poring@AL_TELEPORT','idle',26,1,10000,0,0,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'Fire Poring@NPC_DARKBLESSING','attack',203,1,1000,2000,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'18',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'Fire Poring@NPC_SUMMONSLAVE','attack',196,16,10000,2000,10000,'no','self','slavele','3',1491,1431,1433,NULL,NULL,'18',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'Fire Poring@NPC_SUMMONSLAVE','idle',196,16,10000,2000,10000,'no','self','slavele','3',1491,1431,1433,NULL,NULL,'18',NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'Fire Poring@RG_INTIMIDATE','attack',219,5,1000,0,3000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'Fire Poring@RG_STRIPARMOR','attack',217,5,2000,0,3000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'Fire Poring@RG_STRIPHELM','attack',218,5,2000,0,3000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'Fire Poring@RG_STRIPSHIELD','attack',216,5,2000,0,3000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'Fire Poring@RG_STRIPWEAPON','attack',215,5,2000,0,3000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'兵蚁@治愈术','idle',28,10,10000,0,2000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,'4',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'兵蚁@治愈术','walk',28,10,10000,0,2000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,'4',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'兵蚁@瞬间移动','attack',26,1,1000,5000,60000,'no','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'兵蚁@瞬间移动','idle',26,1,10000,0,0,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'兵蚁@黑暗赐福','attack',203,1,1000,2000,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'18',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'兵蚁@召唤随从','attack',196,16,10000,2000,10000,'no','self','slavele','3',1491,1431,1433,NULL,NULL,'18',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'兵蚁@召唤随从','idle',196,16,10000,2000,10000,'no','self','slavele','3',1491,1431,1433,NULL,NULL,'18',NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'兵蚁@胁持','attack',219,5,1000,0,3000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'兵蚁@卸除铠甲','attack',217,5,2000,0,3000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'兵蚁@卸除头盔','attack',218,5,2000,0,3000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'兵蚁@卸除盾牌','attack',216,5,2000,0,3000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (1239,'兵蚁@卸除武器','attack',215,5,2000,0,3000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 #iRO Halloween Event 2009
-#REPLACE INTO `mob_skill_db2_re` VALUES (3014,'Halloween Whisper@AS_CLOAKING','idle',135,1,2000,200,5000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (3014,'Halloween Whisper@AS_CLOAKING','chase',135,1,2000,200,5000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (3014,'Halloween Whisper@NPC_EMOTION','idle',197,1,2000,0,5000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db2_re` VALUES (3014,'Halloween Whisper@NPC_EMOTION','chase',197,1,200,0,5000,'yes','self','always','0',19,0x81,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (3014,'堕落的沙漠之狼@伪装','idle',135,1,2000,200,5000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (3014,'堕落的沙漠之狼@伪装','chase',135,1,2000,200,5000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (3014,'堕落的沙漠之狼@表情','idle',197,1,2000,0,5000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db2_re` VALUES (3014,'堕落的沙漠之狼@表情','chase',197,1,200,0,5000,'yes','self','always','0',19,0x81,NULL,NULL,NULL,NULL,NULL);
 
 # Here you can place your custom mob skills
 
