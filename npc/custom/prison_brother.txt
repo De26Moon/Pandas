@@ -252,7 +252,7 @@ prontera,146,107,6	script	ÀÎ¶þ	878,{
 			mes "Æð·É~";
 			Zeny -= (.@input_count * 648);
 			#CASHPOINTS += .@input_count;
-			#CASHPOINTS += (.@input_count / 100)
+			#CASHPOINTS += (.@input_count / 100);
 		}
 		close;
 	}
