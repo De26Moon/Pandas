@@ -628,7 +628,7 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 	mes "[Wandering Mind]";
 	mes "I need... grudge's... grudge's... strong... power... It will help... both me... and you... all... Kkk...";
 	next;
-	switch( select( "Old Helmet enchant", "Old Helmet reset", "Old Helmet enchant description" ) ) {
+	switch( select( "Old Helmet enchant", "Old Helmet reset", "Old Helmet enchant description", "Old Helment loop enchant" ) ) {
 	case 1:
 		npctalk "Hand over... grudge... grudge...", "", bc_self;
 		mes "[Wandering Mind]";
@@ -1033,6 +1033,262 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 		mes "If you have... the opportunity... you might be... able to upgrade... the enchantment level... ";
 		mes "^FF0000*When reinforcing the enchant level, 50, 70, 100, 150, 250, 500, 1000 Cursed Fragments are consumed, depending on the enchant level";
 		mes "increase after 20 Cursed Fragments in the 2nd step, and 40 Cursed Fragments in the 3rd step.*^000000";
+		close;
+	case 4:
+		.@equip_id = getequipid(EQI_HEAD_TOP);
+		switch(.@equip_id) {
+			case 18971:// Old_Rune_Circlet
+			case 18972:// Old_Mitra
+			case 18973:// Old_Driver_Band_R
+			case 18974:// Old_Driver_Band_Y
+			case 18975:// Old_Shadow_Handicraft
+			case 18976:// Old_Minstrel_Song_Hat
+			case 18977:// Old_Midas_Whisper
+			case 18978:// Old_Magic_Stone_Hat
+			case 18979:// Old_Blazing_Soul
+			case 18980:// Old_Wind_Whisper
+			case 18981:// Old_Dying_Swan
+			case 18982:// Old_Circlet_Of_Bone
+			case 18983:// Old_Protect_Of_Crown
+			case 18984:// Old_Camo_RabbitHood
+				break;
+			default:
+				npctalk "Destroy it... Destroy it...", "", bc_self;
+				mes "[Wandering Mind]";
+				mes "This is... interesting... In that helmet... there is no fragrance... filled with a special power... Do you want... destruction...? kkk...";
+				mes "^FF0000*Enchantment using Cursed Fragment is only possible in the Old Helmet.*^000000";
+				close;
+		}
+
+		setarray .@card[0], getequipcardid(EQI_HEAD_TOP,0), getequipcardid(EQI_HEAD_TOP,1), getequipcardid(EQI_HEAD_TOP,2), getequipcardid(EQI_HEAD_TOP,3);
+		.@refine = getequiprefinerycnt(EQI_HEAD_TOP);
+
+		switch( .@card[1] ) {
+		case 29061:	// Ambition1Lv
+		case 29071:	// Tab1Lv
+		case 29081:	// Expect1Lv
+		case 29091:	// ArchLine1Lv
+		case 29101:	// Steel1Lv
+		case 29111:	// Mercy1Lv
+			.@enchant_level = 1;
+			break;
+		case 29062:	// Ambition2Lv
+		case 29072:	// Tab2Lv
+		case 29082:	// Expect2Lv
+		case 29092:	// ArchLine2Lv
+		case 29102:	// Steel2Lv
+		case 29112:	// Mercy2Lv
+			.@enchant_level = 2;
+			break;
+		case 29063:	// Ambition3Lv
+		case 29073:	// Tab3Lv
+		case 29083:	// Expect3Lv
+		case 29093:	// ArchLine3Lv
+		case 29103:	// Steel3Lv
+		case 29113:	// Mercy3Lv
+			.@enchant_level = 3;
+			break;
+		case 29064:	// Ambition4Lv
+		case 29074:	// Tab4Lv
+		case 29084:	// Expect4Lv
+		case 29094:	// ArchLine4Lv
+		case 29104:	// Steel4Lv
+		case 29114:	// Mercy4Lv
+			.@enchant_level = 4;
+			break;
+		case 29065:	// Ambition5Lv
+		case 29075:	// Tab5Lv
+		case 29085:	// Expect5Lv
+		case 29095:	// ArchLine5Lv
+		case 29105:	// Steel5Lv
+		case 29115:	// Mercy5Lv
+			.@enchant_level = 5;
+			break;
+		case 29066:	// Ambition6Lv
+		case 29076:	// Tab6Lv
+		case 29086:	// Expect6Lv
+		case 29096:	// ArchLine6Lv
+		case 29106:	// Steel6Lv
+		case 29116:	// Mercy6Lv
+			.@enchant_level = 6;
+			break;
+		case 29067:	// Ambition7Lv
+		case 29077:	// Tab7Lv
+		case 29087:	// Expect7Lv
+		case 29097:	// ArchLine7Lv
+		case 29107:	// Steel7Lv
+		case 29117:	// Mercy7Lv
+			.@enchant_level = 7;
+			break;
+		case 29068:	// Ambition8Lv
+		case 29078:	// Tab8Lv
+		case 29088:	// Expect8Lv
+		case 29098:	// ArchLine8Lv
+		case 29108:	// Steel8Lv
+		case 29118:	// Mercy8Lv
+			.@enchant_level = 8;
+			break;
+		case 29069:	// Ambition9Lv
+		case 29079:	// Tab9Lv
+		case 29089:	// Expect9Lv
+		case 29099:	// ArchLine9Lv
+		case 29109:	// Steel9Lv
+		case 29119:	// Mercy9Lv
+			.@enchant_level = 9;
+			break;
+		case 29070:	// Ambition10Lv
+		case 29080:	// Tab10Lv
+		case 29090:	// Expect10Lv
+		case 29100:	// ArchLine10Lv
+		case 29110:	// Steel10Lv
+		case 29120:	// Mercy10Lv
+		default:
+			mes "[Wandering Mind]";
+			mes "First there must have a valid special enchantment.";
+			close;
+		}
+
+		mes "[Wandering Mind]";
+		mes "Select target level.";
+		next;
+		.@enchant_target_level = select("2","3","4","5","6","7","8","9","10");
+
+		mes "[Wandering Mind]";
+		mes "Start?";
+		next;
+		if (select("Sure","Give up") == 2) {
+			mes "[Wandering Mind]";
+			mes "Bye";
+			close;
+		}
+
+		while (.@enchant_target_level > .@enchant_level) {
+			switch( .@card[1] ) {
+			case 29061:	// Ambition1Lv
+			case 29071:	// Tab1Lv
+			case 29081:	// Expect1Lv
+			case 29091:	// ArchLine1Lv
+			case 29101:	// Steel1Lv
+			case 29111:	// Mercy1Lv
+				.@requirement = 1;
+				.@enchant_level = 1;
+				.@enchant_rate = 80;
+				break;
+			case 29062:	// Ambition2Lv
+			case 29072:	// Tab2Lv
+			case 29082:	// Expect2Lv
+			case 29092:	// ArchLine2Lv
+			case 29102:	// Steel2Lv
+			case 29112:	// Mercy2Lv
+				.@requirement = 1;
+				.@enchant_level = 2;
+				.@enchant_rate = 70;
+				break;
+			case 29063:	// Ambition3Lv
+			case 29073:	// Tab3Lv
+			case 29083:	// Expect3Lv
+			case 29093:	// ArchLine3Lv
+			case 29103:	// Steel3Lv
+			case 29113:	// Mercy3Lv
+				.@requirement = 1;
+				.@enchant_level = 3;
+				.@enchant_rate = 50;
+				break;
+			case 29064:	// Ambition4Lv
+			case 29074:	// Tab4Lv
+			case 29084:	// Expect4Lv
+			case 29094:	// ArchLine4Lv
+			case 29104:	// Steel4Lv
+			case 29114:	// Mercy4Lv
+				.@requirement = 2;
+				.@enchant_level = 4;
+				.@enchant_rate = 20;
+				break;
+			case 29065:	// Ambition5Lv
+			case 29075:	// Tab5Lv
+			case 29085:	// Expect5Lv
+			case 29095:	// ArchLine5Lv
+			case 29105:	// Steel5Lv
+			case 29115:	// Mercy5Lv
+				.@requirement = 3;
+				.@enchant_level = 5;
+				.@enchant_rate = 20;	// unknown rates
+				break;
+			case 29066:	// Ambition6Lv
+			case 29076:	// Tab6Lv
+			case 29086:	// Expect6Lv
+			case 29096:	// ArchLine6Lv
+			case 29106:	// Steel6Lv
+			case 29116:	// Mercy6Lv
+				.@requirement = 5;
+				.@enchant_level = 6;
+				.@enchant_rate = 20;	// unknown rates
+				break;
+			case 29067:	// Ambition7Lv
+			case 29077:	// Tab7Lv
+			case 29087:	// Expect7Lv
+			case 29097:	// ArchLine7Lv
+			case 29107:	// Steel7Lv
+			case 29117:	// Mercy7Lv
+				.@requirement = 8;
+				.@enchant_level = 7;
+				.@enchant_rate = 20;	// unknown rates
+				break;
+			case 29068:	// Ambition8Lv
+			case 29078:	// Tab8Lv
+			case 29088:	// Expect8Lv
+			case 29098:	// ArchLine8Lv
+			case 29108:	// Steel8Lv
+			case 29118:	// Mercy8Lv
+				.@requirement = 16;
+				.@enchant_level = 8;
+				.@enchant_rate = 20;	// unknown rates
+				break;
+			case 29069:	// Ambition9Lv
+			case 29079:	// Tab9Lv
+			case 29089:	// Expect9Lv
+			case 29099:	// ArchLine9Lv
+			case 29109:	// Steel9Lv
+			case 29119:	// Mercy9Lv
+				.@requirement = 33;
+				.@enchant_level = 9;
+				.@enchant_rate = 20;	// unknown rates
+				break;
+			case 29070:	// Ambition10Lv
+			case 29080:	// Tab10Lv
+			case 29090:	// Expect10Lv
+			case 29100:	// ArchLine10Lv
+			case 29110:	// Steel10Lv
+			case 29120:	// Mercy10Lv
+			default:
+				mes "Something wrong...";
+				close;
+			}
+
+			if (.@requirement > countitem(23016)) {
+				break;
+			}
+
+			progressbar "000000",1;
+			delitem 23016, .@requirement;
+			if (.@enchant_rate > rand(100)) {
+				specialeffect2 EF_FIREHIT;
+				.@enchant_level += 1;
+				.@card[1] += 1;
+			} else {
+				specialeffect2 EF_SUI_EXPLOSION;
+				if (.@enchant_level > 1) {
+					.@enchant_level -= 1;
+					.@card[1] -= 1;
+				}
+			}
+		}
+
+		delequip EQI_HEAD_TOP;
+		getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+
+		mes "[Wandering Mind]";
+		mes "Finished.";
 		close;
 	}
 }
