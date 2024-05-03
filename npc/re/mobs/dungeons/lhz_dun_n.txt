@@ -72,7 +72,7 @@ OnRegularDeadUpdate:
 		.lhz_dun_n_regular++;
 		dispbottom "lhz_dun_n", "Regular count: " + .lhz_dun_n_regular;
 		if (.lhz_dun_n_regular == 110) {
-			.lhz_dun_n_regular = 0
+			.lhz_dun_n_regular = 0;
 			.@mini_boss = F_Rand(3214,3215,3216,3217,3218,3219,3233,3234,3235,3236,3237,3238,3239);
 			monster "lhz_dun_n",140,90,"--en--",.@mini_boss,1, "lhz_dun_n::OnMiniDeadUpdate";
 		}
@@ -87,7 +87,7 @@ OnMiniDeadUpdate:
 		.lhz_dun_n_mini++;
 		dispbottom "lhz_dun_n", "Mini count: " + .lhz_dun_n_mini;
 		if (.lhz_dun_n_mini == 4) {
-			.lhz_dun_n_mini = 0
+			.lhz_dun_n_mini = 0;
 			monster "lhz_dun_n",140,230,"--en--", F_Rand(3220,3221,3222,3223,3224,3225,3240,3241,3242,3243,3244,3245,3246),1, "lhz_dun_n::OnMyMVPDead";
 			mapannounce "lhz_dun_n", "Voice of Reaper: It's been a while.", bc_map;	// unknown message
 			.lhz_dun_n_boss = 1;
