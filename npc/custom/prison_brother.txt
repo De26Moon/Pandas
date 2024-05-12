@@ -212,7 +212,7 @@ prontera,146,107,6	script	牢二	878,{
 	mes "[牢二]";
 	mes "怎么形容我最贴切？";
 	next;
-	switch (select("持久:专一:持久专一:古希腊掌管氪金的神")) {
+	switch (select("持久:专一:持久专一:古希腊掌管氪金的神:古埃及掌管BUG的蛆")) {
 	case 1:
 		mes "[牢二]";
 		mes "讨厌~";
@@ -263,6 +263,24 @@ prontera,146,107,6	script	牢二	878,{
 			#CASHPOINTS += (.@input_count / 100);
 		}
 		close;
+	case 5:
+		mes "[牢二]";
+		mes "如果你身上有没用但是不能丢不能卖的道具，可以让我来回收。";
+		mes "请选择要回收的道具：";
+		getinventorylist;
+		set .@item_list$,"";
+		for (set .@i,0; .@i<@inventorylist_count; set .@i,.@i+1) {
+			.@item_list$ += getitemname(@inventorylist_id[.@i]);
+			if (.@i < @inventorylist_count - 1) {
+				.@item_list$ += ":";
+			}
+		}
+		next;
+		.@idx = select(.@item_list$) - 1;
+		delitem @inventorylist_id[.@idx], @inventorylist_amount[.@idx];
+		mes "[牢二]";
+		mes "收工~";
+		close;
 	}
 }
 
@@ -289,4 +307,4 @@ prontera,146,107,6	script	牢二	878,{
 	close;
 }
 
-prontera,165,104,4	duplicate(牢极)	牢极#test	950
+//prontera,165,104,4	duplicate(牢极)	牢极#test	950
