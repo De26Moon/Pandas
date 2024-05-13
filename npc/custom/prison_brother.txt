@@ -327,6 +327,15 @@ prontera,146,107,6	script	ÀÎ¶þ	878,{
 			mes "err ref lv";
 			close;
 		}
+
+		dispbottom "rate:"+getequippercentrefinery(.@eqi_idx)+","+getequippercentrefinery(.@eqi_idx, true);
+
+		//.@ref_target = select("11:12:13:14:15:16:17:18:19:20") + 10;
+
+		//while (.@ref_target > getequiprefinerycnt(.@eqi_idx)) {
+		//	;
+		//}
+
 		mes "finish";
 		close;
 	}
