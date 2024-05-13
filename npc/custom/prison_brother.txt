@@ -290,21 +290,46 @@ prontera,146,107,6	script	牢二	878,{
 	mes "脚本测试，没事别点，出事后果自负";
 	next;
 	select ("古希腊掌管编程的牛马");
-	getinventorylist;
-	set .@item_list$,"";
-	for (set .@i,0; .@i<@inventorylist_count; set .@i,.@i+1) {
-		.@item_list$ += getitemname(@inventorylist_id[.@i]);
-		if (.@i < @inventorylist_count - 1) {
-			.@item_list$ += ":";
-		}
-	}
 	mes "[牢极]";
-	mes "选择要回收的道具";
+	mes "精炼";
 	next;
-	.@idx = select(.@item_list$) - 1;
-	dispbottom @inventorylist_id[.@idx];
-	dispbottom getitemname(@inventorylist_id[.@idx]);
-	close;
+	switch (select("精炼说明:自动精炼")) {
+	case 1:
+		mes "[牢极]";
+		close;
+	case 2:
+		mes "[牢极]";
+		mes "选择装备：";
+		set .@equip_list$,"";
+		for (set .@i,EQI_ACC_L; .@i<EQI_MAX; set .@i,.@i+1) {
+			if (getequipisequiped(.@i)) {
+				.@equip_list$ += getequipname(.@i);
+			} else {
+				.@equip_list$ += "(没有装备)";
+			}
+			if (.@i < EQI_MAX-1) {
+				.@equip_list$ += ":";
+			}
+		}
+		next;
+		.@eqi_idx = select(.@equip_list$) - 1;
+
+		mes "[牢极]";
+		if (!getequipisequiped(.@eqi_idx)) {
+			mes "no equip";
+			close;
+		}
+		if (!getequipisenableref(.@eqi_idx)) {
+			mes "cannot ref";
+			close;
+		}
+		if (getequiprefinerycnt(.@eqi_idx) < 10 || getequiprefinerycnt(.@eqi_idx) == 20) {
+			mes "err ref lv";
+			close;
+		}
+		mes "finish";
+		close;
+	}
 }
 
-//prontera,165,104,4	duplicate(牢极)	牢极#test	950
+prontera,165,104,4	duplicate(牢极)	牢极#test	950
