@@ -351,6 +351,7 @@ prontera,146,107,6	script	ÀÎ¶þ	878,{
 				break;
 			}
 			.@material = getequiprefinecost(.@part, REFINE_COST_HD, REFINE_MATERIAL_ID);
+			dispbottom "material id:"+.@material;
 			if (.@material != .@hd_carnium_itemid && .@material != .@hd_bradium_itemid) {
 				mes "material wrong";
 				break;
