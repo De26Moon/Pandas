@@ -342,7 +342,7 @@ prontera,146,107,6	script	牢二	878,{
 		mes "选择等级：";
 		next;
 		.@ref_target = select("11:12:13:14:15:16:17:18:19:20") + 10;
-		.@test_count = 100
+		.@test_count = 100;
 
 		while (.@ref_target > getequiprefinerycnt(.@eqi_idx) && .@test_count > 0) {
 			.@zeny_cost = getequiprefinecost(.@part, REFINE_COST_HD, REFINE_ZENY_COST);
