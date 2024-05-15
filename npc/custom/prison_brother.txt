@@ -363,7 +363,7 @@ prontera,146,107,6	script	ÀÎ¶þ	878,{
 				//#CASHPOINTS -= .@material_cash_cost;
 				//getitem .@material,.@material_cash_cnt;
 			}
-			.@curr_lv = getequiprefinerycnt(.@eqi_idx)
+			.@curr_lv = getequiprefinerycnt(.@eqi_idx);
 			if (.@blacksmith_blessing_max_lv >= .@curr_lv) {
 				set .@curr_blacksmith_blessing_cnt, countitem(.@blacksmith_blessing_itemid);
 				if (.@curr_blacksmith_blessing_cnt < .@blacksmith_blessing_cash_cost) {
