@@ -300,6 +300,7 @@ prontera,146,107,6	script	牢二	878,{
 	case 2:
 		mes "[牢极]";
 		mes "选择装备：";
+		next;
 		set .@equip_list$,"";
 		for (set .@i,EQI_ACC_L; .@i<EQI_MAX; set .@i,.@i+1) {
 			if (getequipisequiped(.@i)) {
@@ -311,7 +312,6 @@ prontera,146,107,6	script	牢二	878,{
 				.@equip_list$ += ":";
 			}
 		}
-		next;
 		.@eqi_idx = select(.@equip_list$) - 1;
 
 		mes "[牢极]";
@@ -328,13 +328,72 @@ prontera,146,107,6	script	牢二	878,{
 			close;
 		}
 
-		dispbottom "rate:"+getequippercentrefinery(.@eqi_idx)+","+getequippercentrefinery(.@eqi_idx, true);
+		//setarray .@weapon123_rate[10],18,18,18,18,18,17,17,17,15,15;
+		//setarray .@armor_weapon4_rate[10],8,8,8,8,7,7,7,7,5,5;
+		setarray .@blacksmith_blessing_cost[10],7,11,16,22;
+		set .@blacksmith_blessing_max_lv,13;
+		set .@hd_carnium_itemid,6225;
+		set .@hd_bradium_itemid,6226;
+		set .@material_cash_cost,29;
+		set .@material_cash_cnt,5;
+		set .@blacksmith_blessing_itemid,6635;
+		set .@blacksmith_blessing_cash_cost,29;
 
-		//.@ref_target = select("11:12:13:14:15:16:17:18:19:20") + 10;
+		mes "选择等级：";
+		next;
+		.@ref_target = select("11:12:13:14:15:16:17:18:19:20") + 10;
+		.@test_count = 100
 
-		//while (.@ref_target > getequiprefinerycnt(.@eqi_idx)) {
-		//	;
-		//}
+		while (.@ref_target > getequiprefinerycnt(.@eqi_idx) && .@test_count > 0) {
+			.@zeny_cost = getequiprefinecost(.@part, REFINE_COST_HD, REFINE_ZENY_COST);
+			if (Zeny < .@zeny_cost) {
+				mes "zeny not enough";
+				break;
+			}
+			.@material = getequiprefinecost(.@part, REFINE_COST_HD, REFINE_MATERIAL_ID);
+			if (.@material != .@hd_carnium_itemid && .@material != .@hd_bradium_itemid) {
+				mes "material wrong";
+				break;
+			}
+			if (countitem(.@material) == 0) {
+				if (#CASHPOINTS < .@material_cash_cost) {
+					mes "cash not enough";
+					break;
+				}
+				//#CASHPOINTS -= .@material_cash_cost;
+				//getitem .@material,.@material_cash_cnt;
+			}
+			.@curr_lv = getequiprefinerycnt(.@eqi_idx)
+			if (.@blacksmith_blessing_max_lv >= .@curr_lv) {
+				set .@curr_blacksmith_blessing_cnt, countitem(.@blacksmith_blessing_itemid);
+				if (.@curr_blacksmith_blessing_cnt < .@blacksmith_blessing_cash_cost) {
+					if (#CASHPOINTS < (.@blacksmith_blessing_cash_cost - .@curr_blacksmith_blessing_cnt) * .@blacksmith_blessing_cash_cost) {
+						mes "cash not enough";
+						break;
+					}
+					//#CASHPOINTS -= (.@blacksmith_blessing_cash_cost - .@curr_blacksmith_blessing_cnt) * .@blacksmith_blessing_cash_cost;
+					//getitem .@blacksmith_blessing_itemid, .@blacksmith_blessing_cash_cost - .@curr_blacksmith_blessing_cnt;
+				}
+			}
+			
+			progressbar "000000",1;
+			//delitem .@material,1;
+			//delitem .@blacksmith_blessing_itemid, .@blacksmith_blessing_cost[.@curr_lv];
+			//Zeny -= .@zeny_cost;
+
+			if (getequippercentrefinery(.@eqi_idx) < rand(100)) {
+				specialeffect2 EF_REFINEFAIL;
+				if (.@blacksmith_blessing_max_lv < .@curr_lv) {
+					//downrefitem .@eqi_idx;
+					dispbottom "fail";
+				}
+			} else {
+				specialeffect2 EF_REFINEOK;
+				//successrefitem .@eqi_idx;
+				dispbottom "succ";
+			}
+			.@test_count -= 1;
+		}
 
 		mes "finish";
 		close;
