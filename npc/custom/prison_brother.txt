@@ -345,12 +345,12 @@ prontera,146,107,6	script	ÀÎ¶þ	878,{
 		.@test_count = 100;
 
 		while (.@ref_target > getequiprefinerycnt(.@eqi_idx) && .@test_count > 0) {
-			.@zeny_cost = getequiprefinecost(.@part, REFINE_COST_HD, REFINE_ZENY_COST);
+			.@zeny_cost = getequiprefinecost(.@eqi_idx, REFINE_COST_HD, REFINE_ZENY_COST);
 			if (Zeny < .@zeny_cost) {
 				mes "zeny not enough";
 				break;
 			}
-			.@material = getequiprefinecost(.@part, REFINE_COST_HD, REFINE_MATERIAL_ID);
+			.@material = getequiprefinecost(.@eqi_idx, REFINE_COST_HD, REFINE_MATERIAL_ID);
 			dispbottom "material id:"+.@material;
 			if (.@material != .@hd_carnium_itemid && .@material != .@hd_bradium_itemid) {
 				mes "material wrong";
