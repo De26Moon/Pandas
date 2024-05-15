@@ -41,7 +41,7 @@ function set_station_user;
 	mes "[牢鸽]";
 	mes "组撒？";
 	next;
-	switch (select("牢:鸽:古希腊掌管加班的神")) {
+	switch (select("牢:鸽:古希腊掌管加班的神:古埃及掌管打铁的黑奴")) {
 	case 1:
 		mes "[牢鸽]";
 		mes "你别慌~";
@@ -88,6 +88,142 @@ function set_station_user;
 		}
 		mes "这四个逼正在加班，快去看看哪个是工贼！";
 		close;
+	case 4:
+		mes "[牢鸽]";
+		mes "这里可以自动精炼+10以上的装备。";
+		next;
+		if (1 == select("听取相关说明:别废话，直接干")) {
+			mes "[牢鸽]";
+			mes "这里可以将身上的装备自动精炼到指定的等级。";
+			next;
+			mes "[牢鸽]";
+			mes "精炼的花费及成功率与精炼房相同。";
+			mes "精炼所需的商城道具会自动购买。";
+			mes "+14之前精炼失败没有惩罚，+14之后精炼失败会降一级。";
+			next;
+			mes "[牢鸽]";
+			mes "我会不停尝试将装备精炼到你指定的等级直到成功。";
+			mes "除非你花光了金币或者商城点数。";
+			next;
+			mes "[牢鸽]";
+			mes "说明到此为止，是否开始精炼？";
+			next;
+			if (1 == select("再想想:开搞")) {
+				mes "[牢鸽]";
+				mes "告辞";
+				close;
+			}
+		}
+		set .@check_id[0],6225,6226,6635;
+		set .@check_cnt[0],5,5,22;
+		if (!checkweight2(.@check_id, .@check_cnt)) {
+			mes "[牢鸽]";
+			mes "背包有点满了，你先想想办法。";
+			close;
+		}
+		
+		mes "[牢鸽]";
+		mes "选择要精炼的装备：";
+		next;
+		set .@equip_list$,"";
+		for (set .@i,EQI_ACC_L; .@i<=EQI_HAND_R; set .@i,.@i+1) {
+			if (getequipisequiped(.@i)) {
+				.@equip_list$ += getequipname(.@i);
+			} else {
+				.@equip_list$ += "(没有装备)";
+			}
+			if (.@i < EQI_HAND_R) {
+				.@equip_list$ += ":";
+			}
+		}
+		.@eqi_idx = select(.@equip_list$) - 1;
+
+		mes "[牢鸽]";
+		if (!getequipisequiped(.@eqi_idx)) {
+			mes "你希望我精炼你的脑袋吗？";
+			close;
+		}
+		if (!getequipisenableref(.@eqi_idx)) {
+			mes "这件装备不能被精炼。";
+			close;
+		}
+		if (getequiprefinerycnt(.@eqi_idx) < 10 || getequiprefinerycnt(.@eqi_idx) == 20) {
+			mes "我只能精炼+10 ~ +19的装备";
+			close;
+		}
+		setarray .@blacksmith_blessing_cost[10],7,11,16,22;
+		set .@blacksmith_blessing_max_lv,13;
+		set .@hd_carnium_itemid,6225;
+		set .@hd_bradium_itemid,6226;
+		set .@material_cash_cost,29;
+		set .@material_cash_cnt,5;
+		set .@blacksmith_blessing_itemid,6635;
+		set .@blacksmith_blessing_cash_cost,29;
+
+		mes "选择精炼目标等级：";
+		next;
+		.@ref_target = select("11:12:13:14:15:16:17:18:19:20") + 10;
+
+		mes "[牢鸽]";
+		mes "确定脸洗完了开整？";
+		next;
+		if (1 == select("溜了溜了:开整")) {
+			mes "[牢鸽]";
+			mes "告辞";
+			close;
+		}
+
+		while (.@ref_target > getequiprefinerycnt(.@eqi_idx)) {
+			.@zeny_cost = getequiprefinecost(.@eqi_idx, REFINE_COST_HD, REFINE_ZENY_COST);
+			if (Zeny < .@zeny_cost) {
+				mes "[牢鸽]";
+				mes "金币不够了，去想办法赚钱吧。";
+				close;
+			}
+			.@material = getequiprefinecost(.@eqi_idx, REFINE_COST_HD, REFINE_MATERIAL_ID);
+			if (.@material != .@hd_carnium_itemid && .@material != .@hd_bradium_itemid) {
+				mes "[牢鸽]";
+				mes "貌似出了点问题...";
+				close;
+			}
+			if (countitem(.@material) == 0) {
+				if (#CASHPOINTS < .@material_cash_cost) {
+					mes "[牢鸽]";
+					mes "商城点数不够了，去找牢二氪金吧。";
+					close;
+				}
+				#CASHPOINTS -= .@material_cash_cost;
+				getitem .@material,.@material_cash_cnt;
+			}
+			.@curr_lv = getequiprefinerycnt(.@eqi_idx);
+			if (.@blacksmith_blessing_max_lv >= .@curr_lv) {
+				set .@curr_blacksmith_blessing_cnt, countitem(.@blacksmith_blessing_itemid);
+				if (.@curr_blacksmith_blessing_cnt < .@blacksmith_blessing_cost[.@curr_lv]) {
+					.@blacksmith_blessing_buy_cnt = .@blacksmith_blessing_cost[.@curr_lv] - .@curr_blacksmith_blessing_cnt;
+					if (#CASHPOINTS < .@blacksmith_blessing_buy_cnt * .@blacksmith_blessing_cash_cost) {
+						mes "[牢鸽]";
+						mes "商城点数不够了，去找牢二氪金吧。";
+						close;
+					}
+					#CASHPOINTS -= .@blacksmith_blessing_buy_cnt * .@blacksmith_blessing_cash_cost;
+					getitem .@blacksmith_blessing_itemid, .@blacksmith_blessing_buy_cnt;
+				}
+			}
+			progressbar "000000",1;
+			delitem .@material,1;
+			delitem .@blacksmith_blessing_itemid, .@blacksmith_blessing_cost[.@curr_lv];
+			Zeny -= .@zeny_cost;
+
+			if (getequippercentrefinery(.@eqi_idx) < rand(100)) {
+				specialeffect2 EF_REFINEFAIL;
+				if (.@blacksmith_blessing_max_lv < .@curr_lv) {
+					downrefitem .@eqi_idx;
+				}
+			} else {
+				specialeffect2 EF_REFINEOK;
+				successrefitem .@eqi_idx;
+			}
+		}
 	}
 }
 
@@ -290,115 +426,7 @@ prontera,146,107,6	script	牢二	878,{
 	mes "脚本测试，没事别点，出事后果自负";
 	next;
 	select ("古希腊掌管编程的牛马");
-	mes "[牢极]";
-	mes "精炼";
-	next;
-	switch (select("精炼说明:自动精炼")) {
-	case 1:
-		mes "[牢极]";
-		close;
-	case 2:
-		mes "[牢极]";
-		mes "选择装备：";
-		next;
-		set .@equip_list$,"";
-		for (set .@i,EQI_ACC_L; .@i<EQI_MAX; set .@i,.@i+1) {
-			if (getequipisequiped(.@i)) {
-				.@equip_list$ += getequipname(.@i);
-			} else {
-				.@equip_list$ += "(没有装备)";
-			}
-			if (.@i < EQI_MAX-1) {
-				.@equip_list$ += ":";
-			}
-		}
-		.@eqi_idx = select(.@equip_list$) - 1;
-
-		mes "[牢极]";
-		if (!getequipisequiped(.@eqi_idx)) {
-			mes "no equip";
-			close;
-		}
-		if (!getequipisenableref(.@eqi_idx)) {
-			mes "cannot ref";
-			close;
-		}
-		if (getequiprefinerycnt(.@eqi_idx) < 10 || getequiprefinerycnt(.@eqi_idx) == 20) {
-			mes "err ref lv";
-			close;
-		}
-
-		//setarray .@weapon123_rate[10],18,18,18,18,18,17,17,17,15,15;
-		//setarray .@armor_weapon4_rate[10],8,8,8,8,7,7,7,7,5,5;
-		setarray .@blacksmith_blessing_cost[10],7,11,16,22;
-		set .@blacksmith_blessing_max_lv,13;
-		set .@hd_carnium_itemid,6225;
-		set .@hd_bradium_itemid,6226;
-		set .@material_cash_cost,29;
-		set .@material_cash_cnt,5;
-		set .@blacksmith_blessing_itemid,6635;
-		set .@blacksmith_blessing_cash_cost,29;
-
-		mes "选择等级：";
-		next;
-		.@ref_target = select("11:12:13:14:15:16:17:18:19:20") + 10;
-		.@test_count = 100;
-
-		while (.@ref_target > getequiprefinerycnt(.@eqi_idx) && .@test_count > 0) {
-			.@zeny_cost = getequiprefinecost(.@eqi_idx, REFINE_COST_HD, REFINE_ZENY_COST);
-			if (Zeny < .@zeny_cost) {
-				mes "zeny not enough";
-				break;
-			}
-			.@material = getequiprefinecost(.@eqi_idx, REFINE_COST_HD, REFINE_MATERIAL_ID);
-			dispbottom "material id:"+.@material;
-			if (.@material != .@hd_carnium_itemid && .@material != .@hd_bradium_itemid) {
-				mes "material wrong";
-				break;
-			}
-			if (countitem(.@material) == 0) {
-				if (#CASHPOINTS < .@material_cash_cost) {
-					mes "cash not enough";
-					break;
-				}
-				//#CASHPOINTS -= .@material_cash_cost;
-				//getitem .@material,.@material_cash_cnt;
-			}
-			.@curr_lv = getequiprefinerycnt(.@eqi_idx);
-			if (.@blacksmith_blessing_max_lv >= .@curr_lv) {
-				set .@curr_blacksmith_blessing_cnt, countitem(.@blacksmith_blessing_itemid);
-				if (.@curr_blacksmith_blessing_cnt < .@blacksmith_blessing_cash_cost) {
-					if (#CASHPOINTS < (.@blacksmith_blessing_cash_cost - .@curr_blacksmith_blessing_cnt) * .@blacksmith_blessing_cash_cost) {
-						mes "cash not enough";
-						break;
-					}
-					//#CASHPOINTS -= (.@blacksmith_blessing_cash_cost - .@curr_blacksmith_blessing_cnt) * .@blacksmith_blessing_cash_cost;
-					//getitem .@blacksmith_blessing_itemid, .@blacksmith_blessing_cash_cost - .@curr_blacksmith_blessing_cnt;
-				}
-			}
-			
-			progressbar "000000",1;
-			//delitem .@material,1;
-			//delitem .@blacksmith_blessing_itemid, .@blacksmith_blessing_cost[.@curr_lv];
-			//Zeny -= .@zeny_cost;
-
-			if (getequippercentrefinery(.@eqi_idx) < rand(100)) {
-				specialeffect2 EF_REFINEFAIL;
-				if (.@blacksmith_blessing_max_lv < .@curr_lv) {
-					//downrefitem .@eqi_idx;
-					dispbottom "fail";
-				}
-			} else {
-				specialeffect2 EF_REFINEOK;
-				//successrefitem .@eqi_idx;
-				dispbottom "succ";
-			}
-			.@test_count -= 1;
-		}
-
-		mes "finish";
-		close;
-	}
+	close;
 }
 
 prontera,165,104,4	duplicate(牢极)	牢极#test	950
