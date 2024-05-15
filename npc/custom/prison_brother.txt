@@ -114,8 +114,8 @@ function set_station_user;
 				close;
 			}
 		}
-		set .@check_id[0],6225,6226,6635;
-		set .@check_cnt[0],5,5,22;
+		setarray .@check_id[0],6225,6226,6635;
+		setarray .@check_cnt[0],5,5,22;
 		if (!checkweight2(.@check_id, .@check_cnt)) {
 			mes "[牢鸽]";
 			mes "背包有点满了，你先想想办法。";
