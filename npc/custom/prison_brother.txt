@@ -173,6 +173,7 @@ function set_station_user;
 			close;
 		}
 
+		next;
 		while (.@ref_target > getequiprefinerycnt(.@eqi_idx)) {
 			.@zeny_cost = getequiprefinecost(.@eqi_idx, REFINE_COST_HD, REFINE_ZENY_COST);
 			if (Zeny < .@zeny_cost) {
@@ -224,6 +225,10 @@ function set_station_user;
 				successrefitem .@eqi_idx;
 			}
 		}
+
+		mes "[ÀÎ¸ë]";
+		mes "¸ã¶¨~";
+		close;
 	}
 }
 
